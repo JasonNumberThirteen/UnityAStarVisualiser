@@ -456,6 +456,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38910348ce02544488f5197d16522d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoveredMapTileWasChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1809132997
 Transform:
   m_ObjectHideFlags: 0
@@ -471,6 +474,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3575210234030208043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4540812702092302581, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_Name
+      value: Hovered Map Tile Indicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9159404536400894273, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 08e118cc34b78854f889f23bb640ba1a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -480,3 +540,4 @@ SceneRoots:
   - {fileID: 1035971081}
   - {fileID: 231139513}
   - {fileID: 1809132997}
+  - {fileID: 3575210234030208043}
