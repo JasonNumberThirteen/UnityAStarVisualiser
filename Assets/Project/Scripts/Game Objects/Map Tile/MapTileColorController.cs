@@ -7,6 +7,7 @@ public class MapTileColorController : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 
 	private readonly Color32 PASSABLE_NODE_COLOR = new(255, 255, 255, 255);
+	private readonly Color32 IMPASSABLE_NODE_COLOR = new(51, 51, 51, 255);
 	private readonly Color32 START_NODE_COLOR = new(151, 208, 119, 255);
 	private readonly Color32 DESTINATION_NODE_COLOR = new(255, 153, 153, 255);
 
@@ -14,21 +15,38 @@ public class MapTileColorController : MonoBehaviour
 	{
 		mapTile = GetComponent<MapTile>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+
+		RegisterToListeners(true);
 	}
 
-	private void Start()
+	private void OnDestroy()
 	{
-		if(mapTile != null && spriteRenderer != null)
+		RegisterToListeners(false);
+	}
+
+	private void RegisterToListeners(bool register)
+	{
+		if(register)
 		{
-			spriteRenderer.color = GetColorByTileType();
+			mapTile.tileTypeWasChangedEvent.AddListener(OnTileTypeWasChanged);
+		}
+		else
+		{
+			mapTile.tileTypeWasChangedEvent.RemoveListener(OnTileTypeWasChanged);
 		}
 	}
 
-	private Color GetColorByTileType()
+	private void OnTileTypeWasChanged(MapTileType mapTileType)
 	{
-		return mapTile.GetTileType() switch
+		spriteRenderer.color = GetColorByTileType(mapTileType);
+	}
+
+	private Color GetColorByTileType(MapTileType mapTileType)
+	{
+		return mapTileType switch
 		{
 			MapTileType.Passable => PASSABLE_NODE_COLOR,
+			MapTileType.Impassable => IMPASSABLE_NODE_COLOR,
 			MapTileType.Start => START_NODE_COLOR,
 			MapTileType.Destination => DESTINATION_NODE_COLOR,
 			_ => Color.white
