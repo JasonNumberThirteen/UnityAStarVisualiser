@@ -1,8 +1,11 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SelectedMapTileMovementManager : MonoBehaviour
 {
+	[SerializeField] private LayerMask unacceptableGameObjects;
+	
 	private Camera mainCamera;
 	private VisualiserEventsManager visualiserEventsManager;
 	private MapTile mapTile;
@@ -84,8 +87,12 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 		}
 
 		var mapTileRealPosition = GetMousePositionToWorldPoint() + translationPositionOffset;
+		var mapTileTiledPosition = mapTileRealPosition.ToTiledPosition(GRID_SIZE);
 
-		mapTile.gameObject.transform.position = mapTileRealPosition.ToTiledPosition(GRID_SIZE);
+		if(!DetectedAnyUnacceptableCollider(mapTileTiledPosition))
+		{
+			mapTile.gameObject.transform.position = mapTileRealPosition.ToTiledPosition(GRID_SIZE);
+		}
 	}
 
 	private Vector3 GetMousePositionToWorldPoint()
@@ -93,5 +100,12 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 		var mousePositionToWorldPoint = mainCamera != null ? mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : Vector3.zero;
 
 		return new Vector3(mousePositionToWorldPoint.x, mousePositionToWorldPoint.y, 0f);
+	}
+
+	private bool DetectedAnyUnacceptableCollider(Vector2 position)
+	{
+		var colliders = Physics2D.OverlapBoxAll(position, Vector2.one*GRID_SIZE, 0f, unacceptableGameObjects);
+
+		return colliders.Any(collider => collider.gameObject != gameObject);
 	}
 }
