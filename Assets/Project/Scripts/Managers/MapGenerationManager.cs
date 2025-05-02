@@ -1,11 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapGenerationManager : MonoBehaviour
 {
+	public UnityEvent mapGeneratedEvent;
+	
 	[SerializeField, Min(3)] private int mapWidth;
 	[SerializeField, Min(3)] private int mapHeight;
 	[SerializeField] private MapTile mapTilePrefab;
 	[SerializeField] private Transform goParentTransform;
+
+	public Vector2 GetMapSize() => new(mapWidth, mapHeight);
 
 	private void Awake()
 	{
@@ -16,6 +21,8 @@ public class MapGenerationManager : MonoBehaviour
 				SpawnMapTile(new Vector2(x, y));
 			}
 		}
+
+		mapGeneratedEvent?.Invoke();
 	}
 
 	private void SpawnMapTile(Vector2 positionInTiles)
