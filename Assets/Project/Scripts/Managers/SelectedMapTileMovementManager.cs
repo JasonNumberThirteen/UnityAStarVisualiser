@@ -11,8 +11,6 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 	private MapTile mapTile;
 	private Vector3 translationPositionOffset;
 
-	private readonly float GRID_SIZE = 1f;
-
 	private void Awake()
 	{
 		mainCamera = Camera.main;
@@ -87,11 +85,11 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 		}
 
 		var mapTileRealPosition = GetMousePositionToWorldPoint() + translationPositionOffset;
-		var mapTileTiledPosition = mapTileRealPosition.ToTiledPosition(GRID_SIZE);
+		var mapTileTiledPosition = mapTileRealPosition.ToTiledPosition(MapTile.GRID_SIZE);
 
 		if(!DetectedAnyUnacceptableCollider(mapTileTiledPosition))
 		{
-			mapTile.gameObject.transform.position = mapTileRealPosition.ToTiledPosition(GRID_SIZE);
+			mapTile.gameObject.transform.position = mapTileTiledPosition;
 		}
 	}
 
@@ -104,7 +102,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 
 	private bool DetectedAnyUnacceptableCollider(Vector2 position)
 	{
-		var colliders = Physics2D.OverlapBoxAll(position, Vector2.one*GRID_SIZE, 0f, unacceptableGameObjects);
+		var colliders = Physics2D.OverlapBoxAll(position, Vector2.one*MapTile.GRID_SIZE, 0f, unacceptableGameObjects);
 
 		return colliders.Any(collider => collider.gameObject != gameObject);
 	}
