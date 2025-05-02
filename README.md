@@ -18,10 +18,10 @@
 
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Gasr5percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Gasr10percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~5%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is completed in ~10%</b>. It still requires further implementations.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
