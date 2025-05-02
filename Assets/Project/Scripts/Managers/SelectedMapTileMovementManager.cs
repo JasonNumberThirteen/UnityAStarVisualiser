@@ -8,6 +8,8 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 	private MapTile mapTile;
 	private Vector3 translationPositionOffset;
 
+	private readonly float GRID_SIZE = 1f;
+
 	private void Awake()
 	{
 		mainCamera = Camera.main;
@@ -76,10 +78,14 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 
 	private void Update()
 	{
-		if(mapTile != null)
+		if(mapTile == null)
 		{
-			mapTile.gameObject.transform.position = GetMousePositionToWorldPoint() + translationPositionOffset;
+			return;
 		}
+
+		var mapTileRealPosition = GetMousePositionToWorldPoint() + translationPositionOffset;
+
+		mapTile.gameObject.transform.position = mapTileRealPosition.ToTiledPosition(GRID_SIZE);
 	}
 
 	private Vector3 GetMousePositionToWorldPoint()
