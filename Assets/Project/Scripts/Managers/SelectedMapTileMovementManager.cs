@@ -41,45 +41,51 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		if(visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{
-			return;
+			UpdateMapTileReference(mapTileBoolVisualiserEvent);
 		}
+	}
 
-		var mapTile = mapTileBoolVisualiserEvent.GetMapTile();
-		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
-		var stateIsEnabled = mapTileBoolVisualiserEvent.GetBoolValue();
+	private void UpdateMapTileReference(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+	{
+		if(MapTileShouldBeSelected(mapTileBoolVisualiserEvent))
+		{
+			mapTile = mapTileBoolVisualiserEvent.GetMapTile();
+			translationPositionOffset = mapTile.gameObject.transform.position - GetMousePositionToWorldPoint();
+		}
+		else if(MapTileShouldBeDeselected(mapTileBoolVisualiserEvent))
+		{
+			mapTile = null;
+		}
+	}
+
+	private bool MapTileShouldBeSelected(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+	{
+		var mapTileSelectionStateIsSetAsSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
 		
-		if(this.mapTile == null && eventType == VisualiserEventType.MapTileSelectionStateWasChanged && stateIsEnabled)
-		{
-			this.mapTile = mapTile;
-		}
-		else if(this.mapTile != null && eventType == VisualiserEventType.MapTileSelectionStateWasChanged && !stateIsEnabled)
-		{
-			this.mapTile = null;
-		}
+		return mapTile == null && mapTileSelectionStateIsSetAsSelected;
+	}
+
+	private bool MapTileShouldBeDeselected(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+	{
+		var mapTileSelectionStateIsSetAsNotSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged && !mapTileBoolVisualiserEvent.GetBoolValue();
 		
-		if(this.mapTile == null)
-		{
-			return;
-		}
-
-		var mousePosition = GetMousePosition();
-
-		translationPositionOffset = this.mapTile.gameObject.transform.position - new Vector3(mousePosition.x, mousePosition.y, this.mapTile.gameObject.transform.position.z);
+		return mapTile != null && mapTileSelectionStateIsSetAsNotSelected;
 	}
 
 	private void Update()
 	{
-		if(mapTile == null)
+		if(mapTile != null)
 		{
-			return;
+			mapTile.gameObject.transform.position = GetMousePositionToWorldPoint() + translationPositionOffset;
 		}
-
-		var mousePosition = GetMousePosition();
-
-		mapTile.gameObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, mapTile.gameObject.transform.position.z) + translationPositionOffset;
 	}
 
-	private Vector3 GetMousePosition() => mainCamera != null ? mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : Vector3.zero;
+	private Vector3 GetMousePositionToWorldPoint()
+	{
+		var mousePositionToWorldPoint = mainCamera != null ? mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : Vector3.zero;
+
+		return new Vector3(mousePositionToWorldPoint.x, mousePositionToWorldPoint.y, 0f);
+	}
 }
