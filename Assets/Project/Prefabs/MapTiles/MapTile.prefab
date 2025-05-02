@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2165034372008790372}
   - component: {fileID: 4615415821789066510}
   - component: {fileID: -2006533442738954559}
-  - component: {fileID: -3889721224253641927}
+  - component: {fileID: 1613367025640206180}
   - component: {fileID: 3904528157514595355}
   m_Layer: 0
   m_Name: MapTile
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6149c779253f68348a305724317e401c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-3889721224253641927
+--- !u!114 &1613367025640206180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8860449814226267721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f9a690ba3495c14aa2e0f1fa5daf495, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fc362b323e568f4394d5a55839de958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &3904528157514595355

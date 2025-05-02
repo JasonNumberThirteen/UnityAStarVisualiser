@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class HoveredMapTileIndicator : MonoBehaviour
 {
-	private HoveredMapTileTracker hoveredMapTileTracker;
+	private VisualiserEventsManager visualiserEventsManager;
+	private MapTile mapTile;
+	private bool mapTileIsSelected;
 
 	private void Awake()
 	{
-		hoveredMapTileTracker = FindFirstObjectByType<HoveredMapTileTracker>();
+		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
 	}
@@ -16,20 +18,28 @@ public class HoveredMapTileIndicator : MonoBehaviour
 		RegisterToListeners(false);
 	}
 
+	private void OnEnable()
+	{
+		if(mapTile != null)
+		{
+			transform.position = mapTile.transform.position;
+		}
+	}
+
 	private void RegisterToListeners(bool register)
 	{
 		if(register)
 		{
-			if(hoveredMapTileTracker != null)
+			if(visualiserEventsManager != null)
 			{
-				hoveredMapTileTracker.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
+				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
 			}
 		}
 		else
 		{
-			if(hoveredMapTileTracker != null)
+			if(visualiserEventsManager != null)
 			{
-				hoveredMapTileTracker.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
+				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
 			}
 		}
 	}
@@ -39,15 +49,31 @@ public class HoveredMapTileIndicator : MonoBehaviour
 		gameObject.SetActive(false);
 	}
 
-	private void OnHoveredMapTileWasChanged(MapTile mapTile)
+	private void OnEventReceived(VisualiserEvent visualiserEvent)
 	{
-		var mapTileIsDefined = mapTile != null;
-
-		gameObject.SetActive(mapTileIsDefined);
-
-		if(mapTileIsDefined)
+		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{
-			transform.position = mapTile.transform.position;
+			return;
 		}
+
+		if(mapTileBoolVisualiserEvent.GetVisualiserEventType() != VisualiserEventType.MapTileHoverStateWasChanged || !mapTileIsSelected)
+		{
+			UpdateIndicatorState(mapTileBoolVisualiserEvent);
+		}
+	}
+
+	private void UpdateIndicatorState(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+	{
+		var mapTile = mapTileBoolVisualiserEvent.GetMapTile();
+		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
+		var stateIsEnabled = mapTileBoolVisualiserEvent.GetBoolValue();
+		var mapTileHoverStateIsSetAsHovered = eventType == VisualiserEventType.MapTileHoverStateWasChanged && stateIsEnabled;
+		var mapTileSelectionStateIsSetAsNotSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && !stateIsEnabled;
+		var indicatorShouldBeShown = mapTile != null && (mapTileHoverStateIsSetAsHovered || mapTileSelectionStateIsSetAsNotSelected);
+
+		this.mapTile = mapTile;
+		mapTileIsSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && stateIsEnabled;
+
+		gameObject.SetActive(indicatorShouldBeShown);
 	}
 }
