@@ -1,0 +1,4 @@
+public enum HeuristicType
+{
+	ManhattanDistance
+}

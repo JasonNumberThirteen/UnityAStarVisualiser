@@ -3,10 +3,15 @@ using UnityEngine.UI;
 
 public class MainWindowPanelUI : PanelUI
 {
+	[SerializeField] private Button findPathButton;
 	[SerializeField] private Button exitButton;
+
+	private PathfindingManager pathfindingManager;
 
 	private void Awake()
 	{
+		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
+		
 		RegisterToListeners(true);
 	}
 
@@ -19,6 +24,11 @@ public class MainWindowPanelUI : PanelUI
 	{
 		if(register)
 		{
+			if(findPathButton != null)
+			{
+				findPathButton.onClick.AddListener(OnFindPathButtonClicked);
+			}
+			
 			if(exitButton != null)
 			{
 				exitButton.onClick.AddListener(OnExitButtonClicked);
@@ -26,10 +36,23 @@ public class MainWindowPanelUI : PanelUI
 		}
 		else
 		{
+			if(findPathButton != null)
+			{
+				findPathButton.onClick.RemoveListener(OnFindPathButtonClicked);
+			}
+
 			if(exitButton != null)
 			{
 				exitButton.onClick.RemoveListener(OnExitButtonClicked);
 			}
+		}
+	}
+
+	private void OnFindPathButtonClicked()
+	{
+		if(pathfindingManager != null)
+		{
+			pathfindingManager.FindPath();
 		}
 	}
 
