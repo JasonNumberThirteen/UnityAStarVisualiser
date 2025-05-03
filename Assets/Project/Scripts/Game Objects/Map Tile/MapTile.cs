@@ -14,6 +14,7 @@ public class MapTile : MonoBehaviour
 	private int weight;
 
 	public MapTileType GetTileType() => tileType;
+	public int GetWeight() => weight;
 
 	public void SetTileType(MapTileType tileType)
 	{
