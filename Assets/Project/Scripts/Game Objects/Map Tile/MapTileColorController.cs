@@ -7,6 +7,7 @@ public class MapTileColorController : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 
 	private readonly Color32 PASSABLE_NODE_COLOR = new(255, 255, 255, 255);
+	private readonly Color32 PASSABLE_NODE_WITH_MAX_WEIGHT_COLOR = new(255, 127, 0, 255);
 	private readonly Color32 IMPASSABLE_NODE_COLOR = new(51, 51, 51, 255);
 	private readonly Color32 START_NODE_COLOR = new(151, 208, 119, 255);
 	private readonly Color32 DESTINATION_NODE_COLOR = new(255, 153, 153, 255);
@@ -29,16 +30,25 @@ public class MapTileColorController : MonoBehaviour
 		if(register)
 		{
 			mapTile.tileTypeWasChangedEvent.AddListener(OnTileTypeWasChanged);
+			mapTile.weightWasChangedEvent.AddListener(OnWeightWasChanged);
 		}
 		else
 		{
 			mapTile.tileTypeWasChangedEvent.RemoveListener(OnTileTypeWasChanged);
+			mapTile.weightWasChangedEvent.RemoveListener(OnWeightWasChanged);
 		}
 	}
 
 	private void OnTileTypeWasChanged(MapTileType mapTileType)
 	{
 		spriteRenderer.color = GetColorByTileType(mapTileType);
+	}
+
+	private void OnWeightWasChanged(int weight)
+	{
+		var percent = (float)weight / MapTile.MAX_WEIGHT;
+		
+		spriteRenderer.color = Color.Lerp(PASSABLE_NODE_COLOR, PASSABLE_NODE_WITH_MAX_WEIGHT_COLOR, percent);
 	}
 
 	private Color GetColorByTileType(MapTileType mapTileType)
