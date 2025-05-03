@@ -5,6 +5,7 @@
 ## Table of Contents
 * [General information](#general-information)
 * [Used technologies](#used-technologies)
+* [Features](#features)
 * [Project status](#project-status)
 * [Credits](#credits)
 
@@ -16,12 +17,17 @@
 - [Unity](https://unity.com/ "Unity Real-Time Development Platform | 3D, 2D, VR &amp; AR Engine") game engine (version **6000.0.47f1**),
 - [Visual Studio Code](https://code.visualstudio.com/ "Visual Studio Code - Code Editing. Redefined") IDE for writing code.
 
+## Features
+- Tiled map generation by the given dimensions in tiles,
+- Changing position of map tiles by dragging with a mouse,
+- Adjusting weight to each map tile by using a mouse scroll wheel.
+
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Gasr10percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Gasr15percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~10%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is completed in ~15%</b>. It still requires further implementations.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
