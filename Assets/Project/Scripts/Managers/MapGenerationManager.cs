@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[DefaultExecutionOrder(1)]
 public class MapGenerationManager : MonoBehaviour
 {
 	public UnityEvent mapGeneratedEvent;

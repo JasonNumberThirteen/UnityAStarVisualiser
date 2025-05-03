@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-[DefaultExecutionOrder(-1)]
 public class PathfindingManager : MonoBehaviour
 {
 	private readonly List<MapTile> mapTilesInScene = new();
