@@ -6,11 +6,7 @@ public class MapTileColorController : MonoBehaviour
 	private MapTile mapTile;
 	private SpriteRenderer spriteRenderer;
 
-	private readonly Color32 PASSABLE_NODE_COLOR = new(255, 255, 255, 255);
-	private readonly Color32 PASSABLE_NODE_WITH_MAX_WEIGHT_COLOR = new(255, 127, 0, 255);
-	private readonly Color32 IMPASSABLE_NODE_COLOR = new(51, 51, 51, 255);
-	private readonly Color32 START_NODE_COLOR = new(151, 208, 119, 255);
-	private readonly Color32 DESTINATION_NODE_COLOR = new(255, 153, 153, 255);
+	private static readonly Color32 PASSABLE_NODE_WITH_MAX_WEIGHT_COLOR = new(255, 127, 0, 255);
 
 	private void Awake()
 	{
@@ -41,25 +37,13 @@ public class MapTileColorController : MonoBehaviour
 
 	private void OnTileTypeWasChanged(MapTileType mapTileType)
 	{
-		spriteRenderer.color = GetColorByTileType(mapTileType);
+		spriteRenderer.color = MapTileTypeMethods.GetColorByMapTileType(mapTileType);
 	}
 
 	private void OnWeightWasChanged(int weight)
 	{
 		var percent = (float)weight / MapTile.MAX_WEIGHT;
 		
-		spriteRenderer.color = Color.Lerp(PASSABLE_NODE_COLOR, PASSABLE_NODE_WITH_MAX_WEIGHT_COLOR, percent);
-	}
-
-	private Color GetColorByTileType(MapTileType mapTileType)
-	{
-		return mapTileType switch
-		{
-			MapTileType.Passable => PASSABLE_NODE_COLOR,
-			MapTileType.Impassable => IMPASSABLE_NODE_COLOR,
-			MapTileType.Start => START_NODE_COLOR,
-			MapTileType.Destination => DESTINATION_NODE_COLOR,
-			_ => Color.white
-		};
+		spriteRenderer.color = Color.Lerp(MapTileTypeMethods.GetColorByMapTileType(MapTileType.Passable), PASSABLE_NODE_WITH_MAX_WEIGHT_COLOR, percent);
 	}
 }
