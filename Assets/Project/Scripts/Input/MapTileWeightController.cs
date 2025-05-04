@@ -7,6 +7,7 @@ public class MapTileWeightController : MonoBehaviour
 {
 	private VisualiserEventsManager visualiserEventsManager;
 	private MapTile mapTile;
+	private bool mapTileIsSelected;
 
 	private void Awake()
 	{
@@ -40,7 +41,12 @@ public class MapTileWeightController : MonoBehaviour
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		{
+			return;
+		}
+
+		if(mapTileBoolVisualiserEvent.GetVisualiserEventType() != VisualiserEventType.MapTileHoverStateWasChanged || !mapTileIsSelected)
 		{
 			UpdateMapTileReference(mapTileBoolVisualiserEvent);
 		}
@@ -56,6 +62,8 @@ public class MapTileWeightController : MonoBehaviour
 		{
 			mapTile = null;
 		}
+
+		mapTileIsSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
 	}
 
 	private bool MapTileShouldBeSelected(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
@@ -80,7 +88,7 @@ public class MapTileWeightController : MonoBehaviour
 			MapTileType.Impassable
 		};
 		
-		if(mapTile == null || !allowedMapTileTypes.Contains(mapTile.GetTileType()))
+		if(mapTileIsSelected || mapTile == null || !allowedMapTileTypes.Contains(mapTile.GetTileType()))
 		{
 			return;
 		}
