@@ -56,24 +56,40 @@ public class HoveredMapTileIndicator : MonoBehaviour
 			return;
 		}
 
-		if(mapTileBoolVisualiserEvent.GetVisualiserEventType() != VisualiserEventType.MapTileHoverStateWasChanged || !mapTileIsSelected)
+		UpdateMapTileReference(mapTileBoolVisualiserEvent);
+		UpdateIndicatorState(mapTileBoolVisualiserEvent);
+	}
+
+	private void UpdateMapTileReference(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+	{
+		var mapTile = mapTileBoolVisualiserEvent.GetMapTile();
+		var mapTileIsDefined = mapTile != null;
+		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
+		var stateIsEnabled = mapTileBoolVisualiserEvent.GetBoolValue();
+
+		switch (eventType)
 		{
-			UpdateIndicatorState(mapTileBoolVisualiserEvent);
+			case VisualiserEventType.MapTileHoverStateWasChanged:
+				this.mapTile = mapTileIsDefined && stateIsEnabled ? mapTile : null;
+				break;
+			
+			case VisualiserEventType.MapTileSelectionStateWasChanged:
+				this.mapTile = mapTileIsDefined && !stateIsEnabled ? mapTile : null;
+				break;
 		}
 	}
 
 	private void UpdateIndicatorState(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 	{
-		var mapTile = mapTileBoolVisualiserEvent.GetMapTile();
 		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
-		var stateIsEnabled = mapTileBoolVisualiserEvent.GetBoolValue();
-		var mapTileHoverStateIsSetAsHovered = eventType == VisualiserEventType.MapTileHoverStateWasChanged && stateIsEnabled;
-		var mapTileSelectionStateIsSetAsNotSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && !stateIsEnabled;
-		var indicatorShouldBeShown = mapTile != null && (mapTileHoverStateIsSetAsHovered || mapTileSelectionStateIsSetAsNotSelected);
+		
+		if(eventType == VisualiserEventType.MapTileHoverStateWasChanged && mapTileIsSelected)
+		{
+			return;
+		}
+		
+		mapTileIsSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
 
-		this.mapTile = mapTile;
-		mapTileIsSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && stateIsEnabled;
-
-		gameObject.SetActive(indicatorShouldBeShown);
+		gameObject.SetActive(mapTile != null);
 	}
 }
