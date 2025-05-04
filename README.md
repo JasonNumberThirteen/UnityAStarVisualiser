@@ -15,20 +15,22 @@
 
 ## Used technologies
 - [Unity](https://unity.com/ "Unity Real-Time Development Platform | 3D, 2D, VR &amp; AR Engine") game engine (version **6000.0.47f1**),
-- [Visual Studio Code](https://code.visualstudio.com/ "Visual Studio Code - Code Editing. Redefined") IDE for writing code.
+- [Visual Studio Code](https://code.visualstudio.com/ "Visual Studio Code - Code Editing. Redefined") IDE for writing code,
+- [GIMP](https://www.gimp.org/ "GIMP - GNU Image Manipulation Program") & [Paint.NET](https://www.getpaint.net/ "Paint.NET - Free Software for Digital Photo Editing") for making graphics.
 
 ## Features
 - Tiled map generation by the given dimensions in tiles,
 - Finding a path between the start and destination tiles,
 - Changing position of map tiles by dragging with a mouse,
-- Adjusting weight to each map tile by using a mouse scroll wheel.
+- Adjusting weight to each map tile by using a mouse scroll wheel,
+- Coloring tiles on the map which define a path along with those that were set as visited.
 
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Gasr25percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Gasr30percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~25%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is completed in ~30%</b>. It still requires further implementations.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
