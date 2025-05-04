@@ -928,6 +928,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &998585325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 998585327}
+  - component: {fileID: 998585326}
+  m_Layer: 0
+  m_Name: Camera Movement Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &998585326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998585325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007407379dde08c44a8ba54b5f9390a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 10
+--- !u!4 &998585327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998585325}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1022234668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,6 +1379,7 @@ GameObject:
   - component: {fileID: 1275537824}
   - component: {fileID: 1275537823}
   - component: {fileID: 1275537825}
+  - component: {fileID: 1275537826}
   m_Layer: 0
   m_Name: Player Input
   m_TagString: Untagged
@@ -1474,6 +1520,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45aa3c3bf89b5e847aa3b79fa6f5ca7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1275537826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275537822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7529dabe9cfb44b98ad5dc51ef692f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementKeyPressedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1288450401
 GameObject:
   m_ObjectHideFlags: 0
@@ -3257,3 +3318,4 @@ SceneRoots:
   - {fileID: 3575210234030208043}
   - {fileID: 1692856484}
   - {fileID: 1275537824}
+  - {fileID: 998585327}
