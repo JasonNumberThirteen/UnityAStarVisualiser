@@ -97,7 +97,8 @@ public class MapTileWeightCounterTextUI : MonoBehaviour
 		var stateIsEnabled = mapTileBoolVisualiserEvent.GetBoolValue();
 		var mapTileHoverStateIsSetAsHovered = eventType == VisualiserEventType.MapTileHoverStateWasChanged && stateIsEnabled;
 		var mapTileSelectionStateIsSetAsNotSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && !stateIsEnabled;
+		var mapTileWeightWasChanged = eventType == VisualiserEventType.MapTileWeightWasChanged && stateIsEnabled;
 		
-		return mapTileHoverStateIsSetAsHovered || mapTileSelectionStateIsSetAsNotSelected;
+		return mapTileHoverStateIsSetAsHovered || mapTileSelectionStateIsSetAsNotSelected || mapTileWeightWasChanged;
 	}
 }

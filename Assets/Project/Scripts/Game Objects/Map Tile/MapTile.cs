@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(MapTileNode))]
+[RequireComponent(typeof(MapTileNode), typeof(MapTileColorController))]
 public class MapTile : MonoBehaviour
 {
 	public static readonly float GRID_SIZE = 1f;
@@ -14,6 +14,7 @@ public class MapTile : MonoBehaviour
 	private MapTileType tileType;
 	private int weight;
 	private MapTileNode mapTileNode;
+	private VisualiserEventsManager visualiserEventsManager;
 
 	public MapTileType GetTileType() => tileType;
 	public int GetWeight() => weight;
@@ -53,10 +54,16 @@ public class MapTile : MonoBehaviour
 		SetTileType(this.weight < 0 ? MapTileType.Impassable : MapTileType.Passable);
 
 		mapTileNode.Weight = this.weight;
+
+		if(visualiserEventsManager != null)
+		{
+			visualiserEventsManager.SendEvent(new MapTileBoolVisualiserEvent(this, VisualiserEventType.MapTileWeightWasChanged, true));
+		}
 	}
 
 	private void Awake()
 	{
 		mapTileNode = GetComponent<MapTileNode>();
+		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 	}
 }

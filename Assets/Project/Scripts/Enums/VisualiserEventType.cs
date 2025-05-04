@@ -1,5 +1,6 @@
 public enum VisualiserEventType
 {
 	MapTileHoverStateWasChanged,
-	MapTileSelectionStateWasChanged
+	MapTileSelectionStateWasChanged,
+	MapTileWeightWasChanged
 }

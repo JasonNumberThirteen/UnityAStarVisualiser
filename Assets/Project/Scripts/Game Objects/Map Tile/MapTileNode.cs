@@ -1,19 +1,23 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapTileNode : MonoBehaviour
 {
-	public bool WasVisited {get; set;}
+	public UnityEvent<MapTileNodeType> mapTileNodeTypeWasChangedEvent;
+	
 	public int Weight {get; set;}
 	public MapTileNode Parent {get; set;}
 
+	private MapTileNodeType mapTileNodeType;
 	private PathfindingManager pathfindingManager;
 
 	private readonly List<MapTileNode> neighbors = new();
 
 	public Vector2 GetPosition() => transform.position;
 	public List<MapTileNode> GetNeighbors() => neighbors;
+	public MapTileNodeType GetMapTileNodeType() => mapTileNodeType;
 
 	public float GetCostToReachTo(MapTileNode destinationMapTileNode)
 	{
@@ -27,9 +31,24 @@ public class MapTileNode : MonoBehaviour
 		return GetPathLengthFromStart() + heuristicValue;
 	}
 
+	public void SetTileNodeType(MapTileNodeType mapTileNodeType)
+	{
+		var previousTileNodeType = this.mapTileNodeType;
+
+		if(previousTileNodeType == mapTileNodeType)
+		{
+			return;
+		}
+		
+		this.mapTileNodeType = mapTileNodeType;
+
+		mapTileNodeTypeWasChangedEvent?.Invoke(this.mapTileNodeType);
+	}
+
 	public void ResetData()
 	{
-		WasVisited = false;
+		SetTileNodeType(MapTileNodeType.Unvisited);
+		
 		Parent = null;
 	}
 

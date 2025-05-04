@@ -14,6 +14,7 @@ public class PathfindingManager : MonoBehaviour
 	private bool pathWasFound;
 	private MapGenerationManager mapGenerationManager;
 	private HeuristicManager heuristicManager;
+	private VisualiserEventsManager visualiserEventsManager;
 
 	public float GetHeuristicValue(Vector2 positionA, Vector2 positionB) => heuristicManager != null ? heuristicManager.GetHeuristicValue(positionA, positionB) : 0f;
 	
@@ -40,6 +41,7 @@ public class PathfindingManager : MonoBehaviour
 	{
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		heuristicManager = FindFirstObjectByType<HeuristicManager>();
+		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
 	}
@@ -57,12 +59,22 @@ public class PathfindingManager : MonoBehaviour
 			{
 				mapGenerationManager.mapGeneratedEvent.AddListener(OnMapGenerated);
 			}
+
+			if(visualiserEventsManager != null)
+			{
+				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+			}
 		}
 		else
 		{
 			if(mapGenerationManager != null)
 			{
 				mapGenerationManager.mapGeneratedEvent.RemoveListener(OnMapGenerated);
+			}
+
+			if(visualiserEventsManager != null)
+			{
+				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
 			}
 		}
 	}
@@ -74,6 +86,29 @@ public class PathfindingManager : MonoBehaviour
 		
 		startMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Start);
 		destinationMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Destination);
+	}
+
+	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	{
+		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		{
+			return;
+		}
+
+		var eventTypesClearingColoredTiles = new List<VisualiserEventType>()
+		{
+			VisualiserEventType.MapTileWeightWasChanged,
+			VisualiserEventType.MapTileSelectionStateWasChanged
+		};
+		
+		if(!eventTypesClearingColoredTiles.Contains(mapTileBoolVisualiserEvent.GetVisualiserEventType()))
+		{
+			return;
+		}
+
+		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.ResetData());
+		pathMapTileNodes.Clear();
+		mapTilesInScene.Where(mapTile => mapTile.GetMapTileNode().GetMapTileNodeType() == MapTileNodeType.Visited).ToList().ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
 	}
 
 	private void ClearData()
@@ -114,13 +149,12 @@ public class PathfindingManager : MonoBehaviour
 
 	private void VisitMapTileNodeIfNeeded(MapTileNode mapTileNode)
 	{
-		if(mapTileNode == null || mapTileNode.WasVisited || destinationMapTile == null)
+		if(mapTileNode == null || mapTileNode.GetMapTileNodeType() == MapTileNodeType.Visited || destinationMapTile == null)
 		{
 			return;
 		}
 
-		mapTileNode.WasVisited = true;
-
+		mapTileNode.SetTileNodeType(MapTileNodeType.Visited);
 		OperateOnMapTileNode(mapTileNode);
 	}
 
@@ -151,6 +185,7 @@ public class PathfindingManager : MonoBehaviour
 		pathWasFound = true;
 
 		OperateOnMapTileNodes(mapTileNode, mapTileNode => pathMapTileNodes.Add(mapTileNode));
+		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.SetTileNodeType(MapTileNodeType.BelongingToPath));
 	}
 
 	private void AddNeighborsOf(MapTileNode mapTileNode)
@@ -160,7 +195,7 @@ public class PathfindingManager : MonoBehaviour
 			return;
 		}
 
-		var neighbors = mapTileNode.GetNeighbors().Where(neighbor => !neighbor.WasVisited).ToList();
+		var neighbors = mapTileNode.GetNeighbors().Where(neighbor => neighbor.GetMapTileNodeType() != MapTileNodeType.Visited).ToList();
 
 		neighbors?.ForEach(neighbor => SetupAndAddNeighbor(neighbor, mapTileNode));
 	}
