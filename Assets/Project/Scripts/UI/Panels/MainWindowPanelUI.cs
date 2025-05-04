@@ -5,13 +5,16 @@ public class MainWindowPanelUI : PanelUI
 {
 	[SerializeField] private Button findPathButton;
 	[SerializeField] private Button clearResultsButton;
+	[SerializeField] private Button resetTilesButton;
 	[SerializeField] private Button exitButton;
 
 	private PathfindingManager pathfindingManager;
+	private MapGenerationManager mapGenerationManager;
 
 	private void Awake()
 	{
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
+		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		
 		RegisterToListeners(true);
 	}
@@ -34,6 +37,11 @@ public class MainWindowPanelUI : PanelUI
 			{
 				clearResultsButton.onClick.AddListener(OnClearResultsButtonClicked);
 			}
+
+			if(resetTilesButton != null)
+			{
+				resetTilesButton.onClick.AddListener(OnResetTilesButtonClicked);
+			}
 			
 			if(exitButton != null)
 			{
@@ -50,6 +58,11 @@ public class MainWindowPanelUI : PanelUI
 			if(clearResultsButton != null)
 			{
 				clearResultsButton.onClick.RemoveListener(OnClearResultsButtonClicked);
+			}
+
+			if(resetTilesButton != null)
+			{
+				resetTilesButton.onClick.RemoveListener(OnResetTilesButtonClicked);
 			}
 
 			if(exitButton != null)
@@ -72,6 +85,14 @@ public class MainWindowPanelUI : PanelUI
 		if(pathfindingManager != null)
 		{
 			pathfindingManager.ClearResults();
+		}
+	}
+
+	private void OnResetTilesButtonClicked()
+	{
+		if(mapGenerationManager != null)
+		{
+			mapGenerationManager.ResetTiles();
 		}
 	}
 

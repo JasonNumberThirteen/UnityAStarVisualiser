@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +14,18 @@ public class MapGenerationManager : MonoBehaviour
 	[SerializeField] private Transform goParentTransform;
 
 	public Vector2 GetMapSize() => new(mapWidth, mapHeight);
+
+	public void ResetTiles()
+	{
+		var allowedMapTileTypes = new List<MapTileType>()
+		{
+			MapTileType.Passable,
+			MapTileType.Impassable
+		};
+		var mapTiles = FindObjectsByType<MapTile>(FindObjectsSortMode.None).Where(mapTile => allowedMapTileTypes.Contains(mapTile.GetTileType())).ToList();
+
+		mapTiles.ForEach(mapTile => mapTile.ResetTile());
+	}
 
 	private void Awake()
 	{

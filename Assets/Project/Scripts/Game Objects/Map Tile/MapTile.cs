@@ -20,6 +20,12 @@ public class MapTile : MonoBehaviour
 	public int GetWeight() => weight;
 	public MapTileNode GetMapTileNode() => mapTileNode;
 
+	public void ResetTile()
+	{
+		SetWeightTo(0);
+		SetTileType(MapTileType.Passable);
+	}
+
 	public void SetTileType(MapTileType tileType)
 	{
 		var previousTileType = this.tileType;
