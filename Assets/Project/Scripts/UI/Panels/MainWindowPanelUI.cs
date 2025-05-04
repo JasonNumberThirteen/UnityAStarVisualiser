@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class MainWindowPanelUI : PanelUI
 {
 	[SerializeField] private Button findPathButton;
+	[SerializeField] private Button clearResultsButton;
 	[SerializeField] private Button exitButton;
 
 	private PathfindingManager pathfindingManager;
@@ -28,6 +29,11 @@ public class MainWindowPanelUI : PanelUI
 			{
 				findPathButton.onClick.AddListener(OnFindPathButtonClicked);
 			}
+
+			if(clearResultsButton != null)
+			{
+				clearResultsButton.onClick.AddListener(OnClearResultsButtonClicked);
+			}
 			
 			if(exitButton != null)
 			{
@@ -39,6 +45,11 @@ public class MainWindowPanelUI : PanelUI
 			if(findPathButton != null)
 			{
 				findPathButton.onClick.RemoveListener(OnFindPathButtonClicked);
+			}
+
+			if(clearResultsButton != null)
+			{
+				clearResultsButton.onClick.RemoveListener(OnClearResultsButtonClicked);
 			}
 
 			if(exitButton != null)
@@ -53,6 +64,14 @@ public class MainWindowPanelUI : PanelUI
 		if(pathfindingManager != null)
 		{
 			pathfindingManager.FindPath();
+		}
+	}
+
+	private void OnClearResultsButtonClicked()
+	{
+		if(pathfindingManager != null)
+		{
+			pathfindingManager.ClearResults();
 		}
 	}
 

@@ -25,6 +25,13 @@ public class PathfindingManager : MonoBehaviour
 		FindPathToDestination();
 	}
 
+	public void ClearResults()
+	{
+		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.ResetData());
+		pathMapTileNodes.Clear();
+		mapTilesInScene.Where(mapTile => mapTile.GetMapTileNode().GetMapTileNodeType() == MapTileNodeType.Visited).ToList().ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
+	}
+
 	public void OperateOnMapTileNodes(MapTileNode mapTileNodeToStartFrom, Action<MapTileNode> action)
 	{
 		var currentMapTileNode = mapTileNodeToStartFrom;
@@ -101,14 +108,10 @@ public class PathfindingManager : MonoBehaviour
 			VisualiserEventType.MapTileSelectionStateWasChanged
 		};
 		
-		if(!eventTypesClearingColoredTiles.Contains(mapTileBoolVisualiserEvent.GetVisualiserEventType()))
+		if(eventTypesClearingColoredTiles.Contains(mapTileBoolVisualiserEvent.GetVisualiserEventType()))
 		{
-			return;
+			ClearResults();
 		}
-
-		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.ResetData());
-		pathMapTileNodes.Clear();
-		mapTilesInScene.Where(mapTile => mapTile.GetMapTileNode().GetMapTileNodeType() == MapTileNodeType.Visited).ToList().ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
 	}
 
 	private void ClearData()
