@@ -2265,6 +2265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomPerScroll: 0.2
+  initialSize: 3
   minimumSize: 1.6
   maximumSize: 10
 --- !u!4 &1611714867

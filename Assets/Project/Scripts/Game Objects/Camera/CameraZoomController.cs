@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraZoomController : MonoBehaviour
 {
 	[SerializeField, Min(0f)] private float zoomPerScroll = 0.1f;
+	[SerializeField, Min(0f)] private float initialSize = 2f;
 	[SerializeField, Min(0f)] private float minimumSize = 1f;
 	[SerializeField, Min(0f)] private float maximumSize = 10f;
 	
@@ -19,6 +20,7 @@ public class CameraZoomController : MonoBehaviour
 		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
+		SetSizeTo(initialSize);
 	}
 
 	private void OnDestroy()
@@ -58,8 +60,13 @@ public class CameraZoomController : MonoBehaviour
 	{
 		if(zoomCanBeModified && mainCamera != null && mainCamera.orthographic)
 		{
-			mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y, minimumSize, maximumSize);
+			SetSizeTo(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y);
 		}
+	}
+
+	private void SetSizeTo(float size)
+	{
+		mainCamera.orthographicSize = Mathf.Clamp(size, minimumSize, maximumSize);
 	}
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
