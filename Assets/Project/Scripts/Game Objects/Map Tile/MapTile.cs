@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(MapTileNode), typeof(MapTileColorController))]
+[RequireComponent(typeof(MapTileNode), typeof(MapTileRenderer))]
 public class MapTile : MonoBehaviour
 {
 	public static readonly float GRID_SIZE = 1f;
@@ -14,11 +14,14 @@ public class MapTile : MonoBehaviour
 	private MapTileType tileType;
 	private int weight;
 	private MapTileNode mapTileNode;
+	private MapTileRenderer mapTileRenderer;
 	private VisualiserEventsManager visualiserEventsManager;
 
+	public Vector2 GetPosition() => transform.position;
 	public MapTileType GetTileType() => tileType;
 	public int GetWeight() => weight;
 	public MapTileNode GetMapTileNode() => mapTileNode;
+	public MapTileRenderer GetMapTileRenderer() => mapTileRenderer;
 
 	public void ResetTile()
 	{
@@ -70,6 +73,7 @@ public class MapTile : MonoBehaviour
 	private void Awake()
 	{
 		mapTileNode = GetComponent<MapTileNode>();
+		mapTileRenderer = GetComponent<MapTileRenderer>();
 		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 	}
 }

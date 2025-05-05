@@ -1,22 +1,25 @@
+using System.Linq;
 using UnityEngine;
 
 public class CameraZoomController : MonoBehaviour
 {
-	[SerializeField, Min(0f)] private float zoomPerScroll = 0.1f;
+	[SerializeField, Min(0.01f)] private float zoomPerScroll = 0.1f;
 	[SerializeField, Min(0f)] private float initialSize = 2f;
 	[SerializeField, Min(0f)] private float minimumSize = 1f;
-	[SerializeField, Min(0f)] private float maximumSize = 10f;
-	
+
+	private float maximumSize = float.MaxValue;
 	private bool zoomCanBeModified = true;
 	private bool mapTileIsSelected;
 	private Camera mainCamera;
 	private UserInputController userInputController;
+	private MapGenerationManager mapGenerationManager;
 	private VisualiserEventsManager visualiserEventsManager;
 
 	private void Awake()
 	{
 		mainCamera = Camera.main;
 		userInputController = FindFirstObjectByType<UserInputController>();
+		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
@@ -36,6 +39,11 @@ public class CameraZoomController : MonoBehaviour
 			{
 				userInputController.wheelScrolledEvent.AddListener(OnWheelScrolled);
 			}
+
+			if(mapGenerationManager != null)
+			{
+				mapGenerationManager.mapGeneratedEvent.AddListener(OnMapGenerated);
+			}
 			
 			if(visualiserEventsManager != null)
 			{
@@ -47,6 +55,11 @@ public class CameraZoomController : MonoBehaviour
 			if(userInputController != null)
 			{
 				userInputController.wheelScrolledEvent.RemoveListener(OnWheelScrolled);
+			}
+
+			if(mapGenerationManager != null)
+			{
+				mapGenerationManager.mapGeneratedEvent.RemoveListener(OnMapGenerated);
 			}
 			
 			if(visualiserEventsManager != null)
@@ -62,6 +75,47 @@ public class CameraZoomController : MonoBehaviour
 		{
 			SetSizeTo(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y);
 		}
+	}
+
+	private void OnMapGenerated()
+	{
+		if(mapGenerationManager == null)
+		{
+			return;
+		}
+
+		var currentSize = initialSize;
+
+		while (!EntireMapIsVisibleWithinCamera() && currentSize < maximumSize)
+		{
+			currentSize += zoomPerScroll;
+
+			SetSizeTo(currentSize);
+		}
+
+		maximumSize = currentSize;
+	}
+
+	private bool EntireMapIsVisibleWithinCamera()
+	{
+		if(mapGenerationManager == null)
+		{
+			return false;
+		}
+		
+		var cameraHeight = mainCamera.orthographicSize*2f;
+		var cameraWidth = cameraHeight*mainCamera.aspect;
+		var cameraPosition = mainCamera.transform.position;
+		var cameraSight = new Rect(cameraPosition.x - cameraWidth*0.5f, cameraPosition.y - cameraHeight*0.5f, cameraWidth, cameraHeight);
+		var mapCornersTiles = mapGenerationManager.GetMapCornersTiles();
+
+		return mapCornersTiles.All(mapTile =>
+		{
+			var mapTileBounds = mapTile.GetMapTileRenderer().GetBounds();
+			var mapTileBoundsRectangle = new Rect(mapTileBounds.min.x, mapTileBounds.min.y, mapTileBounds.size.x, mapTileBounds.size.y);
+
+			return cameraSight.Contains(mapTileBoundsRectangle.min) && cameraSight.Contains(mapTileBoundsRectangle.max);
+		});
 	}
 
 	private void SetSizeTo(float size)
