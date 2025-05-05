@@ -1145,11 +1145,13 @@ PrefabInstance:
         Move map tile
         by dragging with a mouse.
 
-        Change tile weight by scrolling with a
-        mouse button.
+        Move around the map by using arrow keys.
 
-        If the weight of the tile is below 0, then the tile
-        is impassable.'
+        Zoom
+        in/out & change tile weight by scrolling with a mouse button.
+
+        If
+        the weight of the tile is below 0, then the tile is impassable.'
       objectReference: {fileID: 0}
     - target: {fileID: 1406665024879607929, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_fontSize
@@ -1225,7 +1227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 537.68
+      value: 587.45
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1261,7 +1263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 276.84
+      value: 301.725
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_AnchoredPosition.y
