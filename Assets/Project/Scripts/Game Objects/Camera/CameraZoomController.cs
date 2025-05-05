@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class CameraZoomController : MonoBehaviour
 {
-	[SerializeField, Min(0.01f)] private float zoomPerScroll = 0.1f;
 	[SerializeField, Min(0f)] private float initialSize = 2f;
 	[SerializeField, Min(0f)] private float minimumSize = 1f;
 
+	private float zoomPerScroll;
 	private float maximumSize = float.MaxValue;
 	private bool zoomCanBeModified = true;
 	private bool mapTileIsSelected;
@@ -14,6 +14,11 @@ public class CameraZoomController : MonoBehaviour
 	private UserInputController userInputController;
 	private MapGenerationManager mapGenerationManager;
 	private VisualiserEventsManager visualiserEventsManager;
+
+	public void SetZoomPerScroll(float zoomPerScroll)
+	{
+		this.zoomPerScroll = zoomPerScroll;
+	}
 
 	private void Awake()
 	{
