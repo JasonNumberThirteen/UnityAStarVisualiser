@@ -1,12 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapTileWeightController : MonoBehaviour
+public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement
 {
 	private MapTile mapTile;
 	private bool mapTileIsSelected;
+	private bool inputIsActive = true;
 	private UserInputController userInputController;
 	private VisualiserEventsManager visualiserEventsManager;
+
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		inputIsActive = active;
+	}
 
 	private void Awake()
 	{
@@ -51,6 +57,11 @@ public class MapTileWeightController : MonoBehaviour
 
 	private void OnWheelScrolled(Vector2 scrollVector)
 	{
+		if(!inputIsActive)
+		{
+			return;
+		}
+		
 		var allowedMapTileTypes = new List<MapTileType>()
 		{
 			MapTileType.Passable,

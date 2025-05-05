@@ -1,10 +1,16 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MapTile))]
-public class MapTileMouseEventsSender : MonoBehaviour
+public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 {
+	private bool inputIsActive = true;
 	private MapTile mapTile;
 	private VisualiserEventsManager visualiserEventsManager;
+
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		inputIsActive = active;
+	}
 
 	private void Awake()
 	{
@@ -34,7 +40,7 @@ public class MapTileMouseEventsSender : MonoBehaviour
 
 	private void SendEvent(VisualiserEventType visualiserEventType, bool enabled)
 	{
-		if(visualiserEventsManager != null)
+		if(inputIsActive && visualiserEventsManager != null)
 		{
 			visualiserEventsManager.SendEvent(new MapTileBoolVisualiserEvent(mapTile, visualiserEventType, enabled));
 		}

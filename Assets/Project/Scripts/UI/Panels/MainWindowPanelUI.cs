@@ -1,20 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainWindowPanelUI : PanelUI
+public class MainWindowPanelUI : PanelUI, IPrimaryWindowElement
 {
 	[SerializeField] private Button findPathButton;
 	[SerializeField] private Button clearResultsButton;
 	[SerializeField] private Button resetTilesButton;
+	[SerializeField] private Button changeMapDimensionsButton;
 	[SerializeField] private Button exitButton;
 
 	private PathfindingManager pathfindingManager;
 	private MapGenerationManager mapGenerationManager;
+	private ChangeMapDimensionsPanelUI changeMapDimensionsPanelUI;
+
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		SetActive(active);
+	}
 
 	private void Awake()
 	{
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
+		changeMapDimensionsPanelUI = FindFirstObjectByType<ChangeMapDimensionsPanelUI>(FindObjectsInactive.Include);
 		
 		RegisterToListeners(true);
 	}
@@ -42,6 +50,11 @@ public class MainWindowPanelUI : PanelUI
 			{
 				resetTilesButton.onClick.AddListener(OnResetTilesButtonClicked);
 			}
+
+			if(changeMapDimensionsButton != null)
+			{
+				changeMapDimensionsButton.onClick.AddListener(OnChangeMapDimensionsButtonClicked);
+			}
 			
 			if(exitButton != null)
 			{
@@ -63,6 +76,11 @@ public class MainWindowPanelUI : PanelUI
 			if(resetTilesButton != null)
 			{
 				resetTilesButton.onClick.RemoveListener(OnResetTilesButtonClicked);
+			}
+
+			if(changeMapDimensionsButton != null)
+			{
+				changeMapDimensionsButton.onClick.RemoveListener(OnChangeMapDimensionsButtonClicked);
 			}
 
 			if(exitButton != null)
@@ -93,6 +111,14 @@ public class MainWindowPanelUI : PanelUI
 		if(mapGenerationManager != null)
 		{
 			mapGenerationManager.ResetTiles();
+		}
+	}
+
+	private void OnChangeMapDimensionsButtonClicked()
+	{
+		if(changeMapDimensionsPanelUI != null)
+		{
+			changeMapDimensionsPanelUI.SetActive(true);
 		}
 	}
 

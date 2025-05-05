@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class CameraZoomController : MonoBehaviour
+public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 {
 	[SerializeField, Min(0f)] private float initialSize = 2f;
 	[SerializeField, Min(0f)] private float minimumSize = 1f;
@@ -10,10 +10,16 @@ public class CameraZoomController : MonoBehaviour
 	private float maximumSize = float.MaxValue;
 	private bool zoomCanBeModified = true;
 	private bool mapTileIsSelected;
+	private bool inputIsActive = true;
 	private Camera mainCamera;
 	private UserInputController userInputController;
 	private MapGenerationManager mapGenerationManager;
 	private VisualiserEventsManager visualiserEventsManager;
+
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		inputIsActive = active;
+	}
 
 	public void SetZoomPerScroll(float zoomPerScroll)
 	{
@@ -76,7 +82,7 @@ public class CameraZoomController : MonoBehaviour
 
 	private void OnWheelScrolled(Vector2 scrollVector)
 	{
-		if(zoomCanBeModified && mainCamera != null && mainCamera.orthographic)
+		if(inputIsActive && zoomCanBeModified && mainCamera != null && mainCamera.orthographic)
 		{
 			SetSizeTo(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y);
 		}

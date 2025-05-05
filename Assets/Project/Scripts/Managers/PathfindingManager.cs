@@ -65,6 +65,8 @@ public class PathfindingManager : MonoBehaviour
 			if(mapGenerationManager != null)
 			{
 				mapGenerationManager.mapGeneratedEvent.AddListener(OnMapGenerated);
+				mapGenerationManager.mapTilesWereAddedEvent.AddListener(OnMapTilesWereAdded);
+				mapGenerationManager.mapTilesWereRemovedEvent.AddListener(OnMapTilesWereRemoved);
 			}
 
 			if(visualiserEventsManager != null)
@@ -77,6 +79,8 @@ public class PathfindingManager : MonoBehaviour
 			if(mapGenerationManager != null)
 			{
 				mapGenerationManager.mapGeneratedEvent.RemoveListener(OnMapGenerated);
+				mapGenerationManager.mapTilesWereAddedEvent.RemoveListener(OnMapTilesWereAdded);
+				mapGenerationManager.mapTilesWereRemovedEvent.RemoveListener(OnMapTilesWereRemoved);
 			}
 
 			if(visualiserEventsManager != null)
@@ -90,9 +94,18 @@ public class PathfindingManager : MonoBehaviour
 	{
 		mapTilesInScene.Clear();
 		mapTilesInScene.AddRange(FindObjectsByType<MapTile>(FindObjectsSortMode.None));
-		
-		startMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Start);
-		destinationMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Destination);
+	}
+
+	private void OnMapTilesWereAdded(List<MapTile> mapTiles)
+	{
+		mapTilesInScene.AddRange(mapTiles);
+		ClearResults();
+	}
+
+	private void OnMapTilesWereRemoved(List<MapTile> mapTiles)
+	{
+		mapTilesInScene.RemoveAll(mapTiles.Contains);
+		ClearResults();
 	}
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
@@ -116,6 +129,9 @@ public class PathfindingManager : MonoBehaviour
 
 	private void ClearData()
 	{
+		startMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Start);
+		destinationMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Destination);
+		
 		pathMapTileNodes.Clear();
 		priorityQueue.Clear();
 		CreateConnectionsBetweenMapTileNodes();
