@@ -3,6 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 
+[DefaultExecutionOrder(1)]
 [RequireComponent(typeof(TMP_InputField))]
 public class DecimalNumberInputFieldUIValueAdjuster : MonoBehaviour
 {

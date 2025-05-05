@@ -273,8 +273,8 @@ MonoBehaviour:
   mapGeneratedEvent:
     m_PersistentCalls:
       m_Calls: []
-  mapWidth: 3
-  mapHeight: 3
+  mapWidth: 15
+  mapHeight: 15
   mapTilePrefab: {fileID: 4615415821789066510, guid: 6d69a39a46a640b45820d99db6809705, type: 3}
   goParentTransform: {fileID: 958042500}
 --- !u!1001 &531888951
