@@ -7,6 +7,7 @@
 * [Used technologies](#used-technologies)
 * [Features](#features)
 * [Screenshots](#screenshots)
+* [Usage](#usage)
 * [Project status](#project-status)
 * [Credits](#credits)
 
@@ -20,6 +21,7 @@
 - [GIMP](https://www.gimp.org/ "GIMP - GNU Image Manipulation Program") & [Paint.NET](https://www.getpaint.net/ "Paint.NET - Free Software for Digital Photo Editing") for making graphics.
 
 ## Features
+- Taking screenshots of the map,
 - Zooming in/out by using a mouse scroll wheel,
 - Adjusting weight of heuristic by the input field,
 - Tiled map generation by the given dimensions in tiles,
@@ -34,12 +36,17 @@
 ## Screenshots
 ![A* Visualiser](./Screenshots/AStarVisualiser.png?raw=true)
 
+## Usage
+- W / S / A / D or arrow keys - **Navigation**,
+- Left mouse button (press & hold) - **Dragging hovered tile**,
+- Mouse scroll wheel - **Zooming in and out** (if none tile is hovered) / **Changing weight of a tile** (if any tile is hovered).
+
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Gasr60percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Gasr65percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~60%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is completed in ~65%</b>. It still requires further implementations.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
