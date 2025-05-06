@@ -26,14 +26,15 @@
 - Changing position of map tiles by dragging with a mouse,
 - Adjusting weight to each map tile by using a mouse scroll wheel,
 - Adjusting map dimensions (extending & shrinking) by the given size,
+- 3 types of heuristics: Manhattan, Euclidean and Chebyshev distance metrics,
 - Coloring tiles on the map which define a path along with those that were set as visited.
 
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Gasr50percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Gasr55percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~50%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is completed in ~55%</b>. It still requires further implementations.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
