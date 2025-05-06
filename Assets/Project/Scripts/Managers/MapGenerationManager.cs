@@ -15,8 +15,8 @@ public class MapGenerationManager : MonoBehaviour
 
 	private readonly List<MapTile> mapTiles = new();
 
-	private int mapWidth = 3;
-	private int mapHeight = 3;
+	private int mapWidth = 10;
+	private int mapHeight = 10;
 
 	public Vector2 GetMapDimensions() => new(mapWidth, mapHeight);
 	public Vector2 GetMapSize() => GetMapDimensions()*MapTile.GRID_SIZE;
