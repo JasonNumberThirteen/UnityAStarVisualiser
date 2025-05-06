@@ -65,6 +65,14 @@ public class MapTileNode : MonoBehaviour
 			Vector2.right*gridSize
 		};
 
+		if(pathfindingManager != null && pathfindingManager.DiagonalMovementIsEnabled())
+		{
+			allDirections.Add(-Vector2.one*gridSize);
+			allDirections.Add(Vector2.one*gridSize);
+			allDirections.Add(new Vector2(1, -1)*gridSize);
+			allDirections.Add(new Vector2(-1, -1)*gridSize);
+		}
+
 		allDirections.ForEach(position => AddNeighborIfPossible(mapTileNodes, position));
 	}
 

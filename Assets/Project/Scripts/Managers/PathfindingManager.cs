@@ -12,11 +12,13 @@ public class PathfindingManager : MonoBehaviour
 	private MapTile startMapTile;
 	private MapTile destinationMapTile;
 	private bool pathWasFound;
+	private bool diagonalMovementIsEnabled;
 	private MapGenerationManager mapGenerationManager;
 	private HeuristicManager heuristicManager;
 	private VisualiserEventsManager visualiserEventsManager;
 
 	public float GetHeuristicValue(Vector2 positionA, Vector2 positionB) => heuristicManager != null ? heuristicManager.GetHeuristicValue(positionA, positionB) : 0f;
+	public bool DiagonalMovementIsEnabled() => diagonalMovementIsEnabled;
 	
 	public void FindPath()
 	{
@@ -42,6 +44,11 @@ public class PathfindingManager : MonoBehaviour
 
 			currentMapTileNode = currentMapTileNode.Parent;
 		}	
+	}
+
+	public void SetDiagonalMovementEnabled(bool enabled)
+	{
+		diagonalMovementIsEnabled = enabled;
 	}
 
 	private void Awake()
