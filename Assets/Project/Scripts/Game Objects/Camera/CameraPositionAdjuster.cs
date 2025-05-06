@@ -43,10 +43,8 @@ public class CameraPositionAdjuster : MonoBehaviour
 			return;
 		}
 
-		var mapSize = mapGenerationManager.GetMapSize();
-		var x = (mapSize.x - 1)*0.5f;
-		var y = (mapSize.y - 1)*0.5f;
+		var centerOfMap = mapGenerationManager.GetCenterOfMap();
 		
-		mainCamera.transform.position = new Vector3(x, y, mainCamera.transform.position.z);
+		mainCamera.transform.position = new Vector3(centerOfMap.x, centerOfMap.y, mainCamera.transform.position.z);
 	}
 }

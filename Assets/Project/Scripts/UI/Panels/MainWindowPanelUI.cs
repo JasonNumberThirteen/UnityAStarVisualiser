@@ -7,11 +7,13 @@ public class MainWindowPanelUI : PanelUI, IPrimaryWindowElement
 	[SerializeField] private Button clearResultsButton;
 	[SerializeField] private Button resetTilesButton;
 	[SerializeField] private Button changeMapDimensionsButton;
+	[SerializeField] private Button takeMapScreenshotButton;
 	[SerializeField] private Button exitButton;
 
 	private PathfindingManager pathfindingManager;
 	private MapGenerationManager mapGenerationManager;
 	private ChangeMapDimensionsPanelUI changeMapDimensionsPanelUI;
+	private MapScreenshotTaker mapScreenshotTaker;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -23,6 +25,7 @@ public class MainWindowPanelUI : PanelUI, IPrimaryWindowElement
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		changeMapDimensionsPanelUI = FindFirstObjectByType<ChangeMapDimensionsPanelUI>(FindObjectsInactive.Include);
+		mapScreenshotTaker = FindFirstObjectByType<MapScreenshotTaker>();
 		
 		RegisterToListeners(true);
 	}
@@ -55,6 +58,11 @@ public class MainWindowPanelUI : PanelUI, IPrimaryWindowElement
 			{
 				changeMapDimensionsButton.onClick.AddListener(OnChangeMapDimensionsButtonClicked);
 			}
+
+			if(takeMapScreenshotButton != null)
+			{
+				takeMapScreenshotButton.onClick.AddListener(OnTakeMapScreenshotButtonClicked);
+			}
 			
 			if(exitButton != null)
 			{
@@ -81,6 +89,11 @@ public class MainWindowPanelUI : PanelUI, IPrimaryWindowElement
 			if(changeMapDimensionsButton != null)
 			{
 				changeMapDimensionsButton.onClick.RemoveListener(OnChangeMapDimensionsButtonClicked);
+			}
+
+			if(takeMapScreenshotButton != null)
+			{
+				takeMapScreenshotButton.onClick.RemoveListener(OnTakeMapScreenshotButtonClicked);
 			}
 
 			if(exitButton != null)
@@ -119,6 +132,14 @@ public class MainWindowPanelUI : PanelUI, IPrimaryWindowElement
 		if(changeMapDimensionsPanelUI != null)
 		{
 			changeMapDimensionsPanelUI.SetActive(true);
+		}
+	}
+
+	private void OnTakeMapScreenshotButtonClicked()
+	{
+		if(takeMapScreenshotButton != null)
+		{
+			mapScreenshotTaker.TakeMapScreenshot();
 		}
 	}
 

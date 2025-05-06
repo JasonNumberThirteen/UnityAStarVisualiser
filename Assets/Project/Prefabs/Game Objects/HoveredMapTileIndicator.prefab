@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9159404536400894273}
   - component: {fileID: 3203351142423801647}
   - component: {fileID: 5614374376475596690}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HoveredMapTileIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

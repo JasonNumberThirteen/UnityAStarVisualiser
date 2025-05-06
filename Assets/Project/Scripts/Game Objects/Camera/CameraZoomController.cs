@@ -1,9 +1,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 {
+	public UnityEvent<float> cameraSizeWasUpdatedEvent;
+	
 	private float zoomPerScroll;
 	private float sizeUpperBoundToMapSize;
 	private bool zoomCanBeModified = true;
@@ -15,7 +18,7 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private VisualiserEventsManager visualiserEventsManager;
 
 	private readonly float MINIMUM_SIZE = 3f;
-	private readonly float MAXIMUM_SIZE = 20f;
+	private readonly float MAXIMUM_SIZE = 26f;
 	private readonly float SIZE_GROWTH_PER_ITERATION = 1f;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -119,6 +122,8 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 		}
 
 		sizeUpperBoundToMapSize = mainCamera.orthographicSize;
+
+		cameraSizeWasUpdatedEvent?.Invoke(mainCamera.orthographicSize);
 	}
 
 	private bool EntireMapIsVisibleWithinCamera()
