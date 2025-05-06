@@ -1,13 +1,11 @@
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 {
-	[SerializeField, Min(0f)] private float initialSize = 2f;
-	[SerializeField, Min(0f)] private float minimumSize = 1f;
-
 	private float zoomPerScroll;
-	private float maximumSize = float.MaxValue;
+	private float sizeUpperBoundToMapSize;
 	private bool zoomCanBeModified = true;
 	private bool mapTileIsSelected;
 	private bool inputIsActive = true;
@@ -15,6 +13,10 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private UserInputController userInputController;
 	private MapGenerationManager mapGenerationManager;
 	private VisualiserEventsManager visualiserEventsManager;
+
+	private readonly float MINIMUM_SIZE = 3f;
+	private readonly float MAXIMUM_SIZE = 20f;
+	private readonly float SIZE_GROWTH_PER_ITERATION = 1f;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -29,12 +31,12 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private void Awake()
 	{
 		mainCamera = Camera.main;
+		sizeUpperBoundToMapSize = mainCamera.orthographicSize;
 		userInputController = FindFirstObjectByType<UserInputController>();
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
-		SetSizeTo(initialSize);
 	}
 
 	private void OnDestroy()
@@ -53,7 +55,9 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.AddListener(OnMapGenerated);
+				mapGenerationManager.mapGeneratedEvent.AddListener(UpdateMaximumSize);
+				mapGenerationManager.mapTilesWereAddedEvent.AddListener(OnMapTilesWereAdded);
+				mapGenerationManager.mapTilesWereRemovedEvent.AddListener(OnMapTilesWereRemoved);
 			}
 			
 			if(visualiserEventsManager != null)
@@ -70,7 +74,9 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.RemoveListener(OnMapGenerated);
+				mapGenerationManager.mapGeneratedEvent.RemoveListener(UpdateMaximumSize);
+				mapGenerationManager.mapTilesWereAddedEvent.RemoveListener(OnMapTilesWereAdded);
+				mapGenerationManager.mapTilesWereRemovedEvent.RemoveListener(OnMapTilesWereRemoved);
 			}
 			
 			if(visualiserEventsManager != null)
@@ -84,27 +90,35 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	{
 		if(inputIsActive && zoomCanBeModified && mainCamera != null && mainCamera.orthographic)
 		{
-			SetSizeTo(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y);
+			mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y, MINIMUM_SIZE, sizeUpperBoundToMapSize);
 		}
 	}
 
-	private void OnMapGenerated()
+	private void OnMapTilesWereAdded(List<MapTile> mapTiles)
+	{
+		UpdateMaximumSize();
+	}
+
+	private void OnMapTilesWereRemoved(List<MapTile> mapTiles)
+	{
+		UpdateMaximumSize();
+	}
+
+	private void UpdateMaximumSize()
 	{
 		if(mapGenerationManager == null)
 		{
 			return;
 		}
 
-		var currentSize = initialSize;
+		mainCamera.orthographicSize = MINIMUM_SIZE;
 
-		while (!EntireMapIsVisibleWithinCamera() && currentSize < maximumSize)
+		while (!EntireMapIsVisibleWithinCamera() && mainCamera.orthographicSize < MAXIMUM_SIZE)
 		{
-			currentSize += zoomPerScroll;
-
-			SetSizeTo(currentSize);
+			mainCamera.orthographicSize += SIZE_GROWTH_PER_ITERATION;
 		}
 
-		maximumSize = currentSize;
+		sizeUpperBoundToMapSize = mainCamera.orthographicSize;
 	}
 
 	private bool EntireMapIsVisibleWithinCamera()
@@ -116,22 +130,19 @@ public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
 		
 		var cameraHeight = mainCamera.orthographicSize*2f;
 		var cameraWidth = cameraHeight*mainCamera.aspect;
-		var cameraPosition = mainCamera.transform.position;
-		var cameraSight = new Rect(cameraPosition.x - cameraWidth*0.5f, cameraPosition.y - cameraHeight*0.5f, cameraWidth, cameraHeight);
+		var cameraSize = new Vector2(cameraWidth, cameraHeight);
 		var mapCornersTiles = mapGenerationManager.GetMapCornersTiles();
+		var mapSizeWithOffset = mapGenerationManager.GetMapSize() - Vector2.one*MapTile.GRID_SIZE;
+		var offsetToCenter = (mapSizeWithOffset - cameraSize)*0.5f;
+		var areaInTheCenterOfMap = new Rect(offsetToCenter, cameraSize);
 
 		return mapCornersTiles.All(mapTile =>
 		{
 			var mapTileBounds = mapTile.GetMapTileRenderer().GetBounds();
-			var mapTileBoundsRectangle = new Rect(mapTileBounds.min.x, mapTileBounds.min.y, mapTileBounds.size.x, mapTileBounds.size.y);
+			var mapTileBoundsRectangle = new Rect(mapTileBounds.min, mapTileBounds.size);
 
-			return cameraSight.Contains(mapTileBoundsRectangle.min) && cameraSight.Contains(mapTileBoundsRectangle.max);
+			return areaInTheCenterOfMap.Contains(mapTileBoundsRectangle.min) && areaInTheCenterOfMap.Contains(mapTileBoundsRectangle.max);
 		});
-	}
-
-	private void SetSizeTo(float size)
-	{
-		mainCamera.orthographicSize = Mathf.Clamp(size, minimumSize, maximumSize);
 	}
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
