@@ -11,6 +11,8 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 	private MapTile mapTile;
 	private Vector3 translationPositionOffset;
 
+	private readonly float COLLISION_BOX_SIZE_OFFSET = 0.1f;
+
 	private void Awake()
 	{
 		mainCamera = Camera.main;
@@ -102,7 +104,9 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 
 	private bool DetectedAnyUnacceptableCollider(Vector2 position)
 	{
-		var colliders = Physics2D.OverlapBoxAll(position, Vector2.one*MapTile.GRID_SIZE, 0f, unacceptableGameObjects);
+		var collisionBoxSize = Vector2.one*MapTile.GRID_SIZE;
+		var collisionBoxSizeOffset = Vector2.one*COLLISION_BOX_SIZE_OFFSET;
+		var colliders = Physics2D.OverlapBoxAll(position, collisionBoxSize - collisionBoxSizeOffset, 0f, unacceptableGameObjects);
 
 		return colliders.Any(collider => collider.gameObject != gameObject);
 	}
