@@ -1,4 +1,6 @@
 public enum HeuristicType
 {
-	ManhattanDistance
+	ManhattanDistance,
+	EuclideanDistance,
+	ChebyshevDistance
 }
