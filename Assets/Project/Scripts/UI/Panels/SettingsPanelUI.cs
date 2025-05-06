@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsPanelUI : PanelUI
+public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 {
 	[SerializeField] private Toggle showMapTilesLegendToggle;
 	[SerializeField] private Toggle showInstructionsToggle;
@@ -11,16 +11,31 @@ public class SettingsPanelUI : PanelUI
 	private InstructionsPanelUI instructionsPanelUI;
 	private PathfindingManager pathfindingManager;
 
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		SetActive(active);
+
+		if(active)
+		{
+			UpdateUIElementsDependantOnToggleUIStates();
+		}
+	}
+
 	private void Awake()
 	{
 		mapTilesLegendPanelUI = FindFirstObjectByType<MapTilesLegendPanelUI>();
 		instructionsPanelUI = FindFirstObjectByType<InstructionsPanelUI>();
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 
-		SetPanelUIActiveDependingOnToggle(mapTilesLegendPanelUI, showMapTilesLegendToggle);
-		SetPanelUIActiveDependingOnToggle(instructionsPanelUI, showInstructionsToggle);
+		UpdateUIElementsDependantOnToggleUIStates();
 		SetDiagonalMovementEnabled(enableDiagonalMovementToggle != null && enableDiagonalMovementToggle.isOn);
 		RegisterToListeners(true);
+	}
+
+	private void UpdateUIElementsDependantOnToggleUIStates()
+	{
+		SetPanelUIActiveDependingOnToggle(mapTilesLegendPanelUI, showMapTilesLegendToggle);
+		SetPanelUIActiveDependingOnToggle(instructionsPanelUI, showInstructionsToggle);
 	}
 
 	private void SetPanelUIActiveDependingOnToggle(PanelUI panelUI, Toggle toggle)
