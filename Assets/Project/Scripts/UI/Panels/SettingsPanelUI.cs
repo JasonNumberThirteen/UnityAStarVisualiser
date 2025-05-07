@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 {
-	[SerializeField] private Toggle showMapTilesLegendToggle;
-	[SerializeField] private Toggle showInstructionsToggle;
-	[SerializeField] private Toggle enableDiagonalMovementToggle;
+	[SerializeField] private Toggle showMapTilesLegendToggleUI;
+	[SerializeField] private Toggle showInstructionsToggleUI;
+	[SerializeField] private Toggle enableDiagonalMovementToggleUI;
 
 	private MapTilesLegendPanelUI mapTilesLegendPanelUI;
 	private InstructionsPanelUI instructionsPanelUI;
@@ -28,14 +28,14 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 
 		UpdateUIElementsDependantOnToggleUIStates();
-		SetDiagonalMovementEnabled(enableDiagonalMovementToggle != null && enableDiagonalMovementToggle.isOn);
+		SetDiagonalMovementEnabled(enableDiagonalMovementToggleUI != null && enableDiagonalMovementToggleUI.isOn);
 		RegisterToListeners(true);
 	}
 
 	private void UpdateUIElementsDependantOnToggleUIStates()
 	{
-		SetPanelUIActiveDependingOnToggle(mapTilesLegendPanelUI, showMapTilesLegendToggle);
-		SetPanelUIActiveDependingOnToggle(instructionsPanelUI, showInstructionsToggle);
+		SetPanelUIActiveDependingOnToggle(mapTilesLegendPanelUI, showMapTilesLegendToggleUI);
+		SetPanelUIActiveDependingOnToggle(instructionsPanelUI, showInstructionsToggleUI);
 	}
 
 	private void SetPanelUIActiveDependingOnToggle(PanelUI panelUI, Toggle toggle)
@@ -55,51 +55,51 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		if(register)
 		{
-			if(showMapTilesLegendToggle != null)
+			if(showMapTilesLegendToggleUI != null)
 			{
-				showMapTilesLegendToggle.onValueChanged.AddListener(OnShowMapTilesLegendToggleValueChanged);
+				showMapTilesLegendToggleUI.onValueChanged.AddListener(OnShowMapTilesLegendToggleUIValueChanged);
 			}
 
-			if(showInstructionsToggle != null)
+			if(showInstructionsToggleUI != null)
 			{
-				showInstructionsToggle.onValueChanged.AddListener(OnShowInstructionsToggleValueChanged);
+				showInstructionsToggleUI.onValueChanged.AddListener(OnShowInstructionsToggleUIValueChanged);
 			}
 
-			if(enableDiagonalMovementToggle != null)
+			if(enableDiagonalMovementToggleUI != null)
 			{
-				enableDiagonalMovementToggle.onValueChanged.AddListener(OnEnableDiagonalMovementToggleValueChanged);
+				enableDiagonalMovementToggleUI.onValueChanged.AddListener(OnEnableDiagonalMovementToggleUIValueChanged);
 			}
 		}
 		else
 		{
-			if(showMapTilesLegendToggle != null)
+			if(showMapTilesLegendToggleUI != null)
 			{
-				showMapTilesLegendToggle.onValueChanged.RemoveListener(OnShowMapTilesLegendToggleValueChanged);
+				showMapTilesLegendToggleUI.onValueChanged.RemoveListener(OnShowMapTilesLegendToggleUIValueChanged);
 			}
 
-			if(showInstructionsToggle != null)
+			if(showInstructionsToggleUI != null)
 			{
-				showInstructionsToggle.onValueChanged.RemoveListener(OnShowInstructionsToggleValueChanged);
+				showInstructionsToggleUI.onValueChanged.RemoveListener(OnShowInstructionsToggleUIValueChanged);
 			}
 
-			if(enableDiagonalMovementToggle != null)
+			if(enableDiagonalMovementToggleUI != null)
 			{
-				enableDiagonalMovementToggle.onValueChanged.RemoveListener(OnEnableDiagonalMovementToggleValueChanged);
+				enableDiagonalMovementToggleUI.onValueChanged.RemoveListener(OnEnableDiagonalMovementToggleUIValueChanged);
 			}
 		}
 	}
 
-	private void OnShowMapTilesLegendToggleValueChanged(bool enabled)
+	private void OnShowMapTilesLegendToggleUIValueChanged(bool enabled)
 	{
 		SetPanelUIActive(mapTilesLegendPanelUI, enabled);
 	}
 
-	private void OnShowInstructionsToggleValueChanged(bool enabled)
+	private void OnShowInstructionsToggleUIValueChanged(bool enabled)
 	{
 		SetPanelUIActive(instructionsPanelUI, enabled);
 	}
 
-	private void OnEnableDiagonalMovementToggleValueChanged(bool enabled)
+	private void OnEnableDiagonalMovementToggleUIValueChanged(bool enabled)
 	{
 		SetDiagonalMovementEnabled(enabled);
 	}

@@ -5329,9 +5329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f929b287254393e4f9ebfdd0d04f8c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showMapTilesLegendToggle: {fileID: 1710908942}
-  showInstructionsToggle: {fileID: 1082442642}
-  enableDiagonalMovementToggle: {fileID: 632029023}
+  showMapTilesLegendToggleUI: {fileID: 1710908942}
+  showInstructionsToggleUI: {fileID: 1082442642}
+  enableDiagonalMovementToggleUI: {fileID: 632029023}
 --- !u!1 &1875015803 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2769082402499495572, guid: 1a0576eaf8244bf46bc594801c86ea7d, type: 3}
