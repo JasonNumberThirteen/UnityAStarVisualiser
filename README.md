@@ -31,10 +31,12 @@
 - Adjusting finding a path by enabling/disabling diagonal movement,
 - Adjusting map dimensions (extending & shrinking) by the given size,
 - 3 types of heuristics: Manhattan, Euclidean and Chebyshev distance metrics,
-- Coloring tiles on the map which define a path along with those that were set as visited.
+- Coloring tiles on the map which define a path along with those that were set as visited,
+- Simulation Mode for showing how the algorithm works in time (by the adjusted timestep).
 
 ## Screenshots
 ![A* Visualiser](./Screenshots/AStarVisualiser.png?raw=true)
+![A* Visualiser](./Screenshots/AStarVisualiser2.png?raw=true)
 
 ## Usage
 - W / S / A / D or arrow keys - **Navigation**,
@@ -43,10 +45,10 @@
 
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Gasr65percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Gasr70percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~65%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is completed in ~70%</b>. It still requires further implementations.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
