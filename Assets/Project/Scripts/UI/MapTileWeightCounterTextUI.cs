@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class MapTileWeightCounterTextUI : MonoBehaviour
+public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 {
 	private TextMeshProUGUI textUI;
 	private MapTile mapTile;
 	private bool mapTileIsHovered;
 	private bool mapTileIsSelected;
+	private bool textCanBeShown = true;
 	private VisualiserEventsManager visualiserEventsManager;
+
+	public void SetMapEditingElementActive(bool active)
+	{
+		textCanBeShown = active;
+	}
 
 	private void Awake()
 	{
@@ -66,7 +72,7 @@ public class MapTileWeightCounterTextUI : MonoBehaviour
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		if(!textCanBeShown || visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{
 			return;
 		}

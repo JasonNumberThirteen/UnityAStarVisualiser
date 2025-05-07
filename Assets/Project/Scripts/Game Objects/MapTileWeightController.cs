@@ -1,17 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement
+public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	private MapTile mapTile;
 	private bool mapTileIsSelected;
 	private bool inputIsActive = true;
+	private bool tilesCanBeHovered = true;
 	private UserInputController userInputController;
 	private VisualiserEventsManager visualiserEventsManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
 		inputIsActive = active;
+	}
+
+	public void SetMapEditingElementActive(bool active)
+	{
+		tilesCanBeHovered = active;
 	}
 
 	private void Awake()
@@ -86,7 +92,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		if(!tilesCanBeHovered || visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{
 			return;
 		}

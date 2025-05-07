@@ -1,34 +1,82 @@
 using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PathfindingManager : MonoBehaviour
 {
+	public UnityEvent<bool> pathfindingProcessStateWasChangedEvent;
+	
 	private readonly List<MapTile> mapTilesInScene = new();
 	private readonly List<MapTileNode> pathMapTileNodes = new();
+	private readonly List<IMapEditingElement> mapEditingElements = new();
 	private readonly PriorityQueue<MapTileNode> priorityQueue = new();
 
 	private MapTile startMapTile;
 	private MapTile destinationMapTile;
 	private bool pathWasFound;
+	private bool pathfindingWasStarted;
 	private bool diagonalMovementIsEnabled;
 	private MapGenerationManager mapGenerationManager;
 	private HeuristicManager heuristicManager;
 	private VisualiserEventsManager visualiserEventsManager;
+	private SimulationManager simulationManager;
+	private Coroutine pathfindingCoroutine;
+
+	private bool PathWasFound
+	{
+		set
+		{
+			pathWasFound = value;
+			PathfindingWasStarted = !pathWasFound;
+		}
+	}
+
+	private bool PathfindingWasStarted
+	{
+		set
+		{
+			pathfindingWasStarted = value;
+
+			if(pathfindingWasStarted && pathfindingCoroutine == null)
+			{
+				pathfindingCoroutine = StartCoroutine(FindPathToDestination());
+			}
+			else if(!pathfindingWasStarted && pathfindingCoroutine != null)
+			{
+				StopCoroutine(pathfindingCoroutine);
+				
+				pathfindingCoroutine = null;
+			}
+
+			mapEditingElements.ForEach(mapEditingElement => mapEditingElement.SetMapEditingElementActive(!pathfindingWasStarted));
+			pathfindingProcessStateWasChangedEvent?.Invoke(pathfindingWasStarted);
+		}
+	}
 
 	public float GetHeuristicValue(Vector2 positionA, Vector2 positionB) => heuristicManager != null ? heuristicManager.GetHeuristicValue(positionA, positionB) : 0f;
 	public bool DiagonalMovementIsEnabled() => diagonalMovementIsEnabled;
 	
 	public void FindPath()
 	{
+		if(pathfindingWasStarted)
+		{
+			return;
+		}
+		
 		ClearData();
 		InitiatePathfinder();
-		FindPathToDestination();
 	}
 
 	public void ClearResults()
 	{
+		if(pathfindingWasStarted)
+		{
+			return;
+		}
+		
 		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.ResetData());
 		pathMapTileNodes.Clear();
 		mapTilesInScene.Where(mapTile => mapTile.GetMapTileNode().GetMapTileNodeType() == MapTileNodeType.Visited).ToList().ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
@@ -51,12 +99,22 @@ public class PathfindingManager : MonoBehaviour
 		diagonalMovementIsEnabled = enabled;
 	}
 
+	public void InterruptPathfindingIfNeeded()
+	{
+		if(pathfindingWasStarted)
+		{
+			PathfindingWasStarted = false;
+		}
+	}
+
 	private void Awake()
 	{
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		heuristicManager = FindFirstObjectByType<HeuristicManager>();
 		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		simulationManager = FindFirstObjectByType<SimulationManager>();
 
+		mapEditingElements.AddRange(FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IMapEditingElement>());
 		RegisterToListeners(true);
 	}
 
@@ -105,12 +163,18 @@ public class PathfindingManager : MonoBehaviour
 
 	private void OnMapTilesWereAdded(List<MapTile> mapTiles)
 	{
+		var mapEditingElementsToAdd = mapTiles.Select(mapTile => mapTile.GetComponentInChildren<IMapEditingElement>());
+		
+		mapEditingElements.AddRange(mapEditingElementsToAdd);
 		mapTilesInScene.AddRange(mapTiles);
 		ClearResults();
 	}
 
 	private void OnMapTilesWereRemoved(List<MapTile> mapTiles)
 	{
+		var mapEditingElementsToRemove = mapTiles.Select(mapTile => mapTile.GetComponentInChildren<IMapEditingElement>()).Where(mapEditingElement => mapEditingElement != null);
+
+		mapEditingElements.RemoveAll(mapEditingElementsToRemove.Contains);
 		mapTilesInScene.RemoveAll(mapTiles.Contains);
 		ClearResults();
 	}
@@ -158,30 +222,39 @@ public class PathfindingManager : MonoBehaviour
 			return;
 		}
 
-		pathWasFound = false;
-
 		mapTilesInScene.ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
 		startMapTile.SetWeightTo(0);
 		AddMapTileNodeToQueue(startMapTile.GetMapTileNode());
+
+		PathWasFound = false;
 	}
 
-	private void FindPathToDestination()
+	private IEnumerator FindPathToDestination()
 	{
+		var simulationIsEnabled = simulationManager != null && simulationManager.SimulationIsEnabled();
+		
 		while (!pathWasFound && priorityQueue.Count > 0)
 		{
-			VisitMapTileNodeIfNeeded(priorityQueue.Dequeue());
+			if(VisitMapTileNodeIfNeeded(priorityQueue.Dequeue()) && simulationIsEnabled)
+			{
+				yield return new WaitForSeconds(simulationManager.GetSimulationStepDelay());
+			}
 		}
+
+		PathfindingWasStarted = false;
 	}
 
-	private void VisitMapTileNodeIfNeeded(MapTileNode mapTileNode)
+	private bool VisitMapTileNodeIfNeeded(MapTileNode mapTileNode)
 	{
 		if(mapTileNode == null || mapTileNode.GetMapTileNodeType() == MapTileNodeType.Visited || destinationMapTile == null)
 		{
-			return;
+			return false;
 		}
 
 		mapTileNode.SetTileNodeType(MapTileNodeType.Visited);
 		OperateOnMapTileNode(mapTileNode);
+
+		return true;
 	}
 
 	private void OperateOnMapTileNode(MapTileNode mapTileNode)
@@ -208,7 +281,7 @@ public class PathfindingManager : MonoBehaviour
 			return;
 		}
 
-		pathWasFound = true;
+		PathWasFound = true;
 
 		OperateOnMapTileNodes(mapTileNode, mapTileNode => pathMapTileNodes.Add(mapTileNode));
 		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.SetTileNodeType(MapTileNodeType.BelongingToPath));

@@ -1,10 +1,16 @@
 using UnityEngine;
 
-public class HoveredMapTileIndicator : MonoBehaviour
+public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 {
 	private VisualiserEventsManager visualiserEventsManager;
 	private MapTile mapTile;
 	private bool mapTileIsSelected;
+	private bool indicatorCanBeShown = true;
+
+	public void SetMapEditingElementActive(bool active)
+	{
+		indicatorCanBeShown = active;
+	}
 
 	private void Awake()
 	{
@@ -51,7 +57,7 @@ public class HoveredMapTileIndicator : MonoBehaviour
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		if(!indicatorCanBeShown || visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{
 			return;
 		}

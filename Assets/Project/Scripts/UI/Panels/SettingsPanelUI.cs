@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,10 +7,13 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	[SerializeField] private Toggle showMapTilesLegendToggleUI;
 	[SerializeField] private Toggle showInstructionsToggleUI;
 	[SerializeField] private Toggle enableDiagonalMovementToggleUI;
+	[SerializeField] private Toggle enableSimulationModeToggleUI;
 
 	private MapTilesLegendPanelUI mapTilesLegendPanelUI;
 	private InstructionsPanelUI instructionsPanelUI;
+	private SimulationSettingsPanelUI simulationSettingsPanelUI;
 	private PathfindingManager pathfindingManager;
+	private SimulationManager simulationManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -21,10 +25,13 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		mapTilesLegendPanelUI = FindFirstObjectByType<MapTilesLegendPanelUI>();
 		instructionsPanelUI = FindFirstObjectByType<InstructionsPanelUI>();
+		simulationSettingsPanelUI = FindFirstObjectByType<SimulationSettingsPanelUI>();
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
+		simulationManager = FindFirstObjectByType<SimulationManager>();
 
 		UpdateUIElementsDependantOnToggleUIStates();
 		SetDiagonalMovementEnabled(enableDiagonalMovementToggleUI != null && enableDiagonalMovementToggleUI.isOn);
+		SetSimulationEnabled(enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.isOn);
 		RegisterToListeners(true);
 	}
 
@@ -32,6 +39,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		SetPanelUIActiveDependingOnToggle(mapTilesLegendPanelUI, showMapTilesLegendToggleUI);
 		SetPanelUIActiveDependingOnToggle(instructionsPanelUI, showInstructionsToggleUI);
+		SetPanelUIActiveDependingOnToggle(simulationSettingsPanelUI, enableSimulationModeToggleUI);
 	}
 
 	private void SetPanelUIActiveDependingOnToggle(PanelUI panelUI, Toggle toggle)
@@ -63,7 +71,17 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 
 			if(enableDiagonalMovementToggleUI != null)
 			{
-				enableDiagonalMovementToggleUI.onValueChanged.AddListener(OnEnableDiagonalMovementToggleUIValueChanged);
+				enableDiagonalMovementToggleUI.onValueChanged.AddListener(SetDiagonalMovementEnabled);
+			}
+
+			if(enableSimulationModeToggleUI != null)
+			{
+				enableSimulationModeToggleUI.onValueChanged.AddListener(SetSimulationEnabled);
+			}
+
+			if(pathfindingManager != null)
+			{
+				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 		else
@@ -80,7 +98,17 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 
 			if(enableDiagonalMovementToggleUI != null)
 			{
-				enableDiagonalMovementToggleUI.onValueChanged.RemoveListener(OnEnableDiagonalMovementToggleUIValueChanged);
+				enableDiagonalMovementToggleUI.onValueChanged.RemoveListener(SetDiagonalMovementEnabled);
+			}
+
+			if(enableSimulationModeToggleUI != null)
+			{
+				enableSimulationModeToggleUI.onValueChanged.RemoveListener(SetSimulationEnabled);
+			}
+
+			if(pathfindingManager != null)
+			{
+				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 	}
@@ -95,16 +123,19 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		SetPanelUIActive(instructionsPanelUI, enabled);
 	}
 
-	private void OnEnableDiagonalMovementToggleUIValueChanged(bool enabled)
-	{
-		SetDiagonalMovementEnabled(enabled);
-	}
-
 	private void SetDiagonalMovementEnabled(bool enabled)
 	{
 		if(pathfindingManager != null)
 		{
 			pathfindingManager.SetDiagonalMovementEnabled(enabled);
+		}
+	}
+
+	private void SetSimulationEnabled(bool enabled)
+	{
+		if(simulationManager != null)
+		{
+			simulationManager.SetSimulationEnabled(enabled);
 		}
 	}
 
@@ -114,5 +145,22 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		{
 			panelUI.SetActive(active);
 		}
-	} 
+	}
+
+	private void OnPathfindingProcessStateWasChanged(bool started)
+	{
+		var selectableUIs = new List<Selectable>()
+		{
+			enableDiagonalMovementToggleUI,
+			enableSimulationModeToggleUI
+		};
+
+		selectableUIs.ForEach(selectableUI =>
+		{
+			if(selectableUI != null)
+			{
+				selectableUI.interactable = !started;
+			}
+		});
+	}
 }

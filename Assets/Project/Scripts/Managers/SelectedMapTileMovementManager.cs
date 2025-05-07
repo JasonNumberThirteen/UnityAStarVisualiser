@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SelectedMapTileMovementManager : MonoBehaviour
+public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 {
 	[SerializeField] private LayerMask unacceptableGameObjects;
 	
@@ -10,8 +10,14 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 	private VisualiserEventsManager visualiserEventsManager;
 	private MapTile mapTile;
 	private Vector3 translationPositionOffset;
+	private bool tilesCanBeSelected = true;
 
 	private readonly float COLLISION_BOX_SIZE_OFFSET = 0.1f;
+
+	public void SetMapEditingElementActive(bool active)
+	{
+		tilesCanBeSelected = active;
+	}
 
 	private void Awake()
 	{
@@ -46,7 +52,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		if(tilesCanBeSelected && visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{
 			UpdateMapTileReference(mapTileBoolVisualiserEvent);
 		}

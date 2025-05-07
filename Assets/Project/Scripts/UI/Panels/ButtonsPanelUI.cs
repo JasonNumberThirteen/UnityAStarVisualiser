@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,6 +69,11 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 			{
 				exitButtonUI.onClick.AddListener(OnExitButtonUIClicked);
 			}
+
+			if(pathfindingManager != null)
+			{
+				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
+			}
 		}
 		else
 		{
@@ -99,6 +105,11 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 			if(exitButtonUI != null)
 			{
 				exitButtonUI.onClick.RemoveListener(OnExitButtonUIClicked);
+			}
+
+			if(pathfindingManager != null)
+			{
+				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 	}
@@ -146,5 +157,24 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	private void OnExitButtonUIClicked()
 	{
 		Application.Quit();
+	}
+
+	private void OnPathfindingProcessStateWasChanged(bool started)
+	{
+		var buttonUIs = new List<Button>()
+		{
+			findPathButtonUI,
+			clearResultsButtonUI,
+			resetTilesButtonUI,
+			changeMapDimensionsButtonUI
+		};
+
+		buttonUIs.ForEach(buttonUI =>
+		{
+			if(buttonUI != null)
+			{
+				buttonUI.interactable = !started;
+			}
+		});
 	}
 }
