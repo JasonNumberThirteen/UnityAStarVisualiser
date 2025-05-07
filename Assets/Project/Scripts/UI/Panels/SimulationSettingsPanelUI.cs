@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SimulationSettingsPanelUI : PanelUI, IPrimaryWindowElement
 {
-	[SerializeField] private Slider simulationStepDelaySliderUI;
+	[SerializeField] private TMP_Dropdown simulationTypeDropdownUI;
+	[SerializeField] private PanelUI simulationStepDelaySliderUIPanelUI;
+	[SerializeField] private Button simulationStepForwardButtonUI;
 	[SerializeField] private Button interruptSimulationButtonUI;
 	
 	private SimulationManager simulationManager;
@@ -20,7 +23,6 @@ public class SimulationSettingsPanelUI : PanelUI, IPrimaryWindowElement
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 
 		RegisterToListeners(true);
-		SetInterruptSimulationButtonUIInteractable(false);
 	}
 
 	private void OnDestroy()
@@ -39,12 +41,13 @@ public class SimulationSettingsPanelUI : PanelUI, IPrimaryWindowElement
 			
 			if(simulationManager != null)
 			{
-				simulationManager.simulationEnabledStateWasChangedEvent.AddListener(OnSimulationEnabledStateWasChanged);
+				simulationManager.simulationEnabledStateWasChangedEvent.AddListener(SetActive);
+				simulationManager.simulationTypeWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnSimulationType);
 			}
 
 			if(pathfindingManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(SetInterruptSimulationButtonUIInteractable);
+				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
 			}
 		}
 		else
@@ -56,12 +59,13 @@ public class SimulationSettingsPanelUI : PanelUI, IPrimaryWindowElement
 			
 			if(simulationManager != null)
 			{
-				simulationManager.simulationEnabledStateWasChangedEvent.RemoveListener(OnSimulationEnabledStateWasChanged);
+				simulationManager.simulationEnabledStateWasChangedEvent.RemoveListener(SetActive);
+				simulationManager.simulationTypeWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnSimulationType);
 			}
 
 			if(pathfindingManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(SetInterruptSimulationButtonUIInteractable);
+				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
 			}
 		}
 	}
@@ -74,16 +78,44 @@ public class SimulationSettingsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnSimulationEnabledStateWasChanged(bool enabled)
+	private void SetSelectableUIsInteractableDependingOnPathfindingProcessState(bool interactable)
 	{
-		SetActive(enabled);
-	}
+		if(simulationTypeDropdownUI != null)
+		{
+			simulationTypeDropdownUI.interactable = !interactable;
+		}
 
-	private void SetInterruptSimulationButtonUIInteractable(bool interactable)
-	{
+		if(simulationStepForwardButtonUI != null)
+		{
+			simulationStepForwardButtonUI.interactable = interactable;
+		}
+		
 		if(interruptSimulationButtonUI != null)
 		{
 			interruptSimulationButtonUI.interactable = interactable;
+		}
+	}
+
+	private void OnEnable()
+	{
+		SetSelectableUIsInteractableDependingOnPathfindingProcessState(false);
+		
+		if(simulationManager != null)
+		{
+			SetSelectableUIsInteractableDependingOnSimulationType(simulationManager.GetSimulationType());
+		}
+	}
+
+	private void SetSelectableUIsInteractableDependingOnSimulationType(SimulationType simulationType)
+	{
+		if(simulationStepDelaySliderUIPanelUI != null)
+		{
+			simulationStepDelaySliderUIPanelUI.SetActive(simulationType == SimulationType.Timed);
+		}
+		
+		if(simulationStepForwardButtonUI != null)
+		{
+			simulationStepForwardButtonUI.gameObject.SetActive(simulationType == SimulationType.Stepwise);
 		}
 	}
 }

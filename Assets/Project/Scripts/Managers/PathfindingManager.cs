@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class PathfindingManager : MonoBehaviour
 {
 	public UnityEvent<bool> pathfindingProcessStateWasChangedEvent;
+	public UnityEvent<MapTileNode> mapTileNodeWasVisitedEvent;
 	
 	private readonly List<MapTile> mapTilesInScene = new();
 	private readonly List<MapTileNode> pathMapTileNodes = new();
@@ -237,7 +238,7 @@ public class PathfindingManager : MonoBehaviour
 		{
 			if(VisitMapTileNodeIfNeeded(priorityQueue.Dequeue()) && simulationIsEnabled)
 			{
-				yield return new WaitForSeconds(simulationManager.GetSimulationStepDelay());
+				yield return simulationManager.GetNextStepDelayDependingOnSimulationType();
 			}
 		}
 
@@ -253,6 +254,7 @@ public class PathfindingManager : MonoBehaviour
 
 		mapTileNode.SetTileNodeType(MapTileNodeType.Visited);
 		OperateOnMapTileNode(mapTileNode);
+		mapTileNodeWasVisitedEvent?.Invoke(mapTileNode);
 
 		return true;
 	}
