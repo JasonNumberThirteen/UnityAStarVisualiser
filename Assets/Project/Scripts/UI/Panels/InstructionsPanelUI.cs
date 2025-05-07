@@ -1,7 +1,4 @@
-public class InstructionsPanelUI : PanelUI, IPrimaryWindowElement
+public class InstructionsPanelUI : PanelUI
 {
-	public void SetPrimaryWindowElementActive(bool active)
-	{
-		SetActive(active);
-	}
+	
 }

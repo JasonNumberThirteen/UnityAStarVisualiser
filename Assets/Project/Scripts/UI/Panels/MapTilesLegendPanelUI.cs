@@ -1,7 +1,4 @@
-public class MapTilesLegendPanelUI : PanelUI, IPrimaryWindowElement
+public class MapTilesLegendPanelUI : PanelUI
 {
-	public void SetPrimaryWindowElementActive(bool active)
-	{
-		SetActive(active);
-	}
+	
 }

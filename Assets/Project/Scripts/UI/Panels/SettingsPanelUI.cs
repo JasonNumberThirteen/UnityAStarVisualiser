@@ -14,11 +14,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	public void SetPrimaryWindowElementActive(bool active)
 	{
 		SetActive(active);
-
-		if(active)
-		{
-			UpdateUIElementsDependantOnToggleUIStates();
-		}
+		UpdateUIElementsDependantOnToggleUIStates();
 	}
 
 	private void Awake()
@@ -42,7 +38,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		if(panelUI != null && toggle != null)
 		{
-			panelUI.SetActive(toggle.isOn);
+			panelUI.SetActive(gameObject.activeSelf && toggle.isOn);
 		}
 	}
 
