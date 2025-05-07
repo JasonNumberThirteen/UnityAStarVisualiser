@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraMovementController : MonoBehaviour, IPrimaryWindowElement
+public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 {
 	[SerializeField, Min(0f)] private float movementSpeed = 10f;
 	

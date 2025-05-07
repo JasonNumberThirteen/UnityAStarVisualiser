@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraPositionAdjuster : MonoBehaviour
+public class MainCameraPositionAdjuster : MonoBehaviour
 {
 	private Camera mainCamera;
 	private MapGenerationManager mapGenerationManager;

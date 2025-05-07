@@ -5,12 +5,12 @@ using UnityEngine.UI;
 public class CameraZoomSensitivitySliderUI : MonoBehaviour
 {
 	private Slider slider;
-	private CameraZoomController cameraZoomController;
+	private MainCameraZoomController mainCameraZoomController;
 
 	private void Awake()
 	{
 		slider = GetComponent<Slider>();
-		cameraZoomController = FindFirstObjectByType<CameraZoomController>();
+		mainCameraZoomController = FindFirstObjectByType<MainCameraZoomController>();
 
 		RegisterToListeners(true);
 		SetZoomPerScroll(slider.value);
@@ -35,9 +35,9 @@ public class CameraZoomSensitivitySliderUI : MonoBehaviour
 
 	private void SetZoomPerScroll(float value)
 	{
-		if(cameraZoomController != null)
+		if(mainCameraZoomController != null)
 		{
-			cameraZoomController.SetZoomPerScroll(value);
+			mainCameraZoomController.SetZoomPerScroll(value);
 		}
 	}
 }

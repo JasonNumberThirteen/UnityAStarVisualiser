@@ -4,7 +4,7 @@ using UnityEngine;
 public class MapScreenshotCamera : MonoBehaviour
 {
 	private Camera thisCamera;
-	private CameraZoomController cameraZoomController;
+	private MainCameraZoomController mainCameraZoomController;
 	private MapGenerationManager mapGenerationManager;
 
 	public void SetTargetTexture(RenderTexture renderTexture)
@@ -20,7 +20,7 @@ public class MapScreenshotCamera : MonoBehaviour
 	private void Awake()
 	{
 		thisCamera = GetComponent<Camera>();
-		cameraZoomController = FindFirstObjectByType<CameraZoomController>();
+		mainCameraZoomController = FindFirstObjectByType<MainCameraZoomController>();
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 
 		RegisterToListeners(true);
@@ -36,16 +36,16 @@ public class MapScreenshotCamera : MonoBehaviour
 	{
 		if(register)
 		{
-			if(cameraZoomController != null)
+			if(mainCameraZoomController != null)
 			{
-				cameraZoomController.cameraSizeWasUpdatedEvent.AddListener(OnCameraSizeWasUpdated);
+				mainCameraZoomController.cameraSizeWasUpdatedEvent.AddListener(OnCameraSizeWasUpdated);
 			}
 		}
 		else
 		{
-			if(cameraZoomController != null)
+			if(mainCameraZoomController != null)
 			{
-				cameraZoomController.cameraSizeWasUpdatedEvent.RemoveListener(OnCameraSizeWasUpdated);
+				mainCameraZoomController.cameraSizeWasUpdatedEvent.RemoveListener(OnCameraSizeWasUpdated);
 			}
 		}
 	}

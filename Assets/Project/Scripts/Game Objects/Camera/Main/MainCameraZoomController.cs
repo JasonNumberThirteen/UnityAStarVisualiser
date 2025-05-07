@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CameraZoomController : MonoBehaviour, IPrimaryWindowElement
+public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 {
 	public UnityEvent<float> cameraSizeWasUpdatedEvent;
 	
