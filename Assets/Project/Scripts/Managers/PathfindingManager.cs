@@ -172,7 +172,7 @@ public class PathfindingManager : MonoBehaviour
 
 	private void OnMapTilesWereRemoved(List<MapTile> mapTiles)
 	{
-		var mapEditingElementsToRemove = mapTiles.Select(mapTile => mapTile.GetComponentInChildren<IMapEditingElement>()).Where(mapEditingElement => mapEditingElement != null);
+		var mapEditingElementsToRemove = mapTiles.Select(mapTile => mapTile.GetComponentInChildren<IMapEditingElement>());
 
 		mapEditingElements.RemoveAll(mapEditingElementsToRemove.Contains);
 		mapTilesInScene.RemoveAll(mapTiles.Contains);
