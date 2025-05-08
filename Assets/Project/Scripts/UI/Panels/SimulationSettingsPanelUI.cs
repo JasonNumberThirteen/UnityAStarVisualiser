@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SimulationSettingsPanelUI : PanelUI, IPrimaryWindowElement
+public class SimulationSettingsPanelUI : PanelUI
 {
 	[SerializeField] private TMP_Dropdown simulationTypeDropdownUI;
 	[SerializeField] private PanelUI simulationStepDelaySliderUIPanelUI;
@@ -11,11 +11,6 @@ public class SimulationSettingsPanelUI : PanelUI, IPrimaryWindowElement
 	
 	private SimulationManager simulationManager;
 	private PathfindingManager pathfindingManager;
-
-	public void SetPrimaryWindowElementActive(bool active)
-	{
-		SetActive(active);
-	}
 
 	private void Awake()
 	{
