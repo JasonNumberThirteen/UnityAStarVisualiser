@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 6948734966668728093}
   - component: {fileID: 8925046604102082125}
   - component: {fileID: 8023970925283910914}
-  - component: {fileID: 6474806000374492404}
   m_Layer: 5
   m_Name: InputFieldUI
   m_TagString: Untagged
@@ -315,18 +314,6 @@ MonoBehaviour:
   isAlert: 0
   m_InputValidator: {fileID: 0}
   m_ShouldActivateOnSelect: 1
---- !u!114 &6474806000374492404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2769082402499495572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33bb03eee0cf8794d9072b38840c04ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3156461774739758976
 GameObject:
   m_ObjectHideFlags: 0
