@@ -70,11 +70,6 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 				takeMapScreenshotButtonUI.onClick.AddListener(OnTakeMapScreenshotButtonUIClicked);
 			}
 
-			if(takeMapScreenshotButtonUI != null)
-			{
-				takeMapScreenshotButtonUI.onClick.AddListener(OnTakeMapScreenshotButtonUIClicked);
-			}
-
 			if(informationButtonUI != null)
 			{
 				informationButtonUI.onClick.AddListener(OnInformationButtonUIClicked);
@@ -110,6 +105,11 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 			if(changeMapDimensionsButtonUI != null)
 			{
 				changeMapDimensionsButtonUI.onClick.RemoveListener(OnChangeMapDimensionsButtonUIClicked);
+			}
+
+			if(takeMapScreenshotButtonUI != null)
+			{
+				takeMapScreenshotButtonUI.onClick.RemoveListener(OnTakeMapScreenshotButtonUIClicked);
 			}
 
 			if(informationButtonUI != null)
