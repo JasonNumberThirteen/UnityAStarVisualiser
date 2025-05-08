@@ -16,6 +16,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	private MapGenerationManager mapGenerationManager;
 	private ChangeMapDimensionsPopupPanelUI changeMapDimensionsPopupPanelUI;
 	private InformationPopupPanelUI informationPopupPanelUI;
+	private ExitPopupPanelUI exitPopupPanelUI;
 	private MapScreenshotTaker mapScreenshotTaker;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -29,6 +30,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		changeMapDimensionsPopupPanelUI = FindFirstObjectByType<ChangeMapDimensionsPopupPanelUI>(FindObjectsInactive.Include);
 		informationPopupPanelUI = FindFirstObjectByType<InformationPopupPanelUI>(FindObjectsInactive.Include);
+		exitPopupPanelUI = FindFirstObjectByType<ExitPopupPanelUI>(FindObjectsInactive.Include);
 		mapScreenshotTaker = FindFirstObjectByType<MapScreenshotTaker>();
 		
 		RegisterToListeners(true);
@@ -177,7 +179,10 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void OnExitButtonUIClicked()
 	{
-		Application.Quit();
+		if(exitPopupPanelUI != null)
+		{
+			exitPopupPanelUI.SetActive(true);
+		}
 	}
 
 	private void OnPathfindingProcessStateWasChanged(bool started)
