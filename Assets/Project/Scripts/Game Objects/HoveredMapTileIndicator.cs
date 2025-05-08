@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 {
+	[SerializeField, Min(0f)] private float animationTransitionDuration = 0.5f;
+
+	private static readonly float ANIMATION_TRANSITION_MINIMUM_SCALE = 0.8f;
+	
 	private VisualiserEventsManager visualiserEventsManager;
 	private MapTile mapTile;
 	private bool mapTileIsSelected;
@@ -97,5 +101,20 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 		mapTileIsSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
 
 		gameObject.SetActive(mapTile != null);
+	}
+
+	private void Update()
+	{
+		if(Mathf.Approximately(animationTransitionDuration, 0f))
+		{
+			return;
+		}
+		
+		var scale = transform.localScale;
+		var scalePercent = Mathf.PingPong(Time.time, animationTransitionDuration);
+		var scaleInterpolation = Mathf.Lerp(ANIMATION_TRANSITION_MINIMUM_SCALE, 1f, scalePercent);
+
+		scale.x = scale.y = scaleInterpolation;
+		transform.localScale = scale;
 	}
 }
