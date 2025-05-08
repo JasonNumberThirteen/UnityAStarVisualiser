@@ -9,6 +9,8 @@ public class PathfindingManager : MonoBehaviour
 {
 	public UnityEvent<bool> pathfindingProcessStateWasChangedEvent;
 	public UnityEvent<MapTileNode> mapTileNodeWasVisitedEvent;
+	public UnityEvent<List<MapTileNode>> pathWasFoundEvent;
+	public UnityEvent resultsWereClearedEvent;
 	
 	private readonly List<MapTile> mapTilesInScene = new();
 	private readonly List<MapTileNode> pathMapTileNodes = new();
@@ -81,6 +83,7 @@ public class PathfindingManager : MonoBehaviour
 		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.ResetData());
 		pathMapTileNodes.Clear();
 		mapTilesInScene.Where(mapTile => mapTile.GetMapTileNode().GetMapTileNodeType() == MapTileNodeType.Visited).ToList().ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
+		resultsWereClearedEvent?.Invoke();
 	}
 
 	public void OperateOnMapTileNodes(MapTileNode mapTileNodeToStartFrom, Action<MapTileNode> action)
@@ -204,7 +207,7 @@ public class PathfindingManager : MonoBehaviour
 		startMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Start);
 		destinationMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Destination);
 		
-		pathMapTileNodes.Clear();
+		ClearResults();
 		priorityQueue.Clear();
 		CreateConnectionsBetweenMapTileNodes();
 	}
@@ -287,6 +290,7 @@ public class PathfindingManager : MonoBehaviour
 
 		OperateOnMapTileNodes(mapTileNode, mapTileNode => pathMapTileNodes.Add(mapTileNode));
 		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.SetTileNodeType(MapTileNodeType.BelongingToPath));
+		pathWasFoundEvent?.Invoke(pathMapTileNodes);
 	}
 
 	private void AddNeighborsOf(MapTileNode mapTileNode)
