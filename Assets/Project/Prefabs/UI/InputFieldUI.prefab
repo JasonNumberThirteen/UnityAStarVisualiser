@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b384b094ed00ad644acb153898564b23, type: 2}
+  m_sharedMaterial: {fileID: -7176453998148584058, guid: b384b094ed00ad644acb153898564b23, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: b384b094ed00ad644acb153898564b23, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 0
@@ -327,9 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33bb03eee0cf8794d9072b38840c04ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 2791669699594364235}
-  minWidth: 100
-  maxWidth: 500
 --- !u!1 &3156461774739758976
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,8 +447,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b384b094ed00ad644acb153898564b23, type: 2}
+  m_sharedMaterial: {fileID: -7176453998148584058, guid: b384b094ed00ad644acb153898564b23, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
