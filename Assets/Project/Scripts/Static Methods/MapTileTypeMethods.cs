@@ -7,8 +7,8 @@ public static class MapTileTypeMethods
 	{
 		{MapTileType.Passable, Color.white},
 		{MapTileType.Impassable, new(51, 51, 51, 255)},
-		{MapTileType.Start, new(151, 208, 119, 255)},
-		{MapTileType.Destination, new(255, 153, 153, 255)}
+		{MapTileType.Start, new(80, 200, 120, 255)},
+		{MapTileType.Destination, new(250, 80, 83, 255)}
 	};
 
 	private static readonly Color DEFAULT_COLOR = Color.white;

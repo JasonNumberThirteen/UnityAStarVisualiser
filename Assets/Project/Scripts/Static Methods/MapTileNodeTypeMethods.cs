@@ -5,8 +5,8 @@ public class MapTileNodeTypeMethods : MonoBehaviour
 {
 	private static readonly Dictionary<MapTileNodeType, Color32> TILE_COLOR_BY_NODE_TYPE = new()
 	{
-		{MapTileNodeType.Visited, Color.green},
-		{MapTileNodeType.BelongingToPath, Color.yellow}
+		{MapTileNodeType.Visited, new Color32(124, 252, 0, 255)},
+		{MapTileNodeType.BelongingToPath, new Color32(255, 222, 33, 255)}
 	};
 
 	private static readonly Color DEFAULT_COLOR = Color.white;
