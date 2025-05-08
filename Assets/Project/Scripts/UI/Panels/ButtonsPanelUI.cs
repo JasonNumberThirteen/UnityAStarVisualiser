@@ -9,11 +9,13 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	[SerializeField] private Button resetTilesButtonUI;
 	[SerializeField] private Button changeMapDimensionsButtonUI;
 	[SerializeField] private Button takeMapScreenshotButtonUI;
+	[SerializeField] private Button informationButtonUI;
 	[SerializeField] private Button exitButtonUI;
 
 	private PathfindingManager pathfindingManager;
 	private MapGenerationManager mapGenerationManager;
-	private ChangeMapDimensionsPanelUI changeMapDimensionsPanelUI;
+	private ChangeMapDimensionsPopupPanelUI changeMapDimensionsPopupPanelUI;
+	private InformationPopupPanelUI informationPopupPanelUI;
 	private MapScreenshotTaker mapScreenshotTaker;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -25,7 +27,8 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
-		changeMapDimensionsPanelUI = FindFirstObjectByType<ChangeMapDimensionsPanelUI>(FindObjectsInactive.Include);
+		changeMapDimensionsPopupPanelUI = FindFirstObjectByType<ChangeMapDimensionsPopupPanelUI>(FindObjectsInactive.Include);
+		informationPopupPanelUI = FindFirstObjectByType<InformationPopupPanelUI>(FindObjectsInactive.Include);
 		mapScreenshotTaker = FindFirstObjectByType<MapScreenshotTaker>();
 		
 		RegisterToListeners(true);
@@ -64,6 +67,16 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 			{
 				takeMapScreenshotButtonUI.onClick.AddListener(OnTakeMapScreenshotButtonUIClicked);
 			}
+
+			if(takeMapScreenshotButtonUI != null)
+			{
+				takeMapScreenshotButtonUI.onClick.AddListener(OnTakeMapScreenshotButtonUIClicked);
+			}
+
+			if(informationButtonUI != null)
+			{
+				informationButtonUI.onClick.AddListener(OnInformationButtonUIClicked);
+			}
 			
 			if(exitButtonUI != null)
 			{
@@ -97,9 +110,9 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 				changeMapDimensionsButtonUI.onClick.RemoveListener(OnChangeMapDimensionsButtonUIClicked);
 			}
 
-			if(takeMapScreenshotButtonUI != null)
+			if(informationButtonUI != null)
 			{
-				takeMapScreenshotButtonUI.onClick.RemoveListener(OnTakeMapScreenshotButtonUIClicked);
+				informationButtonUI.onClick.RemoveListener(OnInformationButtonUIClicked);
 			}
 
 			if(exitButtonUI != null)
@@ -140,9 +153,9 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void OnChangeMapDimensionsButtonUIClicked()
 	{
-		if(changeMapDimensionsPanelUI != null)
+		if(changeMapDimensionsPopupPanelUI != null)
 		{
-			changeMapDimensionsPanelUI.SetActive(true);
+			changeMapDimensionsPopupPanelUI.SetActive(true);
 		}
 	}
 
@@ -151,6 +164,14 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		if(takeMapScreenshotButtonUI != null)
 		{
 			mapScreenshotTaker.TakeMapScreenshot();
+		}
+	}
+
+	private void OnInformationButtonUIClicked()
+	{
+		if(informationPopupPanelUI != null)
+		{
+			informationPopupPanelUI.SetActive(true);
 		}
 	}
 

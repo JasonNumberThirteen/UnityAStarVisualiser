@@ -4,24 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeMapDimensionsPanelUI : PanelUI
+public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 {
 	[SerializeField] private TMP_InputField mapWidthInputFieldUI;
 	[SerializeField] private TMP_InputField mapHeightInputFieldUI;
 	
 	[SerializeField] private Button changeDimensionsButtonUI;
 	[SerializeField] private Button cancelButtonUI;
-	
-	private readonly List<IPrimaryWindowElement> primaryWindowElements = new();
 
 	private MapGenerationManager mapGenerationManager;
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+		
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		
-		primaryWindowElements.AddRange(FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IPrimaryWindowElement>());
 		RegisterToListeners(true);
+	}
+
+	protected override void OnEnable()
+	{
+		base.OnEnable();
+		AssignMapSizeToInputFieldUIs();
 	}
 
 	private void OnDestroy()
@@ -101,17 +106,6 @@ public class ChangeMapDimensionsPanelUI : PanelUI
 		var mapTilesToRemove = mapTiles.Select(mapTile => mapTile.GetComponent<IPrimaryWindowElement>());
 
 		primaryWindowElements.RemoveAll(mapTilesToRemove.Contains);
-	}
-
-	private void OnEnable()
-	{
-		primaryWindowElements.ForEach(primaryWindowElement => primaryWindowElement.SetPrimaryWindowElementActive(false));
-		AssignMapSizeToInputFieldUIs();
-	}
-
-	private void OnDisable()
-	{
-		primaryWindowElements.ForEach(primaryWindowElement => primaryWindowElement.SetPrimaryWindowElementActive(true));
 	}
 
 	private void AssignMapSizeToInputFieldUIs()
