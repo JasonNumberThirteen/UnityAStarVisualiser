@@ -38,23 +38,6 @@ public class MapGenerationManager : MonoBehaviour
 		mapTiles.ForEach(mapTile => mapTile.ResetTile());
 	}
 
-	public List<MapTile> GetMapCornersTiles()
-	{
-		var mapSize = GetMapSize();
-		var mapTiles = GetMapTiles();
-		
-		return mapTiles.Where(mapTile =>
-		{
-			var mapTilePosition = mapTile.GetPosition();
-			var mapTileIsPlacedInTopLeftCorner = mapTilePosition.x == 0 && mapTilePosition.y == 0;
-			var mapTileIsPlacedInTopRightCorner = mapTilePosition.x == mapSize.x - 1 && mapTilePosition.y == 0;
-			var mapTileIsPlacedInBottomLeftCorner = mapTilePosition.x == 0 && mapTilePosition.y == mapSize.y - 1;
-			var mapTileIsPlacedInBottomRightCorner = mapTilePosition.x == mapSize.x - 1 && mapTilePosition.y == mapSize.y - 1;
-
-			return mapTileIsPlacedInTopLeftCorner || mapTileIsPlacedInTopRightCorner || mapTileIsPlacedInBottomLeftCorner || mapTileIsPlacedInBottomRightCorner;
-		}).ToList();
-	}
-
 	public void ChangeMapDimensionsIfNeeded(Vector2 newMapSize)
 	{
 		mapDimensions = newMapSize;
