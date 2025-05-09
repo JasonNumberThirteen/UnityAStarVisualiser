@@ -41,11 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Map Tile
+  - name: Grid Cell
     uniqueID: 3283900707
     locked: 0
-  - name: Indicator
+  - name: Map Tile
     uniqueID: 2963450531
+    locked: 0
+  - name: Indicator
+    uniqueID: 375696419
     locked: 0
   m_RenderingLayers:
   - Default
