@@ -4,7 +4,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(MapTileNode))]
 public class MapTile : MonoBehaviour
 {
-	public static readonly float GRID_SIZE = 1f;
 	public static readonly int MIN_WEIGHT = -1;
 	public static readonly int MAX_WEIGHT = 10;
 

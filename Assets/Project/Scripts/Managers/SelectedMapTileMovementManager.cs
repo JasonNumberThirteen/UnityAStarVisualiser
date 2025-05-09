@@ -93,7 +93,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 		}
 
 		var mapTileRealPosition = GetMousePositionToWorldPoint() + translationPositionOffset;
-		var mapTileTiledPosition = mapTileRealPosition.ToTiledPosition(MapTile.GRID_SIZE);
+		var mapTileTiledPosition = mapTileRealPosition.ToTiledPosition();
 
 		if(!DetectedAnyUnacceptableCollider(mapTileTiledPosition))
 		{
@@ -110,7 +110,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 
 	private bool DetectedAnyUnacceptableCollider(Vector2 position)
 	{
-		var collisionBoxSize = Vector2.one*MapTile.GRID_SIZE;
+		var collisionBoxSize = Vector2.one;
 		var collisionBoxSizeOffset = Vector2.one*COLLISION_BOX_SIZE_OFFSET;
 		var colliders = Physics2D.OverlapBoxAll(position, collisionBoxSize - collisionBoxSizeOffset, 0f, unacceptableGameObjects);
 

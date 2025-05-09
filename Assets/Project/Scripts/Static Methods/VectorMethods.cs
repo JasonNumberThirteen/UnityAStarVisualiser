@@ -10,18 +10,17 @@ public static class VectorMethods
 	
 	public static List<Vector2> GetDirectionsForFindingNeighbouringNodes(bool allowDiagonal)
 	{
-		var gridSize = MapTile.GRID_SIZE;
 		var directions = new List<Vector2>()
 		{
-			Vector2.up*gridSize,
-			Vector2.down*gridSize,
-			Vector2.left*gridSize,
-			Vector2.right*gridSize
+			Vector2.up,
+			Vector2.down,
+			Vector2.left,
+			Vector2.right
 		};
 
 		if(allowDiagonal)
 		{
-			directions.AddRange(GetNorthEastDirection()*gridSize, GetSouthEastDirection()*gridSize, GetSouthWestDirection()*gridSize, GetNorthWestDirection()*gridSize);
+			directions.AddRange(GetNorthEastDirection(), GetSouthEastDirection(), GetSouthWestDirection(), GetNorthWestDirection());
 		}
 
 		return directions;

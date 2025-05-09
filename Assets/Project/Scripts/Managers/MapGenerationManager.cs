@@ -20,8 +20,8 @@ public class MapGenerationManager : MonoBehaviour
 
 	private Vector2 mapDimensions;
 
-	public Vector2 GetCenterOfMap() => (GetMapSize() - Vector2.one*MapTile.GRID_SIZE)*0.5f;
-	public Vector2 GetMapSize() => GetMapDimensions()*MapTile.GRID_SIZE;
+	public Vector2 GetCenterOfMap() => (GetMapSize() - Vector2.one)*0.5f;
+	public Vector2 GetMapSize() => GetMapDimensions();
 	public Vector2 GetMapDimensions() => mapDimensions;
 	public List<MapTile> GetMapTiles() => mapTiles;
 	public int GetMaximumMapDimension() => (int)Mathf.Max(mapDimensions.x, mapDimensions.y);
@@ -115,7 +115,7 @@ public class MapGenerationManager : MonoBehaviour
 				
 				if(!mapTiles.Any(mapTile => (Vector2)mapTile.transform.position == position))
 				{
-					mapTilesToAdd.Add(Instantiate(mapTilePrefab, position*MapTile.GRID_SIZE, Quaternion.identity, goParentTransform));
+					mapTilesToAdd.Add(Instantiate(mapTilePrefab, position, Quaternion.identity, goParentTransform));
 				}
 			}
 		}
