@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,7 +7,6 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	public UnityEvent<float> cameraSizeWasUpdatedEvent;
 	
 	private float zoomPerScroll;
-	private float sizeUpperBoundToMapSize;
 	private bool zoomCanBeModified = true;
 	private bool mapTileIsSelected;
 	private bool inputIsActive = true;
@@ -17,7 +15,7 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private MapGenerationManager mapGenerationManager;
 	private VisualiserEventsManager visualiserEventsManager;
 
-	private readonly float SIZE_GROWTH_PER_ITERATION = 1f;
+	private readonly float ADDITIONAL_OFFSET_FROM_MAP_EDGES = 1f;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -32,7 +30,6 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private void Awake()
 	{
 		mainCamera = Camera.main;
-		sizeUpperBoundToMapSize = mainCamera != null ? mainCamera.orthographicSize : 0f;
 		userInputController = FindFirstObjectByType<UserInputController>();
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
@@ -89,10 +86,14 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnWheelScrolled(Vector2 scrollVector)
 	{
-		if(inputIsActive && zoomCanBeModified && mainCamera != null && mainCamera.orthographic)
+		if(!inputIsActive || !zoomCanBeModified || mainCamera == null || !mainCamera.orthographic)
 		{
-			mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y, MapGenerationManager.MAP_DIMENSION_LOWER_BOUND, sizeUpperBoundToMapSize);
+			return;
 		}
+
+		var sizeModifyStep = zoomPerScroll*scrollVector.y;
+
+		mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - sizeModifyStep, GetMinimumSize(), GetMaximumSize());
 	}
 
 	private void OnMapTilesWereAdded(List<MapTile> mapTiles)
@@ -112,51 +113,9 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 			return;
 		}
 
-		mainCamera.orthographicSize = MapGenerationManager.MAP_DIMENSION_LOWER_BOUND;
-
-		while (!EntireMapIsVisibleWithinCamera() && mainCamera.orthographicSize < MapGenerationManager.MAP_DIMENSION_UPPER_BOUND)
-		{
-			mainCamera.orthographicSize += SIZE_GROWTH_PER_ITERATION;
-		}
-
-		sizeUpperBoundToMapSize = mainCamera.orthographicSize;
+		mainCamera.orthographicSize = GetMaximumSize();
 
 		cameraSizeWasUpdatedEvent?.Invoke(mainCamera.orthographicSize);
-	}
-
-	private bool EntireMapIsVisibleWithinCamera()
-	{
-		if(mapGenerationManager == null)
-		{
-			return false;
-		}
-		
-		var mapSizeWithOffset = mapGenerationManager.GetMapSize() - Vector2.one*MapTile.GRID_SIZE;
-		var cameraSize = GetCameraSize();
-		var offsetToCenter = (mapSizeWithOffset - cameraSize)*0.5f;
-		var areaInTheCenterOfMap = new Rect(offsetToCenter, cameraSize);
-		var mapCornersTiles = mapGenerationManager.GetMapCornersTiles();
-
-		return mapCornersTiles.All(mapTile =>
-		{
-			var mapTileBounds = mapTile.GetMapTileRenderer().GetBounds();
-			var mapTileBoundsRectangle = new Rect(mapTileBounds.min, mapTileBounds.size);
-
-			return areaInTheCenterOfMap.Contains(mapTileBoundsRectangle.min) && areaInTheCenterOfMap.Contains(mapTileBoundsRectangle.max);
-		});
-	}
-
-	private Vector2 GetCameraSize()
-	{
-		if(mainCamera == null)
-		{
-			return Vector2.zero;
-		}
-
-		var cameraHeight = mainCamera.orthographicSize*2f;
-		var cameraWidth = cameraHeight*mainCamera.aspect;
-
-		return new Vector2(cameraWidth, cameraHeight);
 	}
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
@@ -182,4 +141,14 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 				break;
 		}
 	}
+
+	private float GetMaximumSize()
+	{
+		var maximumMapDimension = GetSizeBy(mapGenerationManager != null ? mapGenerationManager.GetMaximumMapDimension() : 0f);
+		
+		return Mathf.Max(GetMinimumSize(), maximumMapDimension);
+	}
+
+	private float GetMinimumSize() => GetSizeBy(MapGenerationManager.MAP_DIMENSION_LOWER_BOUND);
+	private float GetSizeBy(float value) => value*0.5f + ADDITIONAL_OFFSET_FROM_MAP_EDGES;
 }

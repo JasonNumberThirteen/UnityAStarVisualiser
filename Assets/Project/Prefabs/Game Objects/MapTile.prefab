@@ -352,7 +352,6 @@ GameObject:
   - component: {fileID: -2006533442738954559}
   - component: {fileID: 1613367025640206180}
   - component: {fileID: 6790355574122249668}
-  - component: {fileID: 7562648648007162862}
   - component: {fileID: 3904528157514595355}
   m_Layer: 6
   m_Name: MapTile
@@ -490,18 +489,6 @@ MonoBehaviour:
   mapTileNodeTypeWasChangedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7562648648007162862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8860449814226267721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fce1c80e4c499e46896e043aa392643, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &3904528157514595355
 BoxCollider2D:
   m_ObjectHideFlags: 0
