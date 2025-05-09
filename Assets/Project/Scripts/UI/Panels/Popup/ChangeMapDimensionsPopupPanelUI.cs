@@ -86,7 +86,7 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 		var mapWidth = int.TryParse(widthMapDimensionInputFieldUI.text, out var width) ? width : 0;
 		var mapHeight = int.TryParse(heightMapDimensionInputFieldUI.text, out var height) ? height : 0;
 
-		mapGenerationManager.ChangeMapDimensionsIfNeeded(new Vector2(mapWidth, mapHeight));
+		mapGenerationManager.ChangeMapDimensionsIfNeeded(new Vector2Int(mapWidth, mapHeight));
 	}
 
 	private void OnCancelButtonUIClicked()

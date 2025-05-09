@@ -13,18 +13,17 @@ public class MapGenerationManager : MonoBehaviour
 	public UnityEvent<List<MapTile>> mapTilesWereAddedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereRemovedEvent;
 	
-	[SerializeField] private MapTile mapTilePrefab;
 	[SerializeField] private Transform goParentTransform;
 
 	private readonly List<MapTile> mapTiles = new();
 
-	private Vector2 mapDimensions;
+	private Vector2Int mapDimensions;
+	private MapTilesPooler mapTilesPooler;
 
 	public Vector2 GetCenterOfMap() => (GetMapSize() - Vector2.one)*0.5f;
 	public Vector2 GetMapSize() => GetMapDimensions();
 	public Vector2 GetMapDimensions() => mapDimensions;
-	public List<MapTile> GetMapTiles() => mapTiles;
-	public int GetMaximumMapDimension() => (int)Mathf.Max(mapDimensions.x, mapDimensions.y);
+	public int GetMaximumMapDimension() => Mathf.Max(mapDimensions.x, mapDimensions.y);
 
 	public void ResetTiles()
 	{
@@ -38,7 +37,7 @@ public class MapGenerationManager : MonoBehaviour
 		mapTiles.ForEach(mapTile => mapTile.ResetTile());
 	}
 
-	public void ChangeMapDimensionsIfNeeded(Vector2 newMapSize)
+	public void ChangeMapDimensionsIfNeeded(Vector2Int newMapSize)
 	{
 		mapDimensions = newMapSize;
 		
@@ -48,25 +47,20 @@ public class MapGenerationManager : MonoBehaviour
 		EnsureExistanceOfMapTileOfType(MapTileType.Destination, GetMapSize() - Vector2.one);
 	}
 
-	private void RemoveTilesFromShrinkingIfNeeded(Vector2 newMapSize)
+	private void RemoveTilesFromShrinkingIfNeeded(Vector2Int newMapSize)
 	{
 		var mapTilesToRemove = GetMapTilesToRemove(newMapSize);
 
-		if(mapTilesToRemove.Count() == 0)
+		if(mapTilesPooler == null || mapTilesToRemove.Count() == 0)
 		{
 			return;
 		}
 
-		mapTilesToRemove.ForEach(mapTile =>
-		{
-			mapTiles.Remove(mapTile);
-			Destroy(mapTile.gameObject);
-		});
-
+		mapTilesToRemove.ForEach(mapTile => mapTilesPooler.ReturnMapTileToPooler(mapTile, mapTile => mapTiles.Remove(mapTile)));
 		mapTilesWereRemovedEvent?.Invoke(mapTilesToRemove);
 	}
 
-	private void AddTilesFromExtendingIfNeeded(Vector2 newMapSize)
+	private void AddTilesFromExtendingIfNeeded(Vector2Int newMapSize)
 	{
 		var mapTilesToAdd = GetMapTilesToAdd(newMapSize);
 
@@ -84,41 +78,34 @@ public class MapGenerationManager : MonoBehaviour
 		mapTilesWereAddedEvent?.Invoke(mapTilesToAdd);
 	}
 
-	private List<MapTile> GetMapTilesToRemove(Vector2 newMapSize)
+	private List<MapTile> GetMapTilesToRemove(Vector2Int newMapSize)
 	{
 		var mapTilesToRemove = new List<MapTile>();
+		var rectangleArea = new Rect(Vector2.zero, newMapSize);
 
-		mapTilesToRemove.AddRange(mapTiles.Where(mapTile =>
-		{
-			var mapTileType = mapTile.GetTileType();
-			var mapTileIsOutsideOfMapWidth = mapTile.transform.position.x < 0 || mapTile.transform.position.x > newMapSize.x - 1;
-			var mapTileIsOutsideOfMapHeight = mapTile.transform.position.y < 0 || mapTile.transform.position.y > newMapSize.y - 1;
-			
-			return mapTileIsOutsideOfMapWidth || mapTileIsOutsideOfMapHeight;
-		}).ToList());
+		mapTilesToRemove.AddRange(mapTiles.Where(mapTile => !rectangleArea.Contains(mapTile.transform.position)).ToList());
 
 		return mapTilesToRemove;
 	}
 
-	private List<MapTile> GetMapTilesToAdd(Vector2 newMapSize)
+	private List<MapTile> GetMapTilesToAdd(Vector2Int newMapSize)
 	{
-		var mapTilesToAdd = new List<MapTile>();
-		var currentMapSize = GetMapSize();
-		var mapWidthShouldBeExtended = currentMapSize.x < newMapSize.x;
-		var mapHeightShouldBeExtended = currentMapSize.y < newMapSize.y;
-
-		for (var y = 0; y < newMapSize.y; ++y)
+		if(mapTilesPooler == null)
 		{
-			for (var x = 0; x < newMapSize.x; ++x)
-			{
-				var position = new Vector2(x, y);
-				
-				if(!mapTiles.Any(mapTile => (Vector2)mapTile.transform.position == position))
-				{
-					mapTilesToAdd.Add(Instantiate(mapTilePrefab, position, Quaternion.identity, goParentTransform));
-				}
-			}
+			return new List<MapTile>();
 		}
+		
+		var mapTilesToAdd = new List<MapTile>();
+		var alreadyTakenPositions = new List<Vector2Int>(mapTiles.Select(mapTile => Vector2Int.RoundToInt(mapTile.GetPosition())));
+		var allTilesPositions = Enumerable.Range(0, newMapSize.x*newMapSize.y).Select(i => new Vector2Int(i % newMapSize.x, i / newMapSize.x));
+		var missingTilesPositions = allTilesPositions.Where(position => !alreadyTakenPositions.Contains(position)).ToList();
+
+		missingTilesPositions.ForEach(position => mapTilesPooler.GetFirstAvailableMapTile(goParentTransform, mapTile =>
+		{
+			mapTile.transform.position = (Vector2)position;
+
+			mapTilesToAdd.Add(mapTile);
+		}));
 
 		return mapTilesToAdd;
 	}
@@ -140,9 +127,16 @@ public class MapGenerationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		var initialMapSize = Mathf.Clamp(10, MAP_DIMENSION_LOWER_BOUND, MAP_DIMENSION_UPPER_BOUND);
+		mapTilesPooler = FindFirstObjectByType<MapTilesPooler>();
 		
-		ChangeMapDimensionsIfNeeded(Vector2.one*initialMapSize);
+		GenerateInitialMap(10);
+	}
+
+	private void GenerateInitialMap(int size)
+	{
+		var initialMapSize = Mathf.Clamp(size, MAP_DIMENSION_LOWER_BOUND, MAP_DIMENSION_UPPER_BOUND);
+		
+		ChangeMapDimensionsIfNeeded(Vector2Int.one*initialMapSize);
 		mapGeneratedEvent?.Invoke();
 	}
 }
