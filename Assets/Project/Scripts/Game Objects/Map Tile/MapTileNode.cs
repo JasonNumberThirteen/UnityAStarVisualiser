@@ -13,10 +13,10 @@ public class MapTileNode : MonoBehaviour
 	private MapTileNodeType mapTileNodeType;
 	private PathfindingManager pathfindingManager;
 
-	private readonly List<MapTileNode> neighbors = new();
+	private readonly List<MapTileNode> neighbours = new();
 
 	public Vector2 GetPosition() => transform.position;
-	public List<MapTileNode> GetNeighbors() => neighbors;
+	public List<MapTileNode> GetNeighbours() => neighbours;
 	public MapTileNodeType GetMapTileNodeType() => mapTileNodeType;
 
 	public float GetCostToReachTo(MapTileNode destinationMapTileNode)
@@ -52,28 +52,13 @@ public class MapTileNode : MonoBehaviour
 		Parent = null;
 	}
 
-	public void FindNeighbors(List<MapTileNode> mapTileNodes)
+	public void FindNeighbours(List<MapTileNode> mapTileNodes)
 	{
-		neighbors.Clear();
+		var allowDiagonalDirections = pathfindingManager != null && pathfindingManager.DiagonalMovementIsEnabled();
+		var directions = VectorMethods.GetDirectionsForFindingNeighbouringNodes(allowDiagonalDirections);
 
-		var gridSize = MapTile.GRID_SIZE;
-		var allDirections = new List<Vector2>
-		{
-			Vector2.up*gridSize,
-			Vector2.down*gridSize,
-			Vector2.left*gridSize,
-			Vector2.right*gridSize
-		};
-
-		if(pathfindingManager != null && pathfindingManager.DiagonalMovementIsEnabled())
-		{
-			allDirections.Add(-Vector2.one*gridSize);
-			allDirections.Add(Vector2.one*gridSize);
-			allDirections.Add(new Vector2(1, -1)*gridSize);
-			allDirections.Add(new Vector2(-1, -1)*gridSize);
-		}
-
-		allDirections.ForEach(position => AddNeighborIfPossible(mapTileNodes, position));
+		neighbours.Clear();
+		directions.ForEach(direction => AddNeighbourIfPossible(mapTileNodes, direction));
 	}
 
 	private void Awake()
@@ -81,14 +66,14 @@ public class MapTileNode : MonoBehaviour
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 	}
 
-	private void AddNeighborIfPossible(List<MapTileNode> mapTileNodes, Vector2 direction)
+	private void AddNeighbourIfPossible(List<MapTileNode> mapTileNodes, Vector2 direction)
 	{
-		var neighboringPosition = GetPosition() + direction;
-		var neighboringNode = mapTileNodes.FirstOrDefault(mapTileNode => mapTileNode.GetPosition() == neighboringPosition);
+		var neighbouringPosition = GetPosition() + direction;
+		var neighbouringNode = mapTileNodes.FirstOrDefault(mapTileNode => mapTileNode.GetPosition() == neighbouringPosition);
 
-		if(neighboringNode != null)
+		if(neighbouringNode != null)
 		{
-			neighbors.Add(neighboringNode);
+			neighbours.Add(neighbouringNode);
 		}
 	}
 

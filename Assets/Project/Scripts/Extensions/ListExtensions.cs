@@ -16,4 +16,9 @@ public static class ListExtensions
 
 		return firstElement;
 	}
+
+	public static void AddRange<T>(this List<T> list, params T[] elements)
+	{
+		list.AddRange(elements);
+	}
 }

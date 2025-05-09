@@ -216,7 +216,7 @@ public class PathfindingManager : MonoBehaviour
 	{
 		var passableMapTileNodes = mapTilesInScene.Where(mapTile => mapTile.GetTileType() != MapTileType.Impassable).Select(mapTile => mapTile.GetMapTileNode()).ToList();
 		
-		mapTilesInScene.ForEach(mapTile => mapTile.GetMapTileNode().FindNeighbors(passableMapTileNodes));
+		mapTilesInScene.ForEach(mapTile => mapTile.GetMapTileNode().FindNeighbours(passableMapTileNodes));
 	}
 
 	private void InitiatePathfinder()
@@ -275,7 +275,7 @@ public class PathfindingManager : MonoBehaviour
 		}
 		else
 		{
-			AddNeighborsOf(mapTileNode);
+			AddNeighboursOf(mapTileNode);
 		}
 	}
 
@@ -293,23 +293,23 @@ public class PathfindingManager : MonoBehaviour
 		pathWasFoundEvent?.Invoke(pathMapTileNodes);
 	}
 
-	private void AddNeighborsOf(MapTileNode mapTileNode)
+	private void AddNeighboursOf(MapTileNode mapTileNode)
 	{
 		if(mapTileNode == null)
 		{
 			return;
 		}
 
-		var neighbors = mapTileNode.GetNeighbors().Where(neighbor => neighbor.GetMapTileNodeType() != MapTileNodeType.Visited).ToList();
+		var neighbours = mapTileNode.GetNeighbours().Where(neighbour => neighbour.GetMapTileNodeType() != MapTileNodeType.Visited).ToList();
 
-		neighbors?.ForEach(neighbor => SetupAndAddNeighbor(neighbor, mapTileNode));
+		neighbours?.ForEach(neighbour => SetupAndAddNeighbour(neighbour, mapTileNode));
 	}
 
-	private void SetupAndAddNeighbor(MapTileNode neighboringMapTile, MapTileNode parentMapTile)
+	private void SetupAndAddNeighbour(MapTileNode neighbouringMapTile, MapTileNode parentMapTile)
 	{
-		neighboringMapTile.Parent = parentMapTile;
+		neighbouringMapTile.Parent = parentMapTile;
 
-		AddMapTileNodeToQueue(neighboringMapTile);
+		AddMapTileNodeToQueue(neighbouringMapTile);
 	}
 
 	private void AddMapTileNodeToQueue(MapTileNode mapTileNode)
