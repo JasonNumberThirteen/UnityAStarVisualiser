@@ -17,8 +17,6 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private MapGenerationManager mapGenerationManager;
 	private VisualiserEventsManager visualiserEventsManager;
 
-	private readonly float MINIMUM_SIZE = 3f;
-	private readonly float MAXIMUM_SIZE = 26f;
 	private readonly float SIZE_GROWTH_PER_ITERATION = 1f;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -93,7 +91,7 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	{
 		if(inputIsActive && zoomCanBeModified && mainCamera != null && mainCamera.orthographic)
 		{
-			mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y, MINIMUM_SIZE, sizeUpperBoundToMapSize);
+			mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomPerScroll*scrollVector.y, MapGenerationManager.MAP_DIMENSION_LOWER_BOUND, sizeUpperBoundToMapSize);
 		}
 	}
 
@@ -114,9 +112,9 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 			return;
 		}
 
-		mainCamera.orthographicSize = MINIMUM_SIZE;
+		mainCamera.orthographicSize = MapGenerationManager.MAP_DIMENSION_LOWER_BOUND;
 
-		while (!EntireMapIsVisibleWithinCamera() && mainCamera.orthographicSize < MAXIMUM_SIZE)
+		while (!EntireMapIsVisibleWithinCamera() && mainCamera.orthographicSize < MapGenerationManager.MAP_DIMENSION_UPPER_BOUND)
 		{
 			mainCamera.orthographicSize += SIZE_GROWTH_PER_ITERATION;
 		}

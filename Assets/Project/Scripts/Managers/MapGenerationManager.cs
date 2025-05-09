@@ -6,6 +6,9 @@ using UnityEngine.Events;
 [DefaultExecutionOrder(1)]
 public class MapGenerationManager : MonoBehaviour
 {
+	public static readonly int MAP_DIMENSION_LOWER_BOUND = 3;
+	public static readonly int MAP_DIMENSION_UPPER_BOUND = 50;
+	
 	public UnityEvent mapGeneratedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereAddedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereRemovedEvent;
@@ -15,13 +18,13 @@ public class MapGenerationManager : MonoBehaviour
 
 	private readonly List<MapTile> mapTiles = new();
 
-	private int mapWidth = 10;
-	private int mapHeight = 10;
+	private Vector2 mapDimensions;
 
 	public Vector2 GetCenterOfMap() => (GetMapSize() - Vector2.one*MapTile.GRID_SIZE)*0.5f;
 	public Vector2 GetMapSize() => GetMapDimensions()*MapTile.GRID_SIZE;
-	public Vector2 GetMapDimensions() => new(mapWidth, mapHeight);
+	public Vector2 GetMapDimensions() => mapDimensions;
 	public List<MapTile> GetMapTiles() => mapTiles;
+	public int GetMaximumMapDimension() => (int)Mathf.Max(mapDimensions.x, mapDimensions.y);
 
 	public void ResetTiles()
 	{
@@ -54,11 +57,10 @@ public class MapGenerationManager : MonoBehaviour
 
 	public void ChangeMapDimensionsIfNeeded(Vector2 newMapSize)
 	{
-		mapWidth = (int)newMapSize.x;
-		mapHeight = (int)newMapSize.y;
+		mapDimensions = newMapSize;
 		
-		RemoveTilesFromShrinkingIfNeeded(newMapSize);
-		AddTilesFromExtendingIfNeeded(newMapSize);
+		RemoveTilesFromShrinkingIfNeeded(mapDimensions);
+		AddTilesFromExtendingIfNeeded(mapDimensions);
 		EnsureExistanceOfMapTileOfType(MapTileType.Start, Vector2.zero);
 		EnsureExistanceOfMapTileOfType(MapTileType.Destination, GetMapSize() - Vector2.one);
 	}
@@ -155,7 +157,9 @@ public class MapGenerationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		ChangeMapDimensionsIfNeeded(new Vector2(mapWidth, mapHeight));
+		var initialMapSize = Mathf.Clamp(10, MAP_DIMENSION_LOWER_BOUND, MAP_DIMENSION_UPPER_BOUND);
+		
+		ChangeMapDimensionsIfNeeded(Vector2.one*initialMapSize);
 		mapGeneratedEvent?.Invoke();
 	}
 }

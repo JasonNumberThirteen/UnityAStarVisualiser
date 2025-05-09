@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 {
-	[SerializeField] private TMP_InputField mapWidthInputFieldUI;
-	[SerializeField] private TMP_InputField mapHeightInputFieldUI;
+	[SerializeField] private TMP_InputField widthMapDimensionInputFieldUI;
+	[SerializeField] private TMP_InputField heightMapDimensionInputFieldUI;
 	
 	[SerializeField] private Button changeDimensionsButtonUI;
 	[SerializeField] private Button cancelButtonUI;
@@ -78,13 +78,13 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 	{
 		SetActive(false);
 		
-		if(mapGenerationManager == null || mapWidthInputFieldUI == null || mapHeightInputFieldUI == null)
+		if(mapGenerationManager == null || widthMapDimensionInputFieldUI == null || heightMapDimensionInputFieldUI == null)
 		{
 			return;
 		}
 
-		var mapWidth = int.TryParse(mapWidthInputFieldUI.text, out var width) ? width : 0;
-		var mapHeight = int.TryParse(mapHeightInputFieldUI.text, out var height) ? height : 0;
+		var mapWidth = int.TryParse(widthMapDimensionInputFieldUI.text, out var width) ? width : 0;
+		var mapHeight = int.TryParse(heightMapDimensionInputFieldUI.text, out var height) ? height : 0;
 
 		mapGenerationManager.ChangeMapDimensionsIfNeeded(new Vector2(mapWidth, mapHeight));
 	}
@@ -117,14 +117,14 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 
 		var mapSize = mapGenerationManager.GetMapSize();
 		
-		if(mapWidthInputFieldUI != null)
+		if(widthMapDimensionInputFieldUI != null)
 		{
-			mapWidthInputFieldUI.text = mapSize.x.ToString();
+			widthMapDimensionInputFieldUI.text = mapSize.x.ToString();
 		}
 
-		if(mapWidthInputFieldUI != null)
+		if(widthMapDimensionInputFieldUI != null)
 		{
-			mapHeightInputFieldUI.text = mapSize.y.ToString();
+			heightMapDimensionInputFieldUI.text = mapSize.y.ToString();
 		}
 	}
 }

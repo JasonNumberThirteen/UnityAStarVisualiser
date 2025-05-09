@@ -5,20 +5,19 @@ using UnityEngine.Events;
 
 [DefaultExecutionOrder(1)]
 [RequireComponent(typeof(TMP_InputField))]
-public class IntegerNumberInputFieldUIValueAdjuster : MonoBehaviour
+public class MapDimensionInputFieldUI : MonoBehaviour
 {
 	public UnityEvent<int> valueWasChangedEvent;
-	
-	[SerializeField] private int minimumNumber = 0;
-	[SerializeField] private int maximumNumber = 100;
 
 	private readonly StringBuilder stringBuilder = new();
+	private readonly IntegerRange integerRange = new(MapGenerationManager.MAP_DIMENSION_LOWER_BOUND, MapGenerationManager.MAP_DIMENSION_UPPER_BOUND);
 
 	private TMP_InputField inputField;
 
 	private void Awake()
 	{
 		inputField = GetComponent<TMP_InputField>();
+		inputField.characterLimit = MapGenerationManager.MAP_DIMENSION_UPPER_BOUND.GetNumberOfDigits();
 
 		RegisterToListeners(true);
 		ValidateText(inputField.text);
@@ -54,7 +53,7 @@ public class IntegerNumberInputFieldUIValueAdjuster : MonoBehaviour
 	private void ValidateText(string text)
 	{
 		var textRepresentsIntegerNumber = int.TryParse(text, out var integerNumber);
-		var integerNumberValue = textRepresentsIntegerNumber ? Mathf.Clamp(integerNumber, minimumNumber, maximumNumber) : 0;
+		var integerNumberValue = textRepresentsIntegerNumber ? Mathf.Clamp(integerNumber, integerRange.MinimumBound, integerRange.MaximumBound) : 0;
 
 		if(GetCachedString().Equals(text))
 		{
