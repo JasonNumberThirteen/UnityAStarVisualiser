@@ -34,7 +34,7 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private void Awake()
 	{
 		mainCamera = Camera.main;
-		sizeUpperBoundToMapSize = mainCamera.orthographicSize;
+		sizeUpperBoundToMapSize = mainCamera != null ? mainCamera.orthographicSize : 0f;
 		userInputController = FindFirstObjectByType<UserInputController>();
 		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
 		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
@@ -109,7 +109,7 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 
 	private void UpdateMaximumSize()
 	{
-		if(mapGenerationManager == null)
+		if(mainCamera == null)
 		{
 			return;
 		}
@@ -133,13 +133,11 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 			return false;
 		}
 		
-		var cameraHeight = mainCamera.orthographicSize*2f;
-		var cameraWidth = cameraHeight*mainCamera.aspect;
-		var cameraSize = new Vector2(cameraWidth, cameraHeight);
-		var mapCornersTiles = mapGenerationManager.GetMapCornersTiles();
 		var mapSizeWithOffset = mapGenerationManager.GetMapSize() - Vector2.one*MapTile.GRID_SIZE;
+		var cameraSize = GetCameraSize();
 		var offsetToCenter = (mapSizeWithOffset - cameraSize)*0.5f;
 		var areaInTheCenterOfMap = new Rect(offsetToCenter, cameraSize);
+		var mapCornersTiles = mapGenerationManager.GetMapCornersTiles();
 
 		return mapCornersTiles.All(mapTile =>
 		{
@@ -148,6 +146,19 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 
 			return areaInTheCenterOfMap.Contains(mapTileBoundsRectangle.min) && areaInTheCenterOfMap.Contains(mapTileBoundsRectangle.max);
 		});
+	}
+
+	private Vector2 GetCameraSize()
+	{
+		if(mainCamera == null)
+		{
+			return Vector2.zero;
+		}
+
+		var cameraHeight = mainCamera.orthographicSize*2f;
+		var cameraWidth = cameraHeight*mainCamera.aspect;
+
+		return new Vector2(cameraWidth, cameraHeight);
 	}
 
 	private void OnEventReceived(VisualiserEvent visualiserEvent)
