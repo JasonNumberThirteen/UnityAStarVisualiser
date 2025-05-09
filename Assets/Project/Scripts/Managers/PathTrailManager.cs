@@ -4,10 +4,16 @@ using UnityEngine;
 public class PathTrailManager : MonoBehaviour
 {
 	[SerializeField] private MapTilePathTrailIndicator mapTilePathTrailIndicatorPrefab;
-	
+
+	private bool pathTrailIsEnabled;	
 	private PathfindingManager pathfindingManager;
 
 	private readonly List<MapTilePathTrailIndicator> mapTilePathTrailIndicators = new();
+
+	public void SetPathTrailEnabled(bool enabled)
+	{
+		pathTrailIsEnabled = enabled;
+	}
 
 	private void Awake()
 	{
@@ -43,7 +49,7 @@ public class PathTrailManager : MonoBehaviour
 
 	private void OnPathWasFound(List<MapTileNode> mapTileNodes)
 	{
-		if(mapTilePathTrailIndicatorPrefab == null)
+		if(!pathTrailIsEnabled || mapTilePathTrailIndicatorPrefab == null)
 		{
 			return;
 		}

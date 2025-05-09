@@ -6,6 +6,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 {
 	[SerializeField] private Toggle showMapTilesLegendToggleUI;
 	[SerializeField] private Toggle showInstructionsToggleUI;
+	[SerializeField] private Toggle showPathTrailToggleUI;
 	[SerializeField] private Toggle enableDiagonalMovementToggleUI;
 	[SerializeField] private Toggle enableSimulationModeToggleUI;
 
@@ -14,6 +15,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	private SimulationSettingsPanelUI simulationSettingsPanelUI;
 	private PathfindingManager pathfindingManager;
 	private SimulationManager simulationManager;
+	private PathTrailManager pathTrailManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -28,8 +30,10 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		simulationSettingsPanelUI = FindFirstObjectByType<SimulationSettingsPanelUI>();
 		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
 		simulationManager = FindFirstObjectByType<SimulationManager>();
+		pathTrailManager = FindFirstObjectByType<PathTrailManager>();
 
 		UpdateUIElementsDependantOnToggleUIStates();
+		SetPathTrailEnabled(showPathTrailToggleUI != null && showPathTrailToggleUI.isOn);
 		SetDiagonalMovementEnabled(enableDiagonalMovementToggleUI != null && enableDiagonalMovementToggleUI.isOn);
 		SetSimulationEnabled(enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.isOn);
 		RegisterToListeners(true);
@@ -69,6 +73,11 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 				showInstructionsToggleUI.onValueChanged.AddListener(OnShowInstructionsToggleUIValueChanged);
 			}
 
+			if(showPathTrailToggleUI != null)
+			{
+				showPathTrailToggleUI.onValueChanged.AddListener(SetPathTrailEnabled);
+			}
+
 			if(enableDiagonalMovementToggleUI != null)
 			{
 				enableDiagonalMovementToggleUI.onValueChanged.AddListener(SetDiagonalMovementEnabled);
@@ -96,6 +105,11 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 				showInstructionsToggleUI.onValueChanged.RemoveListener(OnShowInstructionsToggleUIValueChanged);
 			}
 
+			if(showPathTrailToggleUI != null)
+			{
+				showPathTrailToggleUI.onValueChanged.RemoveListener(SetPathTrailEnabled);
+			}
+
 			if(enableDiagonalMovementToggleUI != null)
 			{
 				enableDiagonalMovementToggleUI.onValueChanged.RemoveListener(SetDiagonalMovementEnabled);
@@ -121,6 +135,14 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	private void OnShowInstructionsToggleUIValueChanged(bool enabled)
 	{
 		SetPanelUIActive(instructionsPanelUI, enabled);
+	}
+
+	private void SetPathTrailEnabled(bool enabled)
+	{
+		if(pathTrailManager != null)
+		{
+			pathTrailManager.SetPathTrailEnabled(enabled);
+		}
 	}
 
 	private void SetDiagonalMovementEnabled(bool enabled)
