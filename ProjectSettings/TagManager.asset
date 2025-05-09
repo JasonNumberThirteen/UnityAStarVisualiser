@@ -50,5 +50,8 @@ TagManager:
   - name: Indicator
     uniqueID: 375696419
     locked: 0
+  - name: Map Tile Weight Counter Text UI Canvas
+    uniqueID: 1874636359
+    locked: 0
   m_RenderingLayers:
   - Default
