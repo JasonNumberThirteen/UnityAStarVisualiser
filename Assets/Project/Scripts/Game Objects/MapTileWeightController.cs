@@ -4,26 +4,29 @@ using UnityEngine;
 public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	private MapTile mapTile;
-	private bool mapTileIsSelected;
-	private bool inputIsActive = true;
-	private bool tilesCanBeHovered = true;
+	private bool hoveringTilesIsLocked;
+	private bool panelUIHoverWasDetected;
 	private UserInputController userInputController;
-	private VisualiserEventsManager visualiserEventsManager;
+	private HoveredMapTileManager hoveredMapTileManager;
+	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
-		inputIsActive = active;
+		hoveringTilesIsLocked = !active;
+		panelUIHoverWasDetected = false;
+		mapTile = null;
 	}
 
 	public void SetMapEditingElementActive(bool active)
 	{
-		tilesCanBeHovered = active;
+		hoveringTilesIsLocked = !active;
 	}
 
 	private void Awake()
 	{
 		userInputController = FindFirstObjectByType<UserInputController>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
+		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}
@@ -41,10 +44,15 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 			{
 				userInputController.wheelScrolledEvent.AddListener(OnWheelScrolled);
 			}
-			
-			if(visualiserEventsManager != null)
+
+			if(hoveredMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+				hoveredMapTileManager.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
+			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
 			}
 		}
 		else
@@ -53,17 +61,22 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 			{
 				userInputController.wheelScrolledEvent.RemoveListener(OnWheelScrolled);
 			}
-			
-			if(visualiserEventsManager != null)
+
+			if(hoveredMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
+				hoveredMapTileManager.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
+			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
 			}
 		}
 	}
 
 	private void OnWheelScrolled(Vector2 scrollVector)
 	{
-		if(!inputIsActive)
+		if(hoveringTilesIsLocked || panelUIHoverWasDetected)
 		{
 			return;
 		}
@@ -74,12 +87,10 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 			MapTileType.Impassable
 		};
 		
-		if(mapTileIsSelected || mapTile == null || !allowedMapTileTypes.Contains(mapTile.GetTileType()))
+		if(mapTile != null && allowedMapTileTypes.Contains(mapTile.GetTileType()))
 		{
-			return;
+			ModifyWeightOfMapTile(Mathf.RoundToInt(scrollVector.y));
 		}
-
-		ModifyWeightOfMapTile(Mathf.RoundToInt(scrollVector.y));
 	}
 
 	private void ModifyWeightOfMapTile(int weightValue)
@@ -90,44 +101,13 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		}
 	}
 
-	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
-		if(!tilesCanBeHovered || visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-		{
-			return;
-		}
-
-		if(mapTileBoolVisualiserEvent.GetVisualiserEventType() != VisualiserEventType.MapTileHoverStateWasChanged || !mapTileIsSelected)
-		{
-			UpdateMapTileReference(mapTileBoolVisualiserEvent);
-		}
+		this.mapTile = mapTile;
 	}
 
-	private void UpdateMapTileReference(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
 	{
-		if(MapTileShouldBeSelected(mapTileBoolVisualiserEvent))
-		{
-			mapTile = mapTileBoolVisualiserEvent.GetMapTile();
-		}
-		else if(MapTileShouldBeDeselected(mapTileBoolVisualiserEvent))
-		{
-			mapTile = null;
-		}
-
-		mapTileIsSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
-	}
-
-	private bool MapTileShouldBeSelected(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		var mapTileHoverStateIsSetAsSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileHoverStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
-		
-		return mapTile == null && mapTileHoverStateIsSetAsSelected;
-	}
-
-	private bool MapTileShouldBeDeselected(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		var mapTileHoverStateIsSetAsNotSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileHoverStateWasChanged && !mapTileBoolVisualiserEvent.GetBoolValue();
-		
-		return mapTile != null && mapTileHoverStateIsSetAsNotSelected;
+		panelUIHoverWasDetected = detected;
 	}
 }
