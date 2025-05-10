@@ -7,10 +7,12 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 	public UnityEvent<int> weightWasChangedEvent;
 	
 	private MapTile mapTile;
+	private bool tileIsBeingDragged;
 	private bool hoveringTilesIsLocked;
 	private bool panelUIHoverWasDetected;
 	private UserInputController userInputController;
 	private HoveredMapTileManager hoveredMapTileManager;
+	private SelectedMapTileManager selectedMapTileManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -29,6 +31,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 	{
 		userInputController = FindFirstObjectByType<UserInputController>();
 		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
+		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
 		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
@@ -53,6 +56,11 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
 			}
 
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
+			}
+
 			if(panelUIHoverDetectionManager != null)
 			{
 				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
@@ -70,6 +78,11 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
 			}
 
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
+			}
+
 			if(panelUIHoverDetectionManager != null)
 			{
 				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
@@ -79,7 +92,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void OnWheelScrolled(Vector2 scrollVector)
 	{
-		if(hoveringTilesIsLocked || panelUIHoverWasDetected)
+		if(tileIsBeingDragged || hoveringTilesIsLocked || panelUIHoverWasDetected)
 		{
 			return;
 		}
@@ -110,6 +123,11 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
 		this.mapTile = mapTile;
+	}
+
+	private void OnSelectedMapTileWasChanged(MapTile mapTile)
+	{
+		tileIsBeingDragged = mapTile != null;
 	}
 
 	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
