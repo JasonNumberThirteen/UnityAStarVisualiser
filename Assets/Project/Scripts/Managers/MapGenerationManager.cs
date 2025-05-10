@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class MapGenerationManager : MonoBehaviour
 {
 	public static readonly int MAP_DIMENSION_LOWER_BOUND = 3;
-	public static readonly int MAP_DIMENSION_UPPER_BOUND = 10;
+	public static readonly int MAP_DIMENSION_UPPER_BOUND = 50;
 	
 	public UnityEvent mapGeneratedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereAddedEvent;
