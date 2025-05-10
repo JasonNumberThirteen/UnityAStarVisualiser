@@ -5,7 +5,7 @@ public class PathTrailManager : MonoBehaviour
 {
 	[SerializeField] private MapTilePathTrailIndicator mapTilePathTrailIndicatorPrefab;
 
-	private bool pathTrailIsEnabled;	
+	private bool pathTrailIsEnabled;
 	private PathfindingManager pathfindingManager;
 
 	private readonly List<MapTilePathTrailIndicator> mapTilePathTrailIndicators = new();
@@ -13,6 +13,8 @@ public class PathTrailManager : MonoBehaviour
 	public void SetPathTrailEnabled(bool enabled)
 	{
 		pathTrailIsEnabled = enabled;
+
+		mapTilePathTrailIndicators.ForEach(mapTilePathTrailIndicator => mapTilePathTrailIndicator.SetActive(pathTrailIsEnabled));
 	}
 
 	private void Awake()
@@ -49,7 +51,7 @@ public class PathTrailManager : MonoBehaviour
 
 	private void OnPathWasFound(List<MapTileNode> mapTileNodes)
 	{
-		if(!pathTrailIsEnabled || mapTilePathTrailIndicatorPrefab == null)
+		if(mapTilePathTrailIndicatorPrefab == null)
 		{
 			return;
 		}
@@ -60,6 +62,7 @@ public class PathTrailManager : MonoBehaviour
 			var mapTilePathTrailIndicator = Instantiate(mapTilePathTrailIndicatorPrefab, currentMapTileNode.transform.position, Quaternion.identity);
 			
 			mapTilePathTrailIndicator.Setup(currentMapTileNode, mapTileNodes[i - 1]);
+			mapTilePathTrailIndicator.SetActive(pathTrailIsEnabled);
 			mapTilePathTrailIndicators.Add(mapTilePathTrailIndicator);
 		}
 	}

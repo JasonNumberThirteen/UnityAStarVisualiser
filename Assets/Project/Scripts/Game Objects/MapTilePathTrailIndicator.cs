@@ -22,6 +22,11 @@ public class MapTilePathTrailIndicator : MonoBehaviour
 		initialPosition = transform.position;
 	}
 
+	public void SetActive(bool active)
+	{
+		gameObject.SetActive(active);
+	}
+
 	private void Update()
 	{
 		if(Mathf.Approximately(movementPeriodOfOscillation, 0f))
