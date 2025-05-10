@@ -45,6 +45,7 @@ public class MapGenerationManager : MonoBehaviour
 		AddTilesFromExtendingIfNeeded(mapDimensions);
 		EnsureExistanceOfMapTileOfType(MapTileType.Start, Vector2.zero);
 		EnsureExistanceOfMapTileOfType(MapTileType.Destination, GetMapSize() - Vector2.one);
+		mapGeneratedEvent?.Invoke();
 	}
 
 	private void RemoveTilesFromShrinkingIfNeeded(Vector2Int newMapSize)
@@ -137,6 +138,5 @@ public class MapGenerationManager : MonoBehaviour
 		var initialMapSize = Mathf.Clamp(size, MAP_DIMENSION_LOWER_BOUND, MAP_DIMENSION_UPPER_BOUND);
 		
 		ChangeMapDimensionsIfNeeded(Vector2Int.one*initialMapSize);
-		mapGeneratedEvent?.Invoke();
 	}
 }

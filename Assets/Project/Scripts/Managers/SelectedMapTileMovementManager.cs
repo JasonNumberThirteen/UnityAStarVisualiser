@@ -11,6 +11,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 	private bool selectingTilesIsLocked;
 	private bool panelUIHoverWasDetected;
 	private Vector3 translationPositionOffset;
+	private MapAreaManager mapAreaManager;
 	private SelectedMapTileManager selectedMapTileManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
@@ -32,6 +33,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 	private void Awake()
 	{
 		mainCamera = Camera.main;
+		mapAreaManager = FindFirstObjectByType<MapAreaManager>();
 		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
 		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
 
@@ -94,7 +96,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 		}
 
 		var mapTileRealPosition = GetMousePositionToWorldPoint() + translationPositionOffset;
-		var mapTileTiledPosition = mapTileRealPosition.ToTiledPosition();
+		var mapTileTiledPosition = GetPositionWithinArea(mapTileRealPosition.ToTiledPosition());
 
 		if(!DetectedAnyUnacceptableCollider(mapTileTiledPosition))
 		{
@@ -116,5 +118,22 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 		var colliders = Physics2D.OverlapBoxAll(position, collisionBoxSize - collisionBoxSizeOffset, 0f, unacceptableGameObjects);
 
 		return colliders.Any(collider => collider.gameObject != gameObject);
+	}
+
+	private Vector2 GetPositionWithinArea(Vector2 position)
+	{
+		if(mapAreaManager == null)
+		{
+			return position;
+		}
+
+		var mapArea = mapAreaManager.GetMapArea();
+		var positionWithinArea = new Vector2
+		{
+			x = Mathf.Clamp(position.x, mapArea.x + 0.5f, mapArea.width - 0.5f),
+			y = Mathf.Clamp(position.y, mapArea.y + 0.5f, mapArea.height - 0.5f)
+		};
+
+		return positionWithinArea;
 	}
 }

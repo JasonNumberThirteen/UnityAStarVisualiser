@@ -7,6 +7,7 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 	private bool inputIsActive = true;
 	private Camera mainCamera;
 	private Vector2 movementDirection;
+	private MapAreaManager mapAreaManager;
 	private UserInputController userInputController;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -22,6 +23,7 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 	private void Awake()
 	{
 		mainCamera = Camera.main;
+		mapAreaManager = FindFirstObjectByType<MapAreaManager>();
 		userInputController = FindFirstObjectByType<UserInputController>();
 
 		RegisterToListeners(true);
@@ -36,6 +38,11 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 	{
 		if(register)
 		{
+			if(mapAreaManager != null)
+			{
+				mapAreaManager.mapAreaWasChangedEvent.AddListener(OnMapAreaWasChanged);
+			}
+			
 			if(userInputController != null)
 			{
 				userInputController.movementKeyPressedEvent.AddListener(OnMovementKeyPressed);
@@ -43,11 +50,25 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 		}
 		else
 		{
+			if(mapAreaManager != null)
+			{
+				mapAreaManager.mapAreaWasChangedEvent.RemoveListener(OnMapAreaWasChanged);
+			}
+			
 			if(userInputController != null)
 			{
 				userInputController.movementKeyPressedEvent.RemoveListener(OnMovementKeyPressed);
 			}
 		}
+	}
+
+	private void OnMapAreaWasChanged(Rect mapArea)
+	{
+		var cameraPosition = mainCamera.gameObject.transform.position;
+
+		cameraPosition.x = mapArea.center.x;
+		cameraPosition.y = mapArea.center.y;
+		mainCamera.gameObject.transform.position = cameraPosition;
 	}
 
 	private void OnMovementKeyPressed(Vector2 movementVector)
@@ -60,9 +81,27 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 
 	private void LateUpdate()
 	{
-		if(mainCamera != null && movementDirection != Vector2.zero)
+		if(mainCamera == null || movementDirection == Vector2.zero)
 		{
-			mainCamera.gameObject.transform.Translate(movementSpeed*Time.deltaTime*movementDirection);
+			return;
 		}
+
+		mainCamera.gameObject.transform.Translate(movementSpeed*Time.deltaTime*movementDirection);
+		ClampCameraPositionIfNeeded();
+	}
+
+	private void ClampCameraPositionIfNeeded()
+	{
+		if(mapAreaManager == null)
+		{
+			return;
+		}
+
+		var mapArea = mapAreaManager.GetMapArea();
+		var clampedCameraPosition = mainCamera.transform.position;
+
+		clampedCameraPosition.x = Mathf.Clamp(clampedCameraPosition.x, mapArea.x, mapArea.width);
+		clampedCameraPosition.y = Mathf.Clamp(clampedCameraPosition.y, mapArea.y, mapArea.height);
+		mainCamera.transform.position = clampedCameraPosition;
 	}
 }
