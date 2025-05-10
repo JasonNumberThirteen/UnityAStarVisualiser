@@ -1,25 +1,40 @@
 using UnityEngine;
 
-public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
+public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	[SerializeField, Min(0f)] private float animationTransitionDuration = 0.5f;
 
 	private static readonly float ANIMATION_TRANSITION_MINIMUM_SCALE = 0.8f;
 	
+	private MapTile hoveredMapTile;
+	private MapTile selectedMapTile;
 	private MapTile currentMapTile;
-	private MapTile previousMapTile;
+	private bool indicatorWasHidden;
+	private bool panelUIHoverWasDetected;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
+	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
+
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		indicatorWasHidden = !active;
+		panelUIHoverWasDetected = false;
+
+		UpdateActiveState();
+	}
 
 	public void SetMapEditingElementActive(bool active)
 	{
-		gameObject.SetActive(active);
+		indicatorWasHidden = !active;
+		
+		UpdateActiveState();
 	}
 
 	private void Awake()
 	{
 		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
 		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
+		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}
@@ -50,6 +65,11 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
+			}
 		}
 		else
 		{
@@ -62,6 +82,11 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
 			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
+			}
 		}
 	}
 
@@ -72,30 +97,36 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
-		if(previousMapTile != null)
+		hoveredMapTile = mapTile;
+		
+		if(selectedMapTile != null)
 		{
 			return;
 		}
+
+		currentMapTile = hoveredMapTile;
 		
-		currentMapTile = mapTile;
-		
-		gameObject.SetActive(currentMapTile != null);
+		UpdateActiveState();
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
-		if(mapTile != null)
-		{
-			previousMapTile = mapTile;
-			currentMapTile = null;
-		}
-		else
-		{
-			currentMapTile = previousMapTile;
-			previousMapTile = null;
-		}
+		selectedMapTile = mapTile;
+		currentMapTile = selectedMapTile == null ? hoveredMapTile : null;
 
-		gameObject.SetActive(currentMapTile != null);
+		UpdateActiveState();
+	}
+
+	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
+	{
+		panelUIHoverWasDetected = detected;
+		
+		UpdateActiveState();
+	}
+
+	private void UpdateActiveState()
+	{
+		gameObject.SetActive(!indicatorWasHidden && !panelUIHoverWasDetected && currentMapTile != null);
 	}
 
 	private void Update()

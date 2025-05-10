@@ -2,19 +2,30 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
+public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	[SerializeField] private LayerMask unacceptableGameObjects;
 	
 	private Camera mainCamera;
 	private MapTile mapTile;
+	private bool selectingTilesIsLocked;
+	private bool panelUIHoverWasDetected;
 	private Vector3 translationPositionOffset;
 	private SelectedMapTileManager selectedMapTileManager;
+	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
 	private readonly float COLLISION_BOX_SIZE_OFFSET = 0.1f;
 
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		selectingTilesIsLocked = !active;
+		panelUIHoverWasDetected = false;
+		mapTile = null;
+	}
+
 	public void SetMapEditingElementActive(bool active)
 	{
+		selectingTilesIsLocked = !active;
 		mapTile = null;
 	}
 
@@ -22,6 +33,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 	{
 		mainCamera = Camera.main;
 		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
+		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}
@@ -39,6 +51,11 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
+			}
 		}
 		else
 		{
@@ -46,17 +63,27 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
 			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
+			}
 		}
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
-		this.mapTile = mapTile;
+		this.mapTile = selectingTilesIsLocked || panelUIHoverWasDetected ? null : mapTile;
 
 		if(this.mapTile != null)
 		{
 			translationPositionOffset = this.mapTile.gameObject.transform.position - GetMousePositionToWorldPoint();
 		}
+	}
+
+	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
+	{
+		panelUIHoverWasDetected = detected;
 	}
 
 	private void Update()

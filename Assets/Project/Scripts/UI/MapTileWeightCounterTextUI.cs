@@ -3,17 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
+public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	private TextMeshProUGUI textUI;
 	private MapTile mapTile;
+	private MapTile hoveredMapTile;
 	private MapTile selectedMapTile;
+	private MapTile currentMapTile;
+	private bool textUIWasHidden;
+	private bool panelUIHoverWasDetected;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
+	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
+
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+		textUIWasHidden = !active;
+		panelUIHoverWasDetected = false;
+		
+		UpdateActiveState();
+	}
 
 	public void SetMapEditingElementActive(bool active)
 	{
-		SetActive(false);
+		textUIWasHidden = !active;
+		
+		UpdateActiveState();
 	}
 
 	private void Awake()
@@ -22,6 +37,7 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 		mapTile = GetComponentInParent<MapTile>();
 		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
 		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
+		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}
@@ -49,6 +65,11 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
+			}
 		}
 		else
 		{
@@ -65,6 +86,11 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 			if(selectedMapTileManager != null)
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
+			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
 			}
 		}
 	}
@@ -83,17 +109,36 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
-		if(selectedMapTile == null)
+		hoveredMapTile = mapTile;
+		
+		if(selectedMapTile != null)
 		{
-			SetActive(TextUIShouldBeVisible(mapTile));
+			return;
 		}
+
+		currentMapTile = hoveredMapTile;
+
+		UpdateActiveState();
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
-		SetActive(mapTile == null && TextUIShouldBeVisible(selectedMapTile));
-
 		selectedMapTile = mapTile;
+		currentMapTile = selectedMapTile == null ? hoveredMapTile : null;
+		
+		UpdateActiveState();
+	}
+
+	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
+	{
+		panelUIHoverWasDetected = detected;
+
+		UpdateActiveState();
+	}
+
+	private void UpdateActiveState()
+	{
+		SetActive(!textUIWasHidden && !panelUIHoverWasDetected && TextUIShouldBeVisible(currentMapTile));
 	}
 
 	private void SetActive(bool active)
