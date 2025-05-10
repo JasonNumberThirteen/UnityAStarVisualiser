@@ -139,6 +139,7 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 		selectedMapTile = mapTile;
 		currentMapTile = selectedMapTile == null ? hoveredMapTile : null;
 		
+		SetMapTileWeightText(currentMapTile != null ? currentMapTile.GetWeight() : 0);
 		UpdateActiveState();
 	}
 
