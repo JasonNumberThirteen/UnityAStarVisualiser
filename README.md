@@ -22,6 +22,7 @@
 
 ## Features
 - Taking screenshots of the map,
+- An animated path trail showing direction,
 - Zooming in/out by using a mouse scroll wheel,
 - Adjusting weight of heuristic by the input field,
 - Tiled map generation by the given dimensions in tiles,
@@ -46,10 +47,10 @@
 
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Gasr90percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Gasr95percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~90%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is completed in ~95%</b>. It still requires further implementations.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
