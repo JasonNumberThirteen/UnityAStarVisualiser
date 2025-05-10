@@ -6,7 +6,6 @@ using UnityEngine;
 public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	private TextMeshProUGUI textUI;
-	private MapTile mapTile;
 	private MapTile hoveredMapTile;
 	private MapTile selectedMapTile;
 	private MapTile currentMapTile;
@@ -14,6 +13,7 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 	private bool panelUIHoverWasDetected;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
+	private MapTileWeightController mapTileWeightController;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -34,9 +34,9 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 	private void Awake()
 	{
 		textUI = GetComponent<TextMeshProUGUI>();
-		mapTile = GetComponentInParent<MapTile>();
 		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
 		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
+		mapTileWeightController = FindFirstObjectByType<MapTileWeightController>();
 		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
@@ -51,11 +51,6 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 	{
 		if(register)
 		{
-			if(mapTile != null)
-			{
-				mapTile.weightWasChangedEvent.AddListener(OnWeightWasChanged);
-			}
-			
 			if(hoveredMapTileManager != null)
 			{
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
@@ -66,6 +61,11 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
 
+			if(mapTileWeightController != null)
+			{
+				mapTileWeightController.weightWasChangedEvent.AddListener(OnWeightWasChanged);
+			}
+
 			if(panelUIHoverDetectionManager != null)
 			{
 				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
@@ -73,11 +73,6 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 		}
 		else
 		{
-			if(mapTile != null)
-			{
-				mapTile.weightWasChangedEvent.RemoveListener(OnWeightWasChanged);
-			}
-			
 			if(hoveredMapTileManager != null)
 			{
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
@@ -86,6 +81,11 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 			if(selectedMapTileManager != null)
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
+			}
+
+			if(mapTileWeightController != null)
+			{
+				mapTileWeightController.weightWasChangedEvent.RemoveListener(OnWeightWasChanged);
 			}
 
 			if(panelUIHoverDetectionManager != null)
@@ -100,11 +100,18 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 		SetActive(false);
 	}
 
+	private void OnEnable()
+	{
+		if(currentMapTile != null)
+		{
+			transform.position = currentMapTile.transform.position;
+		}
+	}
+
 	private void OnWeightWasChanged(int weight)
 	{
-		textUI.text = weight.ToString();
-
-		SetActive(weight >= 0);
+		SetMapTileWeightText(weight);
+		UpdateActiveState();
 	}
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
@@ -118,7 +125,13 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 
 		currentMapTile = hoveredMapTile;
 
+		SetMapTileWeightText(currentMapTile != null ? currentMapTile.GetWeight() : 0);
 		UpdateActiveState();
+	}
+
+	private void SetMapTileWeightText(int weight)
+	{
+		textUI.text = weight.ToString();
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
@@ -143,20 +156,18 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 
 	private void SetActive(bool active)
 	{
-		textUI.enabled = active;
+		gameObject.SetActive(active);
 	}
 
 	private bool TextUIShouldBeVisible(MapTile mapTile)
 	{
-		var mapTileIsDefined = mapTile != null;
-		var mapTileIsTheSame = mapTileIsDefined && mapTile == this.mapTile;
-		var mapTileWeightIsPositive = mapTileIsDefined && mapTile.GetWeight() >= 0;
+		var mapTileWeightIsPositive = mapTile != null && mapTile.GetWeight() >= 0;
 		var allowedTileTypes = new List<MapTileType>
 		{
 			MapTileType.Passable,
 			MapTileType.Impassable
 		};
 
-		return mapTileIsTheSame && mapTileWeightIsPositive && allowedTileTypes.Contains(mapTile.GetTileType());
+		return mapTileWeightIsPositive && allowedTileTypes.Contains(mapTile.GetTileType());
 	}
 }

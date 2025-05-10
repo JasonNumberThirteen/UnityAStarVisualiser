@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
+	public UnityEvent<int> weightWasChangedEvent;
+	
 	private MapTile mapTile;
 	private bool hoveringTilesIsLocked;
 	private bool panelUIHoverWasDetected;
@@ -95,10 +98,13 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void ModifyWeightOfMapTile(int weightValue)
 	{
-		if(mapTile != null && weightValue != 0)
+		if(mapTile == null || weightValue == 0)
 		{
-			mapTile.ModifyWeightBy(weightValue);
+			return;
 		}
+
+		mapTile.ModifyWeightBy(weightValue);
+		weightWasChangedEvent?.Invoke(mapTile.GetWeight());
 	}
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)

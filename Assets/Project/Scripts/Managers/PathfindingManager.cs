@@ -167,18 +167,12 @@ public class PathfindingManager : MonoBehaviour
 
 	private void OnMapTilesWereAdded(List<MapTile> mapTiles)
 	{
-		var mapEditingElementsToAdd = mapTiles.Select(mapTile => mapTile.GetComponentInChildren<IMapEditingElement>());
-		
-		mapEditingElements.AddRange(mapEditingElementsToAdd);
 		mapTilesInScene.AddRange(mapTiles);
 		ClearResults();
 	}
 
 	private void OnMapTilesWereRemoved(List<MapTile> mapTiles)
 	{
-		var mapEditingElementsToRemove = mapTiles.Select(mapTile => mapTile.GetComponentInChildren<IMapEditingElement>());
-
-		mapEditingElements.RemoveAll(mapEditingElementsToRemove.Contains);
 		mapTilesInScene.RemoveAll(mapTiles.Contains);
 		ClearResults();
 	}
