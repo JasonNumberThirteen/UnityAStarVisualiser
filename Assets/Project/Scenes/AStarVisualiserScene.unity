@@ -505,11 +505,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 165.01146
+      value: 165.13762
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 138.50574
+      value: 138.56882
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1205,7 +1205,6 @@ MonoBehaviour:
   mapTilesWereRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
-  mapTilePrefab: {fileID: 4615415821789066510, guid: 6d69a39a46a640b45820d99db6809705, type: 3}
   goParentTransform: {fileID: 958042500}
 --- !u!1001 &490427204
 PrefabInstance:
@@ -1656,11 +1655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 189.76317
+      value: 189.90826
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 150.88159
+      value: 150.95413
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2338,11 +2337,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 287.11993
+      value: 287.33945
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 199.55997
+      value: 199.66972
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3493,6 +3492,8 @@ Transform:
   - {fileID: 1519585487}
   - {fileID: 469971225}
   - {fileID: 1699436368}
+  - {fileID: 1123758778}
+  - {fileID: 1843710903}
   - {fileID: 1288450402}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3677,6 +3678,38 @@ PrefabInstance:
     - target: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
       propertyPath: m_Name
       value: Main Window Panel UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TriggerHovering
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIHoverDetector, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818448271466055383, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6982605413705820978, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4977,6 +5010,53 @@ MonoBehaviour:
   heightMapDimensionInputFieldUI: {fileID: 1292082218}
   changeDimensionsButtonUI: {fileID: 851396645}
   cancelButtonUI: {fileID: 1035816616}
+--- !u!1 &1123758777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1123758778}
+  - component: {fileID: 1123758779}
+  m_Layer: 0
+  m_Name: Hovered Map Tile Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1123758778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123758777}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 925085157}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1123758779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123758777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b6f83ec205e9545a9578356b40e61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapTileWasChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1133584530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5748,11 +5828,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 253.29257
+      value: 253.48625
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 182.64629
+      value: 182.74313
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -9072,6 +9152,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da249bc0f138c94281b4aa79c0ed082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1843710902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1843710903}
+  - component: {fileID: 1843710904}
+  m_Layer: 0
+  m_Name: Selected Map Tile Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1843710903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843710902}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 925085157}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1843710904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843710902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce0633bcd98bdf4e8a8241b221b6967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapTileWasChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1875015803 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2769082402499495572, guid: 1a0576eaf8244bf46bc594801c86ea7d, type: 3}
@@ -10398,11 +10525,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 246.69212
+      value: 246.88074
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 179.34607
+      value: 179.44037
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y

@@ -6,19 +6,20 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 
 	private static readonly float ANIMATION_TRANSITION_MINIMUM_SCALE = 0.8f;
 	
-	private VisualiserEventsManager visualiserEventsManager;
-	private MapTile mapTile;
-	private bool mapTileIsSelected;
-	private bool indicatorCanBeShown = true;
+	private MapTile currentMapTile;
+	private MapTile previousMapTile;
+	private HoveredMapTileManager hoveredMapTileManager;
+	private SelectedMapTileManager selectedMapTileManager;
 
 	public void SetMapEditingElementActive(bool active)
 	{
-		indicatorCanBeShown = active;
+		gameObject.SetActive(active);
 	}
 
 	private void Awake()
 	{
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
+		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
 
 		RegisterToListeners(true);
 	}
@@ -30,9 +31,9 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 
 	private void OnEnable()
 	{
-		if(mapTile != null)
+		if(currentMapTile != null)
 		{
-			transform.position = mapTile.transform.position;
+			transform.position = currentMapTile.transform.position;
 		}
 	}
 
@@ -40,16 +41,26 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 	{
 		if(register)
 		{
-			if(visualiserEventsManager != null)
+			if(hoveredMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+				hoveredMapTileManager.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
+			}
+
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
 		}
 		else
 		{
-			if(visualiserEventsManager != null)
+			if(hoveredMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
+				hoveredMapTileManager.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
+			}
+
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
 			}
 		}
 	}
@@ -59,48 +70,32 @@ public class HoveredMapTileIndicator : MonoBehaviour, IMapEditingElement
 		gameObject.SetActive(false);
 	}
 
-	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
-		if(!indicatorCanBeShown || visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-		{
-			return;
-		}
-
-		UpdateMapTileReference(mapTileBoolVisualiserEvent);
-		UpdateIndicatorState(mapTileBoolVisualiserEvent);
-	}
-
-	private void UpdateMapTileReference(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		var mapTile = mapTileBoolVisualiserEvent.GetMapTile();
-		var mapTileIsDefined = mapTile != null;
-		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
-		var stateIsEnabled = mapTileBoolVisualiserEvent.GetBoolValue();
-
-		switch (eventType)
-		{
-			case VisualiserEventType.MapTileHoverStateWasChanged:
-				this.mapTile = mapTileIsDefined && stateIsEnabled ? mapTile : null;
-				break;
-			
-			case VisualiserEventType.MapTileSelectionStateWasChanged:
-				this.mapTile = mapTileIsDefined && !stateIsEnabled ? mapTile : null;
-				break;
-		}
-	}
-
-	private void UpdateIndicatorState(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
-		
-		if(eventType == VisualiserEventType.MapTileHoverStateWasChanged && mapTileIsSelected)
+		if(previousMapTile != null)
 		{
 			return;
 		}
 		
-		mapTileIsSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
+		currentMapTile = mapTile;
+		
+		gameObject.SetActive(currentMapTile != null);
+	}
 
-		gameObject.SetActive(mapTile != null);
+	private void OnSelectedMapTileWasChanged(MapTile mapTile)
+	{
+		if(mapTile != null)
+		{
+			previousMapTile = mapTile;
+			currentMapTile = null;
+		}
+		else
+		{
+			currentMapTile = previousMapTile;
+			previousMapTile = null;
+		}
+
+		gameObject.SetActive(currentMapTile != null);
 	}
 
 	private void Update()

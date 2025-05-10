@@ -7,22 +7,21 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 	[SerializeField] private LayerMask unacceptableGameObjects;
 	
 	private Camera mainCamera;
-	private VisualiserEventsManager visualiserEventsManager;
 	private MapTile mapTile;
 	private Vector3 translationPositionOffset;
-	private bool tilesCanBeSelected = true;
+	private SelectedMapTileManager selectedMapTileManager;
 
 	private readonly float COLLISION_BOX_SIZE_OFFSET = 0.1f;
 
 	public void SetMapEditingElementActive(bool active)
 	{
-		tilesCanBeSelected = active;
+		mapTile = null;
 	}
 
 	private void Awake()
 	{
 		mainCamera = Camera.main;
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
 
 		RegisterToListeners(true);
 	}
@@ -36,53 +35,28 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IMapEditingElement
 	{
 		if(register)
 		{
-			if(visualiserEventsManager != null)
+			if(selectedMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
 		}
 		else
 		{
-			if(visualiserEventsManager != null)
+			if(selectedMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
+				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
 			}
 		}
 	}
 
-	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
-		if(tilesCanBeSelected && visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-		{
-			UpdateMapTileReference(mapTileBoolVisualiserEvent);
-		}
-	}
+		this.mapTile = mapTile;
 
-	private void UpdateMapTileReference(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		if(MapTileShouldBeSelected(mapTileBoolVisualiserEvent))
+		if(this.mapTile != null)
 		{
-			mapTile = mapTileBoolVisualiserEvent.GetMapTile();
-			translationPositionOffset = mapTile.gameObject.transform.position - GetMousePositionToWorldPoint();
+			translationPositionOffset = this.mapTile.gameObject.transform.position - GetMousePositionToWorldPoint();
 		}
-		else if(MapTileShouldBeDeselected(mapTileBoolVisualiserEvent))
-		{
-			mapTile = null;
-		}
-	}
-
-	private bool MapTileShouldBeSelected(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		var mapTileSelectionStateIsSetAsSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
-		
-		return mapTile == null && mapTileSelectionStateIsSetAsSelected;
-	}
-
-	private bool MapTileShouldBeDeselected(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		var mapTileSelectionStateIsSetAsNotSelected = mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged && !mapTileBoolVisualiserEvent.GetBoolValue();
-		
-		return mapTile != null && mapTileSelectionStateIsSetAsNotSelected;
 	}
 
 	private void Update()

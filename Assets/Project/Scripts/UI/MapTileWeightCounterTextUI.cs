@@ -7,21 +7,21 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 {
 	private TextMeshProUGUI textUI;
 	private MapTile mapTile;
-	private bool mapTileIsHovered;
-	private bool mapTileIsSelected;
-	private bool textCanBeShown = true;
-	private VisualiserEventsManager visualiserEventsManager;
+	private MapTile selectedMapTile;
+	private HoveredMapTileManager hoveredMapTileManager;
+	private SelectedMapTileManager selectedMapTileManager;
 
 	public void SetMapEditingElementActive(bool active)
 	{
-		textCanBeShown = active;
+		SetActive(false);
 	}
 
 	private void Awake()
 	{
 		textUI = GetComponent<TextMeshProUGUI>();
 		mapTile = GetComponentInParent<MapTile>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
+		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
 
 		RegisterToListeners(true);
 	}
@@ -40,9 +40,14 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 				mapTile.weightWasChangedEvent.AddListener(OnWeightWasChanged);
 			}
 			
-			if(visualiserEventsManager != null)
+			if(hoveredMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+				hoveredMapTileManager.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
+			}
+
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
 		}
 		else
@@ -52,71 +57,61 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IMapEditingElement
 				mapTile.weightWasChangedEvent.RemoveListener(OnWeightWasChanged);
 			}
 			
-			if(visualiserEventsManager != null)
+			if(hoveredMapTileManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
+				hoveredMapTileManager.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
+			}
+
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
 			}
 		}
 	}
 
 	private void Start()
 	{
-		textUI.enabled = false;
+		SetActive(false);
 	}
 
 	private void OnWeightWasChanged(int weight)
 	{
 		textUI.text = weight.ToString();
-		textUI.enabled = weight >= 0;
+
+		SetActive(weight >= 0);
 	}
 
-	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
-		if(!textCanBeShown || visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+		if(selectedMapTile == null)
 		{
-			return;
-		}
-
-		UpdateHoverState(mapTileBoolVisualiserEvent);
-		UpdateTextState(mapTileBoolVisualiserEvent);
-	}
-
-	private void UpdateHoverState(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
-	{
-		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
-		var stateIsEnabled = mapTileBoolVisualiserEvent.GetBoolValue();
-		var mapTileIsTheSame = mapTileBoolVisualiserEvent.GetMapTile() == mapTile;
-		
-		switch (eventType)
-		{
-			case VisualiserEventType.MapTileHoverStateWasChanged:
-				mapTileIsHovered = mapTileIsTheSame && stateIsEnabled;
-				break;
-			
-			case VisualiserEventType.MapTileSelectionStateWasChanged:
-				mapTileIsHovered = mapTileIsTheSame && !stateIsEnabled;
-				break;
+			SetActive(TextUIShouldBeVisible(mapTile));
 		}
 	}
 
-	private void UpdateTextState(MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
+	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
-		var eventType = mapTileBoolVisualiserEvent.GetVisualiserEventType();
-		
-		if(mapTileIsSelected && eventType == VisualiserEventType.MapTileHoverStateWasChanged)
-		{
-			return;
-		}
-		
-		var mapTile = mapTileBoolVisualiserEvent.GetMapTile();
-		var mapTileWeightIsPositive = mapTile != null && mapTile.GetWeight() >= 0;
+		SetActive(mapTile == null && TextUIShouldBeVisible(selectedMapTile));
+
+		selectedMapTile = mapTile;
+	}
+
+	private void SetActive(bool active)
+	{
+		textUI.enabled = active;
+	}
+
+	private bool TextUIShouldBeVisible(MapTile mapTile)
+	{
+		var mapTileIsDefined = mapTile != null;
+		var mapTileIsTheSame = mapTileIsDefined && mapTile == this.mapTile;
+		var mapTileWeightIsPositive = mapTileIsDefined && mapTile.GetWeight() >= 0;
 		var allowedTileTypes = new List<MapTileType>
 		{
 			MapTileType.Passable,
 			MapTileType.Impassable
 		};
 
-		textUI.enabled = mapTileIsHovered && mapTileWeightIsPositive && allowedTileTypes.Contains(mapTile.GetTileType());
-		mapTileIsSelected = eventType == VisualiserEventType.MapTileSelectionStateWasChanged && mapTileBoolVisualiserEvent.GetBoolValue();
+		return mapTileIsTheSame && mapTileWeightIsPositive && allowedTileTypes.Contains(mapTile.GetTileType());
 	}
 }
