@@ -122,7 +122,7 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 			widthMapDimensionInputFieldUI.text = mapSize.x.ToString();
 		}
 
-		if(widthMapDimensionInputFieldUI != null)
+		if(heightMapDimensionInputFieldUI != null)
 		{
 			heightMapDimensionInputFieldUI.text = mapSize.y.ToString();
 		}
