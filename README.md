@@ -53,7 +53,7 @@
 - Mouse scroll wheel - **Zooming in and out** (if none tile is hovered) / **Changing weight of a tile** (if any tile is hovered).
 
 ## Project status
-<p align = "center"><b>IN PROGRESS</b></p>
+<p align = "center"><b>COMPLETED</b></p>
 <p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Gasr100percent.png"/></p>
 
 ---
