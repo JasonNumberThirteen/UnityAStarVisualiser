@@ -21,20 +21,27 @@
 - [GIMP](https://www.gimp.org/ "GIMP - GNU Image Manipulation Program") & [Paint.NET](https://www.getpaint.net/ "Paint.NET - Free Software for Digital Photo Editing") for making graphics.
 
 ## Features
-- Taking screenshots of the map,
-- An animated path trail showing direction,
-- Zooming in/out by using a mouse scroll wheel,
-- Adjusting weight of heuristic by the input field,
-- Tiled map generation by the given dimensions in tiles,
-- Finding a path between the start and destination tiles,
-- Changing position of map tiles by dragging with a mouse,
-- Adjusting weight to each map tile by using a mouse scroll wheel,
-- Adjusting finding a path by enabling/disabling diagonal movement,
-- Adjusting map dimensions (extending & shrinking) by the given size,
-- 3 types of heuristics: Manhattan, Euclidean and Chebyshev distance metrics,
-- Coloring tiles on the map which define a path along with those that were set as visited,
-- Simulation Mode for showing how the algorithm works in time (by the adjusted timestep),
-- 2 types of simulation mode: Timed (step between interval in seconds) & Stepwise (step after clicking a button).
+- **MAP GENERATION**
+	- Generation of a map by the given dimensions in tiles (from **3x3** to **50x50**)
+	- Adjusting dimensions (extending & shrinking) by the given size in the input field
+- **MAP EDITING**
+	- Changing position of map tiles by dragging with a mouse
+	- Adjusting weight to each map tile by using a mouse scroll wheel
+	- Changing tiles type (**passable**/**impassable**) depending on their weight (if it is below 0, then tile is impassable)
+- **ALGORITHM**
+	- Finding a path between the start and destination tiles
+	- Support of both **4-way** and **8-way** (diagonal) movement
+	- Coloring on the map which define a path along with those that were set as visited
+	- Drawing an animated path trail
+- **HEURISTIC**
+	- 3 types: **Manhattan**, **Euclidean** and **Chebyshev** distance metrics
+	- Adjusting weight (multiplier) by the input field
+- **SIMULATION MODE**
+	- Showing how the algorithm works step by step
+	- 2 types: **Timed** (step between interval in seconds) and **Stepwise** (step after clicking a button)
+- **MISCELLANEOUS**
+	- Taking screenshots of the map
+	- Zooming in/out by using a mouse scroll wheel
 
 ## Screenshots
 ![A* Visualiser](./Screenshots/AStarVisualiser.png?raw=true)
@@ -47,10 +54,10 @@
 
 ## Project status
 <p align = "center"><b>IN PROGRESS</b></p>
-<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Gasr95percent.png"/></p>
+<p align = "center"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Gasr100percent.png"/></p>
 
 ---
-<p align = "center"><b>The project is completed in ~95%</b>. It still requires further implementations.</p>
+<p align = "center"><b>The project is complete and ready to build</b>.</p>
 
 ## Credits
 This project was made **entirely** by [Stanisław "Jason" Popowski](https://jasonxiii.pl "Jason. Cała informatyka w jednym miejscu! Oficjalna strona internetowa! Setki artykułów na różne tematy! Wszystko stworzone przez jedną osobę!").
