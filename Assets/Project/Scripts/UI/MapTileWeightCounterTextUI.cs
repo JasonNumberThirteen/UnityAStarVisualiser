@@ -1,5 +1,4 @@
 using TMPro;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
@@ -160,15 +159,5 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 		gameObject.SetActive(active);
 	}
 
-	private bool TextUIShouldBeVisible(MapTile mapTile)
-	{
-		var mapTileWeightIsPositive = mapTile != null && mapTile.GetWeight() >= 0;
-		var allowedTileTypes = new List<MapTileType>
-		{
-			MapTileType.Passable,
-			MapTileType.Impassable
-		};
-
-		return mapTileWeightIsPositive && allowedTileTypes.Contains(mapTile.GetTileType());
-	}
+	private bool TextUIShouldBeVisible(MapTile mapTile) => mapTile != null && mapTile.GetTileType() == MapTileType.Passable;
 }

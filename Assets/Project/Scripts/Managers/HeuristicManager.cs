@@ -5,6 +5,8 @@ public class HeuristicManager : MonoBehaviour
 	private HeuristicType heuristicType;
 	private float heuristicWeight;
 
+	private static readonly float TIE_BREAKING_HEURISTIC_MULTIPLIER = 0.001f;
+
 	public void SetHeuristicType(HeuristicType heuristicType)
 	{
 		this.heuristicType = heuristicType;
@@ -17,6 +19,7 @@ public class HeuristicManager : MonoBehaviour
 
 	public float GetHeuristicValue(Vector2 positionA, Vector2 positionB)
 	{
+		var heuristicMultiplier = 1 + TIE_BREAKING_HEURISTIC_MULTIPLIER;
 		var heuristicValue = heuristicType switch
 		{
 			HeuristicType.ManhattanDistance => DistanceMethods.GetOneDimensionalDistance(positionA.x, positionB.x) + DistanceMethods.GetOneDimensionalDistance(positionA.y, positionB.y),
@@ -25,6 +28,6 @@ public class HeuristicManager : MonoBehaviour
 			_ => 0f
 		};
 
-		return heuristicValue*heuristicWeight;
+		return heuristicValue*heuristicWeight*heuristicMultiplier;
 	}
 }

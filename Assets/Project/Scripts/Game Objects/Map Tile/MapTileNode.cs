@@ -6,30 +6,19 @@ using UnityEngine.Events;
 public class MapTileNode : MonoBehaviour
 {
 	public UnityEvent<MapTileNodeType> mapTileNodeTypeWasChangedEvent;
-	
+
 	public int Weight {get; set;}
-	public MapTileNode Parent {get; set;}
 
 	private MapTileNodeType mapTileNodeType;
 	private PathfindingManager pathfindingManager;
 
+	private readonly MapTileNodeData mapTileNodeData = new();
 	private readonly List<MapTileNode> neighbours = new();
 
 	public Vector2 GetPosition() => transform.position;
 	public List<MapTileNode> GetNeighbours() => neighbours;
 	public MapTileNodeType GetMapTileNodeType() => mapTileNodeType;
-
-	public float GetCostToReachTo(MapTileNode destinationMapTileNode)
-	{
-		if(destinationMapTileNode == null)
-		{
-			return float.MaxValue;
-		}
-
-		var heuristicValue = pathfindingManager != null ? pathfindingManager.GetHeuristicValue(GetPosition(), destinationMapTileNode.GetPosition()) : 0f;
-
-		return GetPathLengthFromStart() + heuristicValue;
-	}
+	public MapTileNodeData GetMapTileNodeData() => mapTileNodeData;
 
 	public void SetTileNodeType(MapTileNodeType mapTileNodeType)
 	{
@@ -48,8 +37,7 @@ public class MapTileNode : MonoBehaviour
 	public void ResetData()
 	{
 		SetTileNodeType(MapTileNodeType.Unvisited);
-		
-		Parent = null;
+		mapTileNodeData.SetValues(null, 0, 0);
 	}
 
 	public void FindNeighbours(List<MapTileNode> mapTileNodes)
@@ -75,17 +63,5 @@ public class MapTileNode : MonoBehaviour
 		{
 			neighbours.Add(neighbouringNode);
 		}
-	}
-
-	private int GetPathLengthFromStart()
-	{
-		var length = 0;
-
-		if(pathfindingManager != null)
-		{
-			pathfindingManager.OperateOnMapTileNodes(this, mapTileNode => length += mapTileNode.Weight);
-		}
-
-		return length;
 	}
 }

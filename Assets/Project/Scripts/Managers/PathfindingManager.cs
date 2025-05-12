@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,8 +13,8 @@ public class PathfindingManager : MonoBehaviour
 	
 	private readonly List<MapTile> mapTilesInScene = new();
 	private readonly List<MapTileNode> pathMapTileNodes = new();
+	private readonly List<MapTileNode> mapTileNodesWaitingForVisit = new();
 	private readonly List<IMapEditingElement> mapEditingElements = new();
-	private readonly PriorityQueue<MapTileNode> priorityQueue = new();
 
 	private MapTile startMapTile;
 	private MapTile destinationMapTile;
@@ -59,7 +58,6 @@ public class PathfindingManager : MonoBehaviour
 		}
 	}
 
-	public float GetHeuristicValue(Vector2 positionA, Vector2 positionB) => heuristicManager != null ? heuristicManager.GetHeuristicValue(positionA, positionB) : 0f;
 	public bool DiagonalMovementIsEnabled() => diagonalMovementIsEnabled;
 	
 	public void FindPath()
@@ -84,18 +82,6 @@ public class PathfindingManager : MonoBehaviour
 		pathMapTileNodes.Clear();
 		mapTilesInScene.Where(mapTile => mapTile.GetMapTileNode().GetMapTileNodeType() == MapTileNodeType.Visited).ToList().ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
 		resultsWereClearedEvent?.Invoke();
-	}
-
-	public void OperateOnMapTileNodes(MapTileNode mapTileNodeToStartFrom, Action<MapTileNode> action)
-	{
-		var currentMapTileNode = mapTileNodeToStartFrom;
-
-		while (currentMapTileNode.Parent != null)
-		{
-			action?.Invoke(currentMapTileNode);
-
-			currentMapTileNode = currentMapTileNode.Parent;
-		}	
 	}
 
 	public void SetDiagonalMovementEnabled(bool enabled)
@@ -202,7 +188,7 @@ public class PathfindingManager : MonoBehaviour
 		destinationMapTile = mapTilesInScene.FirstOrDefault(mapTile => mapTile.GetTileType() == MapTileType.Destination);
 		
 		ClearResults();
-		priorityQueue.Clear();
+		mapTileNodesWaitingForVisit.Clear();
 		CreateConnectionsBetweenMapTileNodes();
 	}
 
@@ -221,19 +207,28 @@ public class PathfindingManager : MonoBehaviour
 		}
 
 		mapTilesInScene.ForEach(mapTile => mapTile.GetMapTileNode().ResetData());
-		startMapTile.SetWeightTo(0);
-		AddMapTileNodeToQueue(startMapTile.GetMapTileNode());
+		InitiateStartMapTile();
 
 		PathWasFound = false;
+	}
+
+	private void InitiateStartMapTile()
+	{
+		if(startMapTile != null)
+		{
+			mapTileNodesWaitingForVisit.Add(startMapTile.GetMapTileNode());
+		}
 	}
 
 	private IEnumerator FindPathToDestination()
 	{
 		var simulationIsEnabled = simulationManager != null && simulationManager.SimulationIsEnabled();
 		
-		while (!pathWasFound && priorityQueue.Count > 0)
+		while (!pathWasFound && mapTileNodesWaitingForVisit.Count > 0)
 		{
-			if(VisitMapTileNodeIfNeeded(priorityQueue.Dequeue()) && simulationIsEnabled)
+			var currentMapTileNode = mapTileNodesWaitingForVisit.OrderBy(mapTileNode => mapTileNode.GetMapTileNodeData().TotalCost).FirstOrDefault();
+
+			if(VisitMapTileNodeIfPossible(currentMapTileNode) && simulationIsEnabled)
 			{
 				yield return simulationManager.GetNextStepDelayDependingOnSimulationType();
 			}
@@ -242,16 +237,17 @@ public class PathfindingManager : MonoBehaviour
 		PathfindingWasStarted = false;
 	}
 
-	private bool VisitMapTileNodeIfNeeded(MapTileNode mapTileNode)
+	private bool VisitMapTileNodeIfPossible(MapTileNode mapTileNode)
 	{
-		if(mapTileNode == null || mapTileNode.GetMapTileNodeType() == MapTileNodeType.Visited || destinationMapTile == null)
+		if(mapTileNode == null)
 		{
 			return false;
 		}
-
+		
 		mapTileNode.SetTileNodeType(MapTileNodeType.Visited);
-		OperateOnMapTileNode(mapTileNode);
+		mapTileNodesWaitingForVisit.Remove(mapTileNode);
 		mapTileNodeWasVisitedEvent?.Invoke(mapTileNode);
+		OperateOnMapTileNode(mapTileNode);
 
 		return true;
 	}
@@ -269,7 +265,7 @@ public class PathfindingManager : MonoBehaviour
 		}
 		else
 		{
-			AddNeighboursOf(mapTileNode);
+			OperateOnNeighboursOf(mapTileNode);
 		}
 	}
 
@@ -282,40 +278,66 @@ public class PathfindingManager : MonoBehaviour
 
 		PathWasFound = true;
 
-		OperateOnMapTileNodes(mapTileNode, mapTileNode => pathMapTileNodes.Add(mapTileNode));
+		DefinePathMapTileNodes(mapTileNode);
 		pathMapTileNodes.ForEach(mapTileNode => mapTileNode.SetTileNodeType(MapTileNodeType.BelongingToPath));
 		pathWasFoundEvent?.Invoke(pathMapTileNodes);
 	}
 
-	private void AddNeighboursOf(MapTileNode mapTileNode)
+	private void DefinePathMapTileNodes(MapTileNode mapTileNodeToStartFrom)
 	{
-		if(mapTileNode == null)
+		var currentMapTileNode = mapTileNodeToStartFrom;
+		var currentMapTileNodeData = currentMapTileNode.GetMapTileNodeData();
+
+		while (currentMapTileNodeData.Parent != null)
+		{
+			pathMapTileNodes.Add(currentMapTileNode);
+
+			currentMapTileNode = currentMapTileNodeData.Parent;
+			currentMapTileNodeData = currentMapTileNode.GetMapTileNodeData();
+		}	
+	}
+
+	private void OperateOnNeighboursOf(MapTileNode parentMapTileNode)
+	{
+		if(parentMapTileNode == null)
+		{
+			return;
+		}
+		
+		var neighbours = parentMapTileNode.GetNeighbours().Where(neighbour => neighbour.GetMapTileNodeType() != MapTileNodeType.Visited).ToList();
+
+		neighbours.ForEach(neighbour => OperateOnNeighbourIfNeeded(parentMapTileNode, neighbour));
+	}
+
+	private void OperateOnNeighbourIfNeeded(MapTileNode parentMapTileNode, MapTileNode neighbouringMapTileNode)
+	{
+		if(parentMapTileNode == null || neighbouringMapTileNode == null)
+		{
+			return;
+		}
+		
+		var totalCostToReachNeighbourFromParent = GetTotalCostToReachNeighbourFromParent(parentMapTileNode, neighbouringMapTileNode);
+		var neighbourIsAlreadyWaitingForVisit = mapTileNodesWaitingForVisit.Contains(neighbouringMapTileNode);
+		var neighbourMapTileNodeData = neighbouringMapTileNode.GetMapTileNodeData();
+
+		if(neighbourIsAlreadyWaitingForVisit && totalCostToReachNeighbourFromParent >= neighbourMapTileNodeData.RealValue)
 		{
 			return;
 		}
 
-		var neighbours = mapTileNode.GetNeighbours().Where(neighbour => neighbour.GetMapTileNodeType() != MapTileNodeType.Visited).ToList();
+		neighbourMapTileNodeData.SetValues(parentMapTileNode, totalCostToReachNeighbourFromParent, heuristicManager != null ? heuristicManager.GetHeuristicValue(neighbouringMapTileNode.GetPosition(), destinationMapTile.GetMapTileNode().GetPosition()) : 0f);
 
-		neighbours?.ForEach(neighbour => SetupAndAddNeighbour(neighbour, mapTileNode));
-	}
-
-	private void SetupAndAddNeighbour(MapTileNode neighbouringMapTile, MapTileNode parentMapTile)
-	{
-		neighbouringMapTile.Parent = parentMapTile;
-
-		AddMapTileNodeToQueue(neighbouringMapTile);
-	}
-
-	private void AddMapTileNodeToQueue(MapTileNode mapTileNode)
-	{
-		if(mapTileNode == null)
+		if(!neighbourIsAlreadyWaitingForVisit)
 		{
-			return;
+			mapTileNodesWaitingForVisit.Add(neighbouringMapTileNode);
 		}
+	}
 
-		var mapTileNodeCost = mapTileNode.GetCostToReachTo(destinationMapTile.GetMapTileNode());
-		var mapTileNodeWithCost = new PriorityQueueElement<MapTileNode>(mapTileNode, mapTileNodeCost);
-
-		priorityQueue.Enqueue(mapTileNodeWithCost);
+	private float GetTotalCostToReachNeighbourFromParent(MapTileNode parentMapTileNode, MapTileNode neighbouringMapTileNode)
+	{
+		var distanceToNeighbour = DistanceMethods.DistanceBetweenPositionsIsSingleAxis(parentMapTileNode.GetPosition(), neighbouringMapTileNode.GetPosition()) ? 1 : Mathf.Sqrt(2);
+		var neighbourRealValue = distanceToNeighbour*neighbouringMapTileNode.Weight;
+		
+		return parentMapTileNode.GetMapTileNodeData().RealValue + neighbourRealValue;
 	}
 }

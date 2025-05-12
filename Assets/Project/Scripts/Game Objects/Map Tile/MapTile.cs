@@ -45,7 +45,13 @@ public class MapTile : MonoBehaviour
 		SetWeightTo(this.weight + weight);
 	}
 
-	public void SetWeightTo(int weight)
+	private void Awake()
+	{
+		mapTileNode = GetComponent<MapTileNode>();
+		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+	}
+
+	private void SetWeightTo(int weight)
 	{
 		var previousWeight = this.weight;
 		
@@ -65,11 +71,5 @@ public class MapTile : MonoBehaviour
 		{
 			visualiserEventsManager.SendEvent(new MapTileBoolVisualiserEvent(this, VisualiserEventType.MapTileWeightWasChanged, true));
 		}
-	}
-
-	private void Awake()
-	{
-		mapTileNode = GetComponent<MapTileNode>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
 	}
 }
