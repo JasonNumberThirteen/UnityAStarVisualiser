@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: b3886ddae077dc04b9f55b27a34a549b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4693820084857518448
+    second: AStarVisualiserLogo_0
+  - first:
+      213: -4681516700672545251
+    second: AStarVisualiserLogo_1
+  - first:
+      213: 32790667930635880
+    second: AStarVisualiserLogo_2
+  - first:
+      213: -5611555722147707627
+    second: AStarVisualiserLogo_3
+  - first:
+      213: -7322283261004203575
+    second: AStarVisualiserLogo_4
+  - first:
+      213: 371360312998261388
+    second: AStarVisualiserLogo_5
+  - first:
+      213: 564992646627428107
+    second: AStarVisualiserLogo_6
+  - first:
+      213: 7724996194793082094
+    second: AStarVisualiserLogo_7
+  - first:
+      213: -5464488254643080675
+    second: AStarVisualiserLogo_8
+  - first:
+      213: 6648361617883366193
+    second: AStarVisualiserLogo_9
+  - first:
+      213: -5363512345573979210
+    second: AStarVisualiserLogo_10
+  - first:
+      213: 1062963823762510217
+    second: AStarVisualiserLogo_11
+  - first:
+      213: -8544466478577194860
+    second: AStarVisualiserLogo_12
+  - first:
+      213: 312826759330070559
+    second: AStarVisualiserLogo_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 2
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 512
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 12
+        width: 89
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096497270833cdeb0800000000000000
+      internalID: -4693820084857518448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_1
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 51
+        width: 49
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1eaa5e4d59e70fb0800000000000000
+      internalID: -4681516700672545251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_2
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 12
+        width: 89
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86e04f150fe747000800000000000000
+      internalID: 32790667930635880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_3
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 12
+        width: 35
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51543105dcfbf12b0800000000000000
+      internalID: -5611555722147707627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_4
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 80
+        width: 19
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c93e035b26026a90800000000000000
+      internalID: -7322283261004203575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_5
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 11
+        width: 55
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8270f3bc36572500800000000000000
+      internalID: 371360312998261388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_6
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 11
+        width: 75
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b078fe291d147d700800000000000000
+      internalID: 564992646627428107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_7
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 11
+        width: 62
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eecc2e14c13b43b60800000000000000
+      internalID: 7724996194793082094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_8
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 12
+        width: 36
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1274be62ec3a24b0800000000000000
+      internalID: -5464488254643080675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_9
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 12
+        width: 35
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 133874cbaa9b34c50800000000000000
+      internalID: 6648361617883366193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_10
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 80
+        width: 19
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bb04a550f9f095b0800000000000000
+      internalID: -5363512345573979210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_11
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 11
+        width: 55
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 981947447f760ce00800000000000000
+      internalID: 1062963823762510217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_12
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 11
+        width: 60
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4986c2d1205fb6980800000000000000
+      internalID: -8544466478577194860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AStarVisualiserLogo_13
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 12
+        width: 54
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f100b1ab742675400800000000000000
+      internalID: 312826759330070559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AStarVisualiserLogo_0: -4693820084857518448
+      AStarVisualiserLogo_1: -4681516700672545251
+      AStarVisualiserLogo_10: -5363512345573979210
+      AStarVisualiserLogo_11: 1062963823762510217
+      AStarVisualiserLogo_12: -8544466478577194860
+      AStarVisualiserLogo_13: 312826759330070559
+      AStarVisualiserLogo_2: 32790667930635880
+      AStarVisualiserLogo_3: -5611555722147707627
+      AStarVisualiserLogo_4: -7322283261004203575
+      AStarVisualiserLogo_5: 371360312998261388
+      AStarVisualiserLogo_6: 564992646627428107
+      AStarVisualiserLogo_7: 7724996194793082094
+      AStarVisualiserLogo_8: -5464488254643080675
+      AStarVisualiserLogo_9: 6648361617883366193
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
