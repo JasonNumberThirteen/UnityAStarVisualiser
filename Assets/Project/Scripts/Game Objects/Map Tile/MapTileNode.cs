@@ -9,17 +9,17 @@ public class MapTileNode : MonoBehaviour
 
 	public int Weight {get; set;}
 
-	private MapTileNodeType mapTileNodeType;
-	private PathfindingManager pathfindingManager;
-
 	private readonly MapTileNodeData mapTileNodeData = new();
 	private readonly List<MapTileNode> neighbours = new();
 
+	private MapTileNodeType mapTileNodeType;
+	private PathfindingManager pathfindingManager;
+
 	public Vector2 GetPosition() => transform.position;
+	public MapTileNodeData GetMapTileNodeData() => mapTileNodeData;
 	public List<MapTileNode> GetNeighbours() => neighbours;
 	public MapTileNodeType GetMapTileNodeType() => mapTileNodeType;
-	public MapTileNodeData GetMapTileNodeData() => mapTileNodeData;
-
+	
 	public void SetTileNodeType(MapTileNodeType mapTileNodeType)
 	{
 		var previousTileNodeType = this.mapTileNodeType;
