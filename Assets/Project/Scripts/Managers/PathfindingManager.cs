@@ -119,33 +119,33 @@ public class PathfindingManager : MonoBehaviour
 		{
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.AddListener(OnMapGenerated);
+				mapGenerationManager.mapWasGeneratedEvent.AddListener(OnMapWasGenerated);
 				mapGenerationManager.mapTilesWereAddedEvent.AddListener(OnMapTilesWereAdded);
 				mapGenerationManager.mapTilesWereRemovedEvent.AddListener(OnMapTilesWereRemoved);
 			}
 
 			if(visualiserEventsManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+				visualiserEventsManager.eventWasSentEvent.AddListener(OnEventWasSent);
 			}
 		}
 		else
 		{
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.RemoveListener(OnMapGenerated);
+				mapGenerationManager.mapWasGeneratedEvent.RemoveListener(OnMapWasGenerated);
 				mapGenerationManager.mapTilesWereAddedEvent.RemoveListener(OnMapTilesWereAdded);
 				mapGenerationManager.mapTilesWereRemovedEvent.RemoveListener(OnMapTilesWereRemoved);
 			}
 
 			if(visualiserEventsManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
+				visualiserEventsManager.eventWasSentEvent.RemoveListener(OnEventWasSent);
 			}
 		}
 	}
 
-	private void OnMapGenerated()
+	private void OnMapWasGenerated()
 	{
 		mapTilesInScene.Clear();
 		mapTilesInScene.AddRange(FindObjectsByType<MapTile>(FindObjectsSortMode.None));
@@ -163,7 +163,7 @@ public class PathfindingManager : MonoBehaviour
 		ClearResults();
 	}
 
-	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	private void OnEventWasSent(VisualiserEvent visualiserEvent)
 	{
 		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{

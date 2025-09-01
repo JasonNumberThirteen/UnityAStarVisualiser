@@ -3,10 +3,10 @@ using UnityEngine.Events;
 
 public class VisualiserEventsManager : MonoBehaviour
 {
-	public UnityEvent<VisualiserEvent> eventReceivedEvent;
+	public UnityEvent<VisualiserEvent> eventWasSentEvent;
 
 	public void SendEvent(VisualiserEvent visualiserEvent)
 	{
-		eventReceivedEvent?.Invoke(visualiserEvent);
+		eventWasSentEvent?.Invoke(visualiserEvent);
 	}
 }

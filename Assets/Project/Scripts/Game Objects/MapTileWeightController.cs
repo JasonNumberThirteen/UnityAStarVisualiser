@@ -48,7 +48,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		{
 			if(userInputController != null)
 			{
-				userInputController.wheelScrolledEvent.AddListener(OnWheelScrolled);
+				userInputController.mouseWheelWasScrolledEvent.AddListener(OnMouseWheelWasScrolled);
 			}
 
 			if(hoveredMapTileManager != null)
@@ -70,7 +70,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		{
 			if(userInputController != null)
 			{
-				userInputController.wheelScrolledEvent.RemoveListener(OnWheelScrolled);
+				userInputController.mouseWheelWasScrolledEvent.RemoveListener(OnMouseWheelWasScrolled);
 			}
 
 			if(hoveredMapTileManager != null)
@@ -90,7 +90,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		}
 	}
 
-	private void OnWheelScrolled(Vector2 scrollVector)
+	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
 		if(tileIsBeingDragged || hoveringTilesIsLocked || panelUIHoverWasDetected)
 		{

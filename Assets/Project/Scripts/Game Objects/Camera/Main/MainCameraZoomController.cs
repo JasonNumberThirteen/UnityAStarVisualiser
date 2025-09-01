@@ -48,43 +48,43 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 		{
 			if(userInputController != null)
 			{
-				userInputController.wheelScrolledEvent.AddListener(OnWheelScrolled);
+				userInputController.mouseWheelWasScrolledEvent.AddListener(OnMouseWheelWasScrolled);
 			}
 
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.AddListener(UpdateMaximumSize);
+				mapGenerationManager.mapWasGeneratedEvent.AddListener(UpdateMaximumSize);
 				mapGenerationManager.mapTilesWereAddedEvent.AddListener(OnMapTilesWereAdded);
 				mapGenerationManager.mapTilesWereRemovedEvent.AddListener(OnMapTilesWereRemoved);
 			}
 			
 			if(visualiserEventsManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+				visualiserEventsManager.eventWasSentEvent.AddListener(OnEventWasSent);
 			}
 		}
 		else
 		{
 			if(userInputController != null)
 			{
-				userInputController.wheelScrolledEvent.RemoveListener(OnWheelScrolled);
+				userInputController.mouseWheelWasScrolledEvent.RemoveListener(OnMouseWheelWasScrolled);
 			}
 
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.RemoveListener(UpdateMaximumSize);
+				mapGenerationManager.mapWasGeneratedEvent.RemoveListener(UpdateMaximumSize);
 				mapGenerationManager.mapTilesWereAddedEvent.RemoveListener(OnMapTilesWereAdded);
 				mapGenerationManager.mapTilesWereRemovedEvent.RemoveListener(OnMapTilesWereRemoved);
 			}
 			
 			if(visualiserEventsManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
+				visualiserEventsManager.eventWasSentEvent.RemoveListener(OnEventWasSent);
 			}
 		}
 	}
 
-	private void OnWheelScrolled(Vector2 scrollVector)
+	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
 		if(!inputIsActive || !zoomCanBeModified || mainCamera == null || !mainCamera.orthographic)
 		{
@@ -118,7 +118,7 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 		cameraSizeWasUpdatedEvent?.Invoke(mainCamera.orthographicSize);
 	}
 
-	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	private void OnEventWasSent(VisualiserEvent visualiserEvent)
 	{
 		if(visualiserEvent is not MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent)
 		{

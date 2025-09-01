@@ -31,19 +31,19 @@ public class PanelUIHoverDetectionManager : MonoBehaviour, IPrimaryWindowElement
 		{
 			if(visualiserEventsManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.AddListener(OnEventReceived);
+				visualiserEventsManager.eventWasSentEvent.AddListener(OnEventWasSent);
 			}
 		}
 		else
 		{
 			if(visualiserEventsManager != null)
 			{
-				visualiserEventsManager.eventReceivedEvent.RemoveListener(OnEventReceived);
+				visualiserEventsManager.eventWasSentEvent.RemoveListener(OnEventWasSent);
 			}
 		}
 	}
 
-	private void OnEventReceived(VisualiserEvent visualiserEvent)
+	private void OnEventWasSent(VisualiserEvent visualiserEvent)
 	{
 		if(visualiserEvent is PanelUIBoolVisualiserEvent panelUIBoolVisualiserEvent)
 		{

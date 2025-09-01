@@ -31,19 +31,19 @@ public class MapAreaManager : MonoBehaviour
 		{
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.AddListener(OnMapGenerated);
+				mapGenerationManager.mapWasGeneratedEvent.AddListener(OnMapWasGenerated);
 			}
 		}
 		else
 		{
 			if(mapGenerationManager != null)
 			{
-				mapGenerationManager.mapGeneratedEvent.RemoveListener(OnMapGenerated);
+				mapGenerationManager.mapWasGeneratedEvent.RemoveListener(OnMapWasGenerated);
 			}
 		}
 	}
 
-	private void OnMapGenerated()
+	private void OnMapWasGenerated()
 	{
 		if(mapGenerationManager == null)
 		{

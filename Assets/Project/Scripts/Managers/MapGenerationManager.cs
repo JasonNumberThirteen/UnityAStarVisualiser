@@ -9,7 +9,7 @@ public class MapGenerationManager : MonoBehaviour
 	public static readonly int MAP_DIMENSION_LOWER_BOUND = 3;
 	public static readonly int MAP_DIMENSION_UPPER_BOUND = 50;
 	
-	public UnityEvent mapGeneratedEvent;
+	public UnityEvent mapWasGeneratedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereAddedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereRemovedEvent;
 	
@@ -45,7 +45,7 @@ public class MapGenerationManager : MonoBehaviour
 		AddTilesFromExtendingIfNeeded(mapDimensions);
 		EnsureExistanceOfMapTileOfType(MapTileType.Start, Vector2.zero);
 		EnsureExistanceOfMapTileOfType(MapTileType.Destination, GetMapSize() - Vector2.one);
-		mapGeneratedEvent?.Invoke();
+		mapWasGeneratedEvent?.Invoke();
 	}
 
 	private void RemoveTilesFromShrinkingIfNeeded(Vector2Int newMapSize)

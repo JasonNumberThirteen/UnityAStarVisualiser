@@ -5,16 +5,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class UserInputController : MonoBehaviour
 {
-	public UnityEvent<Vector2> movementKeyPressedEvent;
-	public UnityEvent<Vector2> wheelScrolledEvent;
+	public UnityEvent<Vector2> movementKeyWasPressedEvent;
+	public UnityEvent<Vector2> mouseWheelWasScrolledEvent;
 
 	private void OnNavigate(InputValue inputValue)
 	{
-		movementKeyPressedEvent?.Invoke(inputValue.Get<Vector2>());
+		movementKeyWasPressedEvent?.Invoke(inputValue.Get<Vector2>());
 	}
 
 	private void OnScrollWheel(InputValue inputValue)
 	{
-		wheelScrolledEvent?.Invoke(inputValue.Get<Vector2>());
+		mouseWheelWasScrolledEvent?.Invoke(inputValue.Get<Vector2>());
 	}
 }

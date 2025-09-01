@@ -45,7 +45,7 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 			
 			if(userInputController != null)
 			{
-				userInputController.movementKeyPressedEvent.AddListener(OnMovementKeyPressed);
+				userInputController.movementKeyWasPressedEvent.AddListener(OnMovementKeyWasPressed);
 			}
 		}
 		else
@@ -57,7 +57,7 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 			
 			if(userInputController != null)
 			{
-				userInputController.movementKeyPressedEvent.RemoveListener(OnMovementKeyPressed);
+				userInputController.movementKeyWasPressedEvent.RemoveListener(OnMovementKeyWasPressed);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 		mainCamera.gameObject.transform.position = cameraPosition;
 	}
 
-	private void OnMovementKeyPressed(Vector2 movementVector)
+	private void OnMovementKeyWasPressed(Vector2 movementVector)
 	{
 		if(inputIsActive)
 		{
