@@ -15,7 +15,7 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private MapGenerationManager mapGenerationManager;
 	private VisualiserEventsManager visualiserEventsManager;
 
-	private readonly float ADDITIONAL_OFFSET_FROM_MAP_EDGES = 1f;
+	private static readonly float ADDITIONAL_OFFSET_FROM_MAP_EDGES = 1f;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
