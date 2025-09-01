@@ -98,7 +98,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 		var mapTileRealPosition = GetMousePositionToWorldPoint() + translationPositionOffset;
 		var mapTileTiledPosition = GetPositionWithinArea(mapTileRealPosition.ToTiledPosition());
 
-		if(!DetectedAnyUnacceptableCollider(mapTileTiledPosition))
+		if(!AnyUnacceptableColliderWasDetected(mapTileTiledPosition))
 		{
 			mapTile.gameObject.transform.position = mapTileTiledPosition;
 		}
@@ -111,7 +111,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 		return new Vector3(mousePositionToWorldPoint.x, mousePositionToWorldPoint.y, 0f);
 	}
 
-	private bool DetectedAnyUnacceptableCollider(Vector2 position)
+	private bool AnyUnacceptableColliderWasDetected(Vector2 position)
 	{
 		var collisionBoxSize = Vector2.one;
 		var collisionBoxSizeOffset = Vector2.one*COLLISION_BOX_SIZE_OFFSET;
