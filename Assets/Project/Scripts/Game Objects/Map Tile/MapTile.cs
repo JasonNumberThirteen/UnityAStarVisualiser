@@ -57,16 +57,23 @@ public class MapTile : MonoBehaviour
 		
 		this.weight = Mathf.Clamp(weight, MIN_WEIGHT, MAX_WEIGHT);
 
-		if(previousWeight == this.weight)
+		if(previousWeight != this.weight)
 		{
-			return;
+			OnWeightWasChanged();
 		}
+	}
 
-		weightWasChangedEvent?.Invoke(this.weight);
-		SetTileType(this.weight < 0 ? MapTileType.Impassable : MapTileType.Passable);
+	private void OnWeightWasChanged()
+	{
+		mapTileNode.Weight = weight;
+		
+		weightWasChangedEvent?.Invoke(weight);
+		SetTileType(weight < 0 ? MapTileType.Impassable : MapTileType.Passable);
+		SendWeightWasChangedEvent();
+	}
 
-		mapTileNode.Weight = this.weight;
-
+	private void SendWeightWasChangedEvent()
+	{
 		if(visualiserEventsManager != null)
 		{
 			visualiserEventsManager.SendEvent(new MapTileBoolVisualiserEvent(this, VisualiserEventType.MapTileWeightWasChanged, true));
