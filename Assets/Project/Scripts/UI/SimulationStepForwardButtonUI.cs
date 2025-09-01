@@ -36,7 +36,7 @@ public class SimulationStepForwardButtonUI : MonoBehaviour
 	{
 		if(simulationManager != null)
 		{
-			simulationManager.InitiateStepForward();
+			simulationManager.SetSimulationPaused(false);
 		}
 	}
 }

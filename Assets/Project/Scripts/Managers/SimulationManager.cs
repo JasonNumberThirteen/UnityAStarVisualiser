@@ -8,23 +8,16 @@ public class SimulationManager : MonoBehaviour
 	public UnityEvent<bool> simulationEnabledStateWasChangedEvent;
 	public UnityEvent<SimulationType> simulationTypeWasChangedEvent;
 
-	private SimulationType simulationType;	
 	private bool simulationIsEnabled;
-	private float simulationStepDelay;
 	private bool simulationIsPaused;
+	private float simulationStepDelay;
+	private SimulationType simulationType;
 	private PathfindingManager pathfindingManager;
 
-	public SimulationType GetSimulationType() => simulationType;
 	public bool SimulationIsEnabled() => simulationIsEnabled;
-	public float GetSimulationStepDelay() => simulationStepDelay;
 	public bool SimulationIsPaused() => simulationIsPaused;
-
-	public void SetSimulationType(SimulationType simulationType)
-	{
-		this.simulationType = simulationType;
-
-		simulationTypeWasChangedEvent?.Invoke(this.simulationType);
-	}
+	public float GetSimulationStepDelay() => simulationStepDelay;
+	public SimulationType GetSimulationType() => simulationType;
 
 	public void SetSimulationEnabled(bool enabled)
 	{
@@ -33,14 +26,21 @@ public class SimulationManager : MonoBehaviour
 		simulationEnabledStateWasChangedEvent?.Invoke(simulationIsEnabled);		
 	}
 
+	public void SetSimulationPaused(bool paused)
+	{
+		simulationIsPaused = paused;
+	}
+
 	public void SetSimulationStepDelay(float stepDelay)
 	{
 		simulationStepDelay = stepDelay;
 	}
 
-	public void InitiateStepForward()
+	public void SetSimulationType(SimulationType simulationType)
 	{
-		simulationIsPaused = false;
+		this.simulationType = simulationType;
+
+		simulationTypeWasChangedEvent?.Invoke(this.simulationType);
 	}
 
 	public IEnumerator GetNextStepDelayDependingOnSimulationType()
@@ -91,14 +91,16 @@ public class SimulationManager : MonoBehaviour
 
 	private void OnPathfindingProcessStateWasChanged(bool started)
 	{
-		simulationIsPaused = started && simulationType == SimulationType.Stepwise;
+		SetSimulationPaused(started && SimulationTypeIsSetTo(SimulationType.Stepwise));
 	}
 
 	private void OnMapTileNodeWasVisited(MapTileNode mapTileNode)
 	{
-		if(simulationType == SimulationType.Stepwise)
+		if(SimulationTypeIsSetTo(SimulationType.Stepwise))
 		{
-			simulationIsPaused = true;
+			SetSimulationPaused(true);
 		}
 	}
+
+	private bool SimulationTypeIsSetTo(SimulationType simulationType) => this.simulationType == simulationType;
 }
