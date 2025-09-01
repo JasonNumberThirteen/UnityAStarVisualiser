@@ -10,7 +10,7 @@ public class SimulationStepDelaySliderUI : MonoBehaviour
 	private void Awake()
 	{
 		slider = GetComponent<Slider>();
-		simulationManager = FindFirstObjectByType<SimulationManager>();
+		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 
 		RegisterToListeners(true);
 		SetSimulationStepDelay(slider.value);

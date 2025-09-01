@@ -29,10 +29,10 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void Awake()
 	{
-		userInputController = FindFirstObjectByType<UserInputController>();
-		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
-		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
-		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
+		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
+		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
+		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
+		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}

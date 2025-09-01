@@ -33,10 +33,10 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 	private void Awake()
 	{
 		textUI = GetComponent<TextMeshProUGUI>();
-		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
-		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
-		mapTileWeightController = FindFirstObjectByType<MapTileWeightController>();
-		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
+		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
+		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
+		mapTileWeightController = ObjectMethods.FindComponentOfType<MapTileWeightController>();
+		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}

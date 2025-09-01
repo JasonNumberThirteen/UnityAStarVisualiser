@@ -8,7 +8,7 @@ public class MainCameraPositionAdjuster : MonoBehaviour
 	private void Awake()
 	{
 		mainCamera = Camera.main;
-		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
+		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
 
 		RegisterToListeners(true);
 	}

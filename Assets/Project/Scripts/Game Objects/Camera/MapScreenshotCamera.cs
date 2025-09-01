@@ -20,8 +20,8 @@ public class MapScreenshotCamera : MonoBehaviour
 	private void Awake()
 	{
 		thisCamera = GetComponent<Camera>();
-		mainCameraZoomController = FindFirstObjectByType<MainCameraZoomController>();
-		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
+		mainCameraZoomController = ObjectMethods.FindComponentOfType<MainCameraZoomController>();
+		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
 
 		RegisterToListeners(true);
 		gameObject.SetActive(false);

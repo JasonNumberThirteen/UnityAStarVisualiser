@@ -32,7 +32,7 @@ public class MapGenerationManager : MonoBehaviour
 			MapTileType.Passable,
 			MapTileType.Impassable
 		};
-		var mapTiles = FindObjectsByType<MapTile>(FindObjectsSortMode.None).Where(mapTile => allowedMapTileTypes.Contains(mapTile.GetTileType())).ToList();
+		var mapTiles = ObjectMethods.FindComponentsOfType<MapTile>(false).Where(mapTile => allowedMapTileTypes.Contains(mapTile.GetTileType())).ToList();
 
 		mapTiles.ForEach(mapTile => mapTile.ResetTile());
 	}
@@ -128,7 +128,7 @@ public class MapGenerationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		mapTilesPooler = FindFirstObjectByType<MapTilesPooler>();
+		mapTilesPooler = ObjectMethods.FindComponentOfType<MapTilesPooler>();
 		
 		GenerateInitialMap(10);
 	}

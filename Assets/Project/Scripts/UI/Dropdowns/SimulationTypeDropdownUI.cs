@@ -12,7 +12,7 @@ public class SimulationTypeDropdownUI : MonoBehaviour
 	private void Awake()
 	{
 		dropdown = GetComponent<TMP_Dropdown>();
-		simulationManager = FindFirstObjectByType<SimulationManager>();
+		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 
 		AddOptionsToDropdown();
 		RegisterToListeners(true);

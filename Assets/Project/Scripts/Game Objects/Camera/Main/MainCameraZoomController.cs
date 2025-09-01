@@ -30,9 +30,9 @@ public class MainCameraZoomController : MonoBehaviour, IPrimaryWindowElement
 	private void Awake()
 	{
 		mainCamera = Camera.main;
-		userInputController = FindFirstObjectByType<UserInputController>();
-		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
+		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
 	}

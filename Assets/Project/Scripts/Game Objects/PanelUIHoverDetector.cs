@@ -20,7 +20,7 @@ public class PanelUIHoverDetector : MonoBehaviour, IPointerEnterHandler, IPointe
 	private void Awake()
 	{
 		panelUI = GetComponent<PanelUI>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 	}
 
 	private void SendHoverEvent(bool @bool)

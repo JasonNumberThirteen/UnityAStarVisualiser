@@ -8,7 +8,7 @@ public class PopupPanelUI : PanelUI
 
 	protected virtual void Awake()
 	{
-		primaryWindowElements.AddRange(FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IPrimaryWindowElement>());
+		primaryWindowElements.AddRange(ObjectMethods.FindComponentsOfType<MonoBehaviour>().OfType<IPrimaryWindowElement>());
 	}
 
 	protected virtual void OnEnable()

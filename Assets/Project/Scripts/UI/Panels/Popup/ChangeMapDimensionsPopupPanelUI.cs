@@ -18,7 +18,7 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 	{
 		base.Awake();
 		
-		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
+		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
 		
 		RegisterToListeners(true);
 	}

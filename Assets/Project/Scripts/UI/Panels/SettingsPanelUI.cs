@@ -25,12 +25,12 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void Awake()
 	{
-		mapTilesLegendPanelUI = FindFirstObjectByType<MapTilesLegendPanelUI>();
-		instructionsPanelUI = FindFirstObjectByType<InstructionsPanelUI>();
-		simulationSettingsPanelUI = FindFirstObjectByType<SimulationSettingsPanelUI>();
-		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
-		simulationManager = FindFirstObjectByType<SimulationManager>();
-		pathTrailManager = FindFirstObjectByType<PathTrailManager>();
+		mapTilesLegendPanelUI = ObjectMethods.FindComponentOfType<MapTilesLegendPanelUI>();
+		instructionsPanelUI = ObjectMethods.FindComponentOfType<InstructionsPanelUI>();
+		simulationSettingsPanelUI = ObjectMethods.FindComponentOfType<SimulationSettingsPanelUI>();
+		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
+		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
+		pathTrailManager = ObjectMethods.FindComponentOfType<PathTrailManager>();
 
 		UpdateUIElementsDependantOnToggleUIStates();
 		SetPathTrailEnabled(showPathTrailToggleUI != null && showPathTrailToggleUI.isOn);

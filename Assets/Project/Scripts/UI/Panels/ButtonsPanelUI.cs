@@ -26,12 +26,12 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void Awake()
 	{
-		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
-		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
-		changeMapDimensionsPopupPanelUI = FindFirstObjectByType<ChangeMapDimensionsPopupPanelUI>(FindObjectsInactive.Include);
-		informationPopupPanelUI = FindFirstObjectByType<InformationPopupPanelUI>(FindObjectsInactive.Include);
-		exitPopupPanelUI = FindFirstObjectByType<ExitPopupPanelUI>(FindObjectsInactive.Include);
-		mapScreenshotTaker = FindFirstObjectByType<MapScreenshotTaker>();
+		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
+		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
+		changeMapDimensionsPopupPanelUI = ObjectMethods.FindComponentOfType<ChangeMapDimensionsPopupPanelUI>();
+		informationPopupPanelUI = ObjectMethods.FindComponentOfType<InformationPopupPanelUI>();
+		exitPopupPanelUI = ObjectMethods.FindComponentOfType<ExitPopupPanelUI>();
+		mapScreenshotTaker = ObjectMethods.FindComponentOfType<MapScreenshotTaker>();
 		
 		RegisterToListeners(true);
 	}

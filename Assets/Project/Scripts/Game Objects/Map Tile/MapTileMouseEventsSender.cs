@@ -15,7 +15,7 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 	private void Awake()
 	{
 		mapTile = GetComponent<MapTile>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 	}
 
 	private void OnMouseEnter()

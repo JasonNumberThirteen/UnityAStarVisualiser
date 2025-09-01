@@ -15,7 +15,7 @@ public class PanelUIHoverDetectionManager : MonoBehaviour, IPrimaryWindowElement
 
 	private void Awake()
 	{
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
 	}

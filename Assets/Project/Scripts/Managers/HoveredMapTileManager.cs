@@ -18,7 +18,7 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement
 
 	private void Awake()
 	{
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
 	}

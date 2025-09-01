@@ -15,7 +15,7 @@ public class MapAreaManager : MonoBehaviour
 
 	private void Awake()
 	{
-		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
+		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
 
 		RegisterToListeners(true);
 	}

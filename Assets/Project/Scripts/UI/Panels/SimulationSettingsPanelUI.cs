@@ -14,8 +14,8 @@ public class SimulationSettingsPanelUI : PanelUI
 
 	private void Awake()
 	{
-		simulationManager = FindFirstObjectByType<SimulationManager>();
-		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
+		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
+		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 
 		RegisterToListeners(true);
 	}

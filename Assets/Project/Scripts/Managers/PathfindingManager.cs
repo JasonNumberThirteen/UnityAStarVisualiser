@@ -99,12 +99,12 @@ public class PathfindingManager : MonoBehaviour
 
 	private void Awake()
 	{
-		mapGenerationManager = FindFirstObjectByType<MapGenerationManager>();
-		heuristicManager = FindFirstObjectByType<HeuristicManager>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
-		simulationManager = FindFirstObjectByType<SimulationManager>();
+		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
+		heuristicManager = ObjectMethods.FindComponentOfType<HeuristicManager>();
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
+		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 
-		mapEditingElements.AddRange(FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IMapEditingElement>());
+		mapEditingElements.AddRange(ObjectMethods.FindComponentsOfType<MonoBehaviour>().OfType<IMapEditingElement>());
 		RegisterToListeners(true);
 	}
 
@@ -148,7 +148,7 @@ public class PathfindingManager : MonoBehaviour
 	private void OnMapWasGenerated()
 	{
 		mapTilesInScene.Clear();
-		mapTilesInScene.AddRange(FindObjectsByType<MapTile>(FindObjectsSortMode.None));
+		mapTilesInScene.AddRange(ObjectMethods.FindComponentsOfType<MapTile>(false));
 	}
 
 	private void OnMapTilesWereAdded(List<MapTile> mapTiles)

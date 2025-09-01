@@ -59,7 +59,7 @@ public class SimulationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
+		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 
 		RegisterToListeners(true);
 	}

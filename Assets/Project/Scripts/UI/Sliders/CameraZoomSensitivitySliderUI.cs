@@ -10,7 +10,7 @@ public class CameraZoomSensitivitySliderUI : MonoBehaviour
 	private void Awake()
 	{
 		slider = GetComponent<Slider>();
-		mainCameraZoomController = FindFirstObjectByType<MainCameraZoomController>();
+		mainCameraZoomController = ObjectMethods.FindComponentOfType<MainCameraZoomController>();
 
 		RegisterToListeners(true);
 		SetZoomPerScroll(slider.value);

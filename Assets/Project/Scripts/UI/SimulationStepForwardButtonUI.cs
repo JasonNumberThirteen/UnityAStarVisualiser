@@ -10,7 +10,7 @@ public class SimulationStepForwardButtonUI : MonoBehaviour
 	private void Awake()
 	{
 		button = GetComponent<Button>();
-		simulationManager = FindFirstObjectByType<SimulationManager>();
+		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 
 		RegisterToListeners(true);
 	}

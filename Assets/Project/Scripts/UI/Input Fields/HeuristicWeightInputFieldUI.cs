@@ -9,7 +9,7 @@ public class HeuristicWeightInputFieldUI : MonoBehaviour
 	private void Awake()
 	{
 		decimalNumberInputFieldUIValueAdjuster = GetComponent<DecimalNumberInputFieldUIValueAdjuster>();
-		heuristicManager = FindFirstObjectByType<HeuristicManager>();
+		heuristicManager = ObjectMethods.FindComponentOfType<HeuristicManager>();
 
 		RegisterToListeners(true);
 	}

@@ -33,9 +33,9 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 	private void Awake()
 	{
 		mainCamera = Camera.main;
-		mapAreaManager = FindFirstObjectByType<MapAreaManager>();
-		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
-		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
+		mapAreaManager = ObjectMethods.FindComponentOfType<MapAreaManager>();
+		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
+		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}

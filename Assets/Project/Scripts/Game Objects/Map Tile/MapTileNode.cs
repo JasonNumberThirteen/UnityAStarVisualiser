@@ -51,7 +51,7 @@ public class MapTileNode : MonoBehaviour
 
 	private void Awake()
 	{
-		pathfindingManager = FindFirstObjectByType<PathfindingManager>();
+		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 	}
 
 	private void AddNeighbourIfPossible(List<MapTileNode> mapTileNodes, Vector2 direction)

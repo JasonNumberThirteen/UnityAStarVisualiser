@@ -13,7 +13,7 @@ public class HeuristicTypeDropdownUI : MonoBehaviour
 	private void Awake()
 	{
 		dropdown = GetComponent<TMP_Dropdown>();
-		heuristicManager = FindFirstObjectByType<HeuristicManager>();
+		heuristicManager = ObjectMethods.FindComponentOfType<HeuristicManager>();
 
 		AddOptionsToDropdown();
 		RegisterToListeners(true);

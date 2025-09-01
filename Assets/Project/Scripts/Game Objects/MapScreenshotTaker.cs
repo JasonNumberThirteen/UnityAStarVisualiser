@@ -73,6 +73,6 @@ public class MapScreenshotTaker : MonoBehaviour
 
 	private void Awake()
 	{
-		mapScreenshotCamera = FindFirstObjectByType<MapScreenshotCamera>(FindObjectsInactive.Include);
+		mapScreenshotCamera = ObjectMethods.FindComponentOfType<MapScreenshotCamera>();
 	}
 }

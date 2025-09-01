@@ -48,7 +48,7 @@ public class MapTile : MonoBehaviour
 	private void Awake()
 	{
 		mapTileNode = GetComponent<MapTileNode>();
-		visualiserEventsManager = FindFirstObjectByType<VisualiserEventsManager>();
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 	}
 
 	private void SetWeightTo(int weight)

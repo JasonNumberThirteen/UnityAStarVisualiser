@@ -32,9 +32,9 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void Awake()
 	{
-		hoveredMapTileManager = FindFirstObjectByType<HoveredMapTileManager>();
-		selectedMapTileManager = FindFirstObjectByType<SelectedMapTileManager>();
-		panelUIHoverDetectionManager = FindFirstObjectByType<PanelUIHoverDetectionManager>();
+		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
+		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
+		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}

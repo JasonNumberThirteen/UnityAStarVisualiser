@@ -23,8 +23,8 @@ public class MainCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 	private void Awake()
 	{
 		mainCamera = Camera.main;
-		mapAreaManager = FindFirstObjectByType<MapAreaManager>();
-		userInputController = FindFirstObjectByType<UserInputController>();
+		mapAreaManager = ObjectMethods.FindComponentOfType<MapAreaManager>();
+		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
 
 		RegisterToListeners(true);
 	}
