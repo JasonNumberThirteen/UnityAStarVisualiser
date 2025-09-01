@@ -47,12 +47,6 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 			{
 				cancelButtonUI.onClick.AddListener(OnCancelButtonUIClicked);
 			}
-
-			if(mapGenerationManager != null)
-			{
-				mapGenerationManager.mapTilesWereAddedEvent.AddListener(OnMapTilesWereAdded);
-				mapGenerationManager.mapTilesWereRemovedEvent.AddListener(OnMapTilesWereRemoved);
-			}
 		}
 		else
 		{
@@ -65,12 +59,27 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 			{
 				cancelButtonUI.onClick.RemoveListener(OnCancelButtonUIClicked);
 			}
+		}
 
-			if(mapGenerationManager != null)
-			{
-				mapGenerationManager.mapTilesWereAddedEvent.RemoveListener(OnMapTilesWereAdded);
-				mapGenerationManager.mapTilesWereRemovedEvent.RemoveListener(OnMapTilesWereRemoved);
-			}
+		RegisterToMapGenerationListeners(register);
+	}
+
+	private void RegisterToMapGenerationListeners(bool register)
+	{
+		if(mapGenerationManager == null)
+		{
+			return;
+		}
+		
+		if(register)
+		{
+			mapGenerationManager.mapTilesWereAddedEvent.AddListener(OnMapTilesWereAdded);
+			mapGenerationManager.mapTilesWereRemovedEvent.AddListener(OnMapTilesWereRemoved);
+		}
+		else
+		{
+			mapGenerationManager.mapTilesWereAddedEvent.RemoveListener(OnMapTilesWereAdded);
+			mapGenerationManager.mapTilesWereRemovedEvent.RemoveListener(OnMapTilesWereRemoved);
 		}
 	}
 
