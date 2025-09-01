@@ -11,8 +11,6 @@ public static class MapTileTypeMethods
 		{MapTileType.Destination, new(250, 80, 83, 255)}
 	};
 
-	private static readonly Color DEFAULT_COLOR = Color.white;
-
 	public static IReadOnlyDictionary<MapTileType, Color32> GetKeyValuePairs() => TILE_COLOR_BY_TYPE;
-	public static Color32 GetColorByMapTileType(MapTileType mapTileType) => TILE_COLOR_BY_TYPE.TryGetValue(mapTileType, out var color) ? color : DEFAULT_COLOR;
+	public static Color32 GetColorByMapTileType(MapTileType mapTileType) => TILE_COLOR_BY_TYPE.TryGetValue(mapTileType, out var color) ? color : Color.white;
 }

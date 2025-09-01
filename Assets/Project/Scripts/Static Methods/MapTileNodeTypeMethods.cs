@@ -9,7 +9,5 @@ public class MapTileNodeTypeMethods : MonoBehaviour
 		{MapTileNodeType.BelongingToPath, new Color32(255, 222, 33, 255)}
 	};
 
-	private static readonly Color DEFAULT_COLOR = Color.white;
-
-	public static Color32 GetColorByMapTileNodeType(MapTileNodeType mapTileNodeType) => TILE_COLOR_BY_NODE_TYPE.TryGetValue(mapTileNodeType, out var color) ? color : DEFAULT_COLOR;
+	public static Color32 GetColorByMapTileNodeType(MapTileNodeType mapTileNodeType) => TILE_COLOR_BY_NODE_TYPE.TryGetValue(mapTileNodeType, out var color) ? color : Color.white;
 }
