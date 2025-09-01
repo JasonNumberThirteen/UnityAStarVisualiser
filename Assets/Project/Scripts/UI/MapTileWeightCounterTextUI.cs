@@ -15,6 +15,16 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 	private MapTileWeightController mapTileWeightController;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
+	private MapTile CurrentMapTile
+	{
+		set
+		{
+			currentMapTile = value;
+
+			OnWeightWasChanged(currentMapTile != null ? currentMapTile.GetWeight() : 0);
+		}
+	}
+
 	public void SetPrimaryWindowElementActive(bool active)
 	{
 		textUIWasHidden = !active;
@@ -109,37 +119,29 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 
 	private void OnWeightWasChanged(int weight)
 	{
-		SetMapTileWeightText(weight);
+		SetMapTileWeightText(weight.ToString());
 		UpdateActiveState();
 	}
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
 		hoveredMapTile = mapTile;
-		
-		if(selectedMapTile != null)
+
+		if(selectedMapTile == null)
 		{
-			return;
+			CurrentMapTile = hoveredMapTile;
 		}
-
-		currentMapTile = hoveredMapTile;
-
-		SetMapTileWeightText(currentMapTile != null ? currentMapTile.GetWeight() : 0);
-		UpdateActiveState();
 	}
 
-	private void SetMapTileWeightText(int weight)
+	private void SetMapTileWeightText(string text)
 	{
-		textUI.text = weight.ToString();
+		textUI.SetText(text);
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
 		selectedMapTile = mapTile;
-		currentMapTile = selectedMapTile == null ? hoveredMapTile : null;
-		
-		SetMapTileWeightText(currentMapTile != null ? currentMapTile.GetWeight() : 0);
-		UpdateActiveState();
+		CurrentMapTile = selectedMapTile == null ? hoveredMapTile : null;
 	}
 
 	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
