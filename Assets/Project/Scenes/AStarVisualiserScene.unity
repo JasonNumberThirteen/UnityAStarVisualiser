@@ -665,11 +665,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 165.01146
+      value: 165.3905
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 138.50574
+      value: 138.69525
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1521,7 +1521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bcfd66b8f483d4c9cc817a58525943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapGeneratedEvent:
+  mapWasGeneratedEvent:
     m_PersistentCalls:
       m_Calls: []
   mapTilesWereAddedEvent:
@@ -1980,11 +1980,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 189.76317
+      value: 190.19908
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 150.88159
+      value: 151.09955
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2677,11 +2677,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 287.11993
+      value: 287.77948
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 199.55997
+      value: 199.88974
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3874,7 +3874,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1595584976}
-  - {fileID: 1186613081}
   - {fileID: 91064940}
   - {fileID: 817443041}
   - {fileID: 1519585487}
@@ -3882,6 +3881,7 @@ Transform:
   - {fileID: 1699436368}
   - {fileID: 1123758778}
   - {fileID: 1843710903}
+  - {fileID: 1186613081}
   - {fileID: 767186546}
   - {fileID: 1288450402}
   m_Father: {fileID: 0}
@@ -5700,7 +5700,7 @@ GameObject:
   - component: {fileID: 1186613081}
   - component: {fileID: 1186613082}
   m_Layer: 0
-  m_Name: Path Trail Manager
+  m_Name: Map Tiles Path Trail Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6014,10 +6014,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7529dabe9cfb44b98ad5dc51ef692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementKeyPressedEvent:
+  movementKeyWasPressedEvent:
     m_PersistentCalls:
       m_Calls: []
-  wheelScrolledEvent:
+  mouseWheelWasScrolledEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1288450401
@@ -6204,11 +6204,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 253.29257
+      value: 253.87442
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 182.64629
+      value: 182.93721
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8456,7 +8456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2e3e2ed6f0d7954ea952ec2fbb53ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventReceivedEvent:
+  eventWasSentEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1703664156
@@ -10973,11 +10973,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 246.69212
+      value: 247.2588
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 179.34607
+      value: 179.6294
       objectReference: {fileID: 0}
     - target: {fileID: 8822182477782956189, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_AnchoredPosition.y

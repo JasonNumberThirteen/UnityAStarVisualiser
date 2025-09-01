@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathTrailManager : MonoBehaviour
+public class MapTilesPathTrailManager : MonoBehaviour
 {
 	[SerializeField] private MapTilePathTrailIndicator mapTilePathTrailIndicatorPrefab;
 

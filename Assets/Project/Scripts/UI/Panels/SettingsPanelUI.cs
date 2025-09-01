@@ -15,7 +15,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	private SimulationSettingsPanelUI simulationSettingsPanelUI;
 	private PathfindingManager pathfindingManager;
 	private SimulationManager simulationManager;
-	private PathTrailManager pathTrailManager;
+	private MapTilesPathTrailManager mapTilesPathTrailManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -30,7 +30,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		simulationSettingsPanelUI = ObjectMethods.FindComponentOfType<SimulationSettingsPanelUI>();
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
-		pathTrailManager = ObjectMethods.FindComponentOfType<PathTrailManager>();
+		mapTilesPathTrailManager = ObjectMethods.FindComponentOfType<MapTilesPathTrailManager>();
 
 		UpdateUIElementsDependantOnToggleUIStates();
 		SetPathTrailEnabled(showPathTrailToggleUI != null && showPathTrailToggleUI.isOn);
@@ -139,9 +139,9 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void SetPathTrailEnabled(bool enabled)
 	{
-		if(pathTrailManager != null)
+		if(mapTilesPathTrailManager != null)
 		{
-			pathTrailManager.SetPathTrailEnabled(enabled);
+			mapTilesPathTrailManager.SetPathTrailEnabled(enabled);
 		}
 	}
 
