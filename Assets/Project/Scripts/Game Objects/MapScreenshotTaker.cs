@@ -20,6 +20,11 @@ public class MapScreenshotTaker : MonoBehaviour
 		TakeScreenshotInDirectory(directoryPath);
 	}
 
+	private void Awake()
+	{
+		mapScreenshotCamera = ObjectMethods.FindComponentOfType<MapScreenshotCamera>();
+	}
+
 	private void EnsureExistanceOfDirectory(string path)
 	{
 		if(!Directory.Exists(path))
@@ -69,10 +74,5 @@ public class MapScreenshotTaker : MonoBehaviour
 		}
 
 		RenderTexture.active = renderTexture;
-	}
-
-	private void Awake()
-	{
-		mapScreenshotCamera = ObjectMethods.FindComponentOfType<MapScreenshotCamera>();
 	}
 }
