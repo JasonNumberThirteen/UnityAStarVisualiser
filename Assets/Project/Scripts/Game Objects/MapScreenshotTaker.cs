@@ -48,7 +48,7 @@ public class MapScreenshotTaker : MonoBehaviour
 		var (width, height) = (Screen.width, Screen.height);
 		var renderTexture = new RenderTexture(width, height, RENDER_TEXTURE_DEPTH);
 		var texture2D = new Texture2D(width, height, RENDER_TEXTURE_FORMAT, false);
-		var screenRectangle = new Rect(Vector2Int.zero, new Vector2Int(width, height));
+		var screenRectangle = RectMethods.GetRectWithSize(new Vector2Int(width, height));
 
 		SetRenderTextureResult(renderTexture);
 		texture2D.ReadPixels(screenRectangle, 0, 0);

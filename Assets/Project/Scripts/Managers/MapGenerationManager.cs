@@ -82,7 +82,7 @@ public class MapGenerationManager : MonoBehaviour
 	private List<MapTile> GetMapTilesToRemove(Vector2Int newMapSize)
 	{
 		var mapTilesToRemove = new List<MapTile>();
-		var rectangleArea = new Rect(Vector2.zero, newMapSize);
+		var rectangleArea = RectMethods.GetRectWithSize(newMapSize);
 
 		mapTilesToRemove.AddRange(mapTiles.Where(mapTile => !rectangleArea.Contains(mapTile.transform.position)).ToList());
 
