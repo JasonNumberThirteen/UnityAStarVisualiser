@@ -34,12 +34,6 @@ public class SimulationSettingsPanelUI : PanelUI
 				interruptSimulationButtonUI.onClick.AddListener(OnInterruptSimulationButtonUIClicked);
 			}
 			
-			if(simulationManager != null)
-			{
-				simulationManager.simulationEnabledStateWasChangedEvent.AddListener(SetActive);
-				simulationManager.simulationTypeWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnSimulationType);
-			}
-
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
@@ -52,16 +46,31 @@ public class SimulationSettingsPanelUI : PanelUI
 				interruptSimulationButtonUI.onClick.RemoveListener(OnInterruptSimulationButtonUIClicked);
 			}
 			
-			if(simulationManager != null)
-			{
-				simulationManager.simulationEnabledStateWasChangedEvent.RemoveListener(SetActive);
-				simulationManager.simulationTypeWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnSimulationType);
-			}
-
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
 			}
+		}
+
+		RegisterToSimulationManagerListeners(register);
+	}
+
+	private void RegisterToSimulationManagerListeners(bool register)
+	{
+		if(simulationManager == null)
+		{
+			return;
+		}
+
+		if(register)
+		{
+			simulationManager.simulationEnabledStateWasChangedEvent.AddListener(SetActive);
+			simulationManager.simulationTypeWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnSimulationType);
+		}
+		else
+		{
+			simulationManager.simulationEnabledStateWasChangedEvent.RemoveListener(SetActive);
+			simulationManager.simulationTypeWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnSimulationType);
 		}
 	}
 
@@ -70,6 +79,16 @@ public class SimulationSettingsPanelUI : PanelUI
 		if(pathfindingManager != null)
 		{
 			pathfindingManager.InterruptPathfindingIfNeeded();
+		}
+	}
+
+	private void OnEnable()
+	{
+		SetSelectableUIsInteractableDependingOnPathfindingProcessState(false);
+		
+		if(simulationManager != null)
+		{
+			SetSelectableUIsInteractableDependingOnSimulationType(simulationManager.GetSimulationType());
 		}
 	}
 
@@ -88,16 +107,6 @@ public class SimulationSettingsPanelUI : PanelUI
 		if(interruptSimulationButtonUI != null)
 		{
 			interruptSimulationButtonUI.interactable = interactable;
-		}
-	}
-
-	private void OnEnable()
-	{
-		SetSelectableUIsInteractableDependingOnPathfindingProcessState(false);
-		
-		if(simulationManager != null)
-		{
-			SetSelectableUIsInteractableDependingOnSimulationType(simulationManager.GetSimulationType());
 		}
 	}
 
