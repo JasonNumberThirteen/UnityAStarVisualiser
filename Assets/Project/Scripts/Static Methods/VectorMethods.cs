@@ -8,7 +8,7 @@ public static class VectorMethods
 	public static Vector2 GetSouthWestDirection() => -Vector2.one;
 	public static Vector2 GetNorthWestDirection() => new(-1, 1);
 	
-	public static List<Vector2> GetDirectionsForFindingNeighbouringNodes(bool allowDiagonal)
+	public static List<Vector2> GetCardinalDirections(bool allowDiagonal)
 	{
 		var directions = new List<Vector2>()
 		{

@@ -43,7 +43,7 @@ public class MapTileNode : MonoBehaviour
 	public void FindNeighbours(List<MapTileNode> mapTileNodes)
 	{
 		var allowDiagonalDirections = pathfindingManager != null && pathfindingManager.DiagonalMovementIsEnabled();
-		var directions = VectorMethods.GetDirectionsForFindingNeighbouringNodes(allowDiagonalDirections);
+		var directions = VectorMethods.GetCardinalDirections(allowDiagonalDirections);
 
 		neighbours.Clear();
 		directions.ForEach(direction => AddNeighbourIfPossible(mapTileNodes, direction));
