@@ -8,7 +8,6 @@ public class MapAreaManager : MonoBehaviour
 	[SerializeField, Min(0)] private int additionalOffsetFromMapEdgesInTiles = 1;
 	
 	private Rect mapArea;
-
 	private MapGenerationManager mapGenerationManager;
 
 	public Rect GetMapArea() => mapArea;
