@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 {
-	[SerializeField] private Toggle showMapTilesLegendToggleUI;
-	[SerializeField] private Toggle showInstructionsToggleUI;
-	[SerializeField] private Toggle showPathTrailToggleUI;
-	[SerializeField] private Toggle enableDiagonalMovementToggleUI;
-	[SerializeField] private Toggle enableSimulationModeToggleUI;
+	[SerializeField] private ToggleUI showMapTilesLegendToggleUI;
+	[SerializeField] private ToggleUI showInstructionsToggleUI;
+	[SerializeField] private ToggleUI showPathTrailToggleUI;
+	[SerializeField] private ToggleUI enableDiagonalMovementToggleUI;
+	[SerializeField] private ToggleUI enableSimulationModeToggleUI;
 
 	private MapTilesLegendPanelUI mapTilesLegendPanelUI;
 	private InstructionsPanelUI instructionsPanelUI;
@@ -33,9 +32,9 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		mapTilesPathTrailManager = ObjectMethods.FindComponentOfType<MapTilesPathTrailManager>();
 
 		UpdateUIElementsDependantOnToggleUIStates();
-		SetPathTrailEnabled(showPathTrailToggleUI != null && showPathTrailToggleUI.isOn);
-		SetDiagonalMovementEnabled(enableDiagonalMovementToggleUI != null && enableDiagonalMovementToggleUI.isOn);
-		SetSimulationEnabled(enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.isOn);
+		SetPathTrailEnabled(showPathTrailToggleUI != null && showPathTrailToggleUI.IsOn());
+		SetDiagonalMovementEnabled(enableDiagonalMovementToggleUI != null && enableDiagonalMovementToggleUI.IsOn());
+		SetSimulationEnabled(enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.IsOn());
 		RegisterToListeners(true);
 	}
 
@@ -46,11 +45,11 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		SetPanelUIActiveDependingOnToggle(simulationSettingsPanelUI, enableSimulationModeToggleUI);
 	}
 
-	private void SetPanelUIActiveDependingOnToggle(PanelUI panelUI, Toggle toggle)
+	private void SetPanelUIActiveDependingOnToggle(PanelUI panelUI, ToggleUI toggleUI)
 	{
-		if(panelUI != null && toggle != null)
+		if(panelUI != null && toggleUI != null)
 		{
-			panelUI.SetActive(gameObject.activeSelf && toggle.isOn);
+			panelUI.SetActive(gameObject.activeSelf && toggleUI.IsOn());
 		}
 	}
 
@@ -61,33 +60,33 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void RegisterToListeners(bool register)
 	{
+		if(showMapTilesLegendToggleUI != null)
+		{
+			showMapTilesLegendToggleUI.RegisterToValueChangeListener(OnShowMapTilesLegendToggleUIValueChanged, register);
+		}
+
+		if(showInstructionsToggleUI != null)
+		{
+			showInstructionsToggleUI.RegisterToValueChangeListener(OnShowInstructionsToggleUIValueChanged, register);
+		}
+
+		if(showPathTrailToggleUI != null)
+		{
+			showPathTrailToggleUI.RegisterToValueChangeListener(SetPathTrailEnabled, register);
+		}
+
+		if(enableDiagonalMovementToggleUI != null)
+		{
+			enableDiagonalMovementToggleUI.RegisterToValueChangeListener(SetDiagonalMovementEnabled, register);
+		}
+
+		if(enableSimulationModeToggleUI != null)
+		{
+			enableSimulationModeToggleUI.RegisterToValueChangeListener(SetSimulationEnabled, register);
+		}
+		
 		if(register)
 		{
-			if(showMapTilesLegendToggleUI != null)
-			{
-				showMapTilesLegendToggleUI.onValueChanged.AddListener(OnShowMapTilesLegendToggleUIValueChanged);
-			}
-
-			if(showInstructionsToggleUI != null)
-			{
-				showInstructionsToggleUI.onValueChanged.AddListener(OnShowInstructionsToggleUIValueChanged);
-			}
-
-			if(showPathTrailToggleUI != null)
-			{
-				showPathTrailToggleUI.onValueChanged.AddListener(SetPathTrailEnabled);
-			}
-
-			if(enableDiagonalMovementToggleUI != null)
-			{
-				enableDiagonalMovementToggleUI.onValueChanged.AddListener(SetDiagonalMovementEnabled);
-			}
-
-			if(enableSimulationModeToggleUI != null)
-			{
-				enableSimulationModeToggleUI.onValueChanged.AddListener(SetSimulationEnabled);
-			}
-
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
@@ -95,31 +94,6 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 		else
 		{
-			if(showMapTilesLegendToggleUI != null)
-			{
-				showMapTilesLegendToggleUI.onValueChanged.RemoveListener(OnShowMapTilesLegendToggleUIValueChanged);
-			}
-
-			if(showInstructionsToggleUI != null)
-			{
-				showInstructionsToggleUI.onValueChanged.RemoveListener(OnShowInstructionsToggleUIValueChanged);
-			}
-
-			if(showPathTrailToggleUI != null)
-			{
-				showPathTrailToggleUI.onValueChanged.RemoveListener(SetPathTrailEnabled);
-			}
-
-			if(enableDiagonalMovementToggleUI != null)
-			{
-				enableDiagonalMovementToggleUI.onValueChanged.RemoveListener(SetDiagonalMovementEnabled);
-			}
-
-			if(enableSimulationModeToggleUI != null)
-			{
-				enableSimulationModeToggleUI.onValueChanged.RemoveListener(SetSimulationEnabled);
-			}
-
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
@@ -135,6 +109,14 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	private void OnShowInstructionsToggleUIValueChanged(bool enabled)
 	{
 		SetPanelUIActive(instructionsPanelUI, enabled);
+	}
+
+	private void SetPanelUIActive(PanelUI panelUI, bool active)
+	{
+		if(panelUI != null)
+		{
+			panelUI.SetActive(active);
+		}
 	}
 
 	private void SetPathTrailEnabled(bool enabled)
@@ -161,28 +143,18 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void SetPanelUIActive(PanelUI panelUI, bool active)
-	{
-		if(panelUI != null)
-		{
-			panelUI.SetActive(active);
-		}
-	}
-
 	private void OnPathfindingProcessStateWasChanged(bool started)
 	{
-		var selectableUIs = new List<Selectable>()
-		{
-			enableDiagonalMovementToggleUI,
-			enableSimulationModeToggleUI
-		};
+		var toggleUIs = new List<ToggleUI>(){enableDiagonalMovementToggleUI, enableSimulationModeToggleUI};
 
-		selectableUIs.ForEach(selectableUI =>
+		toggleUIs.ForEach(toggleUI => SetToggleUIInteractable(toggleUI, !started));
+	}
+
+	private void SetToggleUIInteractable(ToggleUI toggleUI, bool interactable)
+	{
+		if(toggleUI != null)
 		{
-			if(selectableUI != null)
-			{
-				selectableUI.interactable = !started;
-			}
-		});
+			toggleUI.SetInteractable(interactable);
+		}
 	}
 }
