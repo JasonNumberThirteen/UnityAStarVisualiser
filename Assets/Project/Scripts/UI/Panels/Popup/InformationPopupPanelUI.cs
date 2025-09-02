@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InformationPopupPanelUI : PopupPanelUI
 {
-	[SerializeField] private Button closeButtonUI;
+	[SerializeField] private ButtonUI closeButtonUI;
 
 	protected override void Awake()
 	{
@@ -18,19 +17,9 @@ public class InformationPopupPanelUI : PopupPanelUI
 
 	private void RegisterToListeners(bool register)
 	{
-		if(register)
+		if(closeButtonUI != null)
 		{
-			if(closeButtonUI != null)
-			{
-				closeButtonUI.onClick.AddListener(OnCloseButtonUIClicked);
-			}
-		}
-		else
-		{
-			if(closeButtonUI != null)
-			{
-				closeButtonUI.onClick.RemoveListener(OnCloseButtonUIClicked);
-			}
+			closeButtonUI.RegisterToClickListener(OnCloseButtonUIClicked, register);
 		}
 	}
 

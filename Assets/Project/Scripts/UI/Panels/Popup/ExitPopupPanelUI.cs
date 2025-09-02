@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ExitPopupPanelUI : PopupPanelUI
 {
-	[SerializeField] private Button yesButtonUI;
-	[SerializeField] private Button noButtonUI;
+	[SerializeField] private ButtonUI yesButtonUI;
+	[SerializeField] private ButtonUI noButtonUI;
 
 	protected override void Awake()
 	{
@@ -19,29 +18,14 @@ public class ExitPopupPanelUI : PopupPanelUI
 
 	private void RegisterToListeners(bool register)
 	{
-		if(register)
+		if(yesButtonUI != null)
 		{
-			if(yesButtonUI != null)
-			{
-				yesButtonUI.onClick.AddListener(Application.Quit);
-			}
-
-			if(noButtonUI != null)
-			{
-				noButtonUI.onClick.AddListener(OnNoButtonUIClicked);
-			}
+			yesButtonUI.RegisterToClickListener(Application.Quit, register);
 		}
-		else
-		{
-			if(yesButtonUI != null)
-			{
-				yesButtonUI.onClick.RemoveListener(Application.Quit);
-			}
 
-			if(noButtonUI != null)
-			{
-				noButtonUI.onClick.RemoveListener(OnNoButtonUIClicked);
-			}
+		if(noButtonUI != null)
+		{
+			noButtonUI.RegisterToClickListener(OnNoButtonUIClicked, register);
 		}
 	}
 

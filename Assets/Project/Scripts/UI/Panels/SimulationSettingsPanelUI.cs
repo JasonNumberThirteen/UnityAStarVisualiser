@@ -1,13 +1,12 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SimulationSettingsPanelUI : PanelUI
 {
 	[SerializeField] private TMP_Dropdown simulationTypeDropdownUI;
 	[SerializeField] private PanelUI simulationStepDelaySliderUIPanelUI;
-	[SerializeField] private Button simulationStepForwardButtonUI;
-	[SerializeField] private Button interruptSimulationButtonUI;
+	[SerializeField] private ButtonUI simulationStepForwardButtonUI;
+	[SerializeField] private ButtonUI interruptSimulationButtonUI;
 	
 	private SimulationManager simulationManager;
 	private PathfindingManager pathfindingManager;
@@ -29,11 +28,6 @@ public class SimulationSettingsPanelUI : PanelUI
 	{
 		if(register)
 		{
-			if(interruptSimulationButtonUI != null)
-			{
-				interruptSimulationButtonUI.onClick.AddListener(OnInterruptSimulationButtonUIClicked);
-			}
-			
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
@@ -41,15 +35,20 @@ public class SimulationSettingsPanelUI : PanelUI
 		}
 		else
 		{
-			if(interruptSimulationButtonUI != null)
-			{
-				interruptSimulationButtonUI.onClick.RemoveListener(OnInterruptSimulationButtonUIClicked);
-			}
-			
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
 			}
+		}
+
+		if(simulationStepForwardButtonUI != null)
+		{
+			simulationStepForwardButtonUI.RegisterToClickListener(OnSimulationStepForwardButtonUIClicked, register);
+		}
+
+		if(interruptSimulationButtonUI != null)
+		{
+			interruptSimulationButtonUI.RegisterToClickListener(OnInterruptSimulationButtonUIClicked, register);
 		}
 
 		RegisterToSimulationManagerListeners(register);
@@ -71,6 +70,14 @@ public class SimulationSettingsPanelUI : PanelUI
 		{
 			simulationManager.simulationEnabledStateWasChangedEvent.RemoveListener(SetActive);
 			simulationManager.simulationTypeWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnSimulationType);
+		}
+	}
+
+	private void OnSimulationStepForwardButtonUIClicked()
+	{
+		if(simulationManager != null)
+		{
+			simulationManager.SetSimulationPaused(false);
 		}
 	}
 
@@ -101,12 +108,12 @@ public class SimulationSettingsPanelUI : PanelUI
 
 		if(simulationStepForwardButtonUI != null)
 		{
-			simulationStepForwardButtonUI.interactable = interactable;
+			simulationStepForwardButtonUI.SetInteractable(interactable);
 		}
 		
 		if(interruptSimulationButtonUI != null)
 		{
-			interruptSimulationButtonUI.interactable = interactable;
+			interruptSimulationButtonUI.SetInteractable(interactable);
 		}
 	}
 

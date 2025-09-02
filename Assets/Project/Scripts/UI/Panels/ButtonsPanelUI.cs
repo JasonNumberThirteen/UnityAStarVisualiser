@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 {
-	[SerializeField] private Button findPathButtonUI;
-	[SerializeField] private Button clearResultsButtonUI;
-	[SerializeField] private Button resetTilesButtonUI;
-	[SerializeField] private Button changeMapDimensionsButtonUI;
-	[SerializeField] private Button takeMapScreenshotButtonUI;
-	[SerializeField] private Button informationButtonUI;
-	[SerializeField] private Button exitButtonUI;
+	[SerializeField] private ButtonUI findPathButtonUI;
+	[SerializeField] private ButtonUI clearResultsButtonUI;
+	[SerializeField] private ButtonUI resetTilesButtonUI;
+	[SerializeField] private ButtonUI changeMapDimensionsButtonUI;
+	[SerializeField] private ButtonUI takeMapScreenshotButtonUI;
+	[SerializeField] private ButtonUI informationButtonUI;
+	[SerializeField] private ButtonUI exitButtonUI;
 
 	private PathfindingManager pathfindingManager;
 	private MapGenerationManager mapGenerationManager;
@@ -43,43 +42,43 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void RegisterToListeners(bool register)
 	{
+		if(findPathButtonUI != null)
+		{
+			findPathButtonUI.RegisterToClickListener(OnFindPathButtonUIClicked, register);
+		}
+
+		if(clearResultsButtonUI != null)
+		{
+			clearResultsButtonUI.RegisterToClickListener(OnClearResultsButtonUIClicked, register);
+		}
+
+		if(resetTilesButtonUI != null)
+		{
+			resetTilesButtonUI.RegisterToClickListener(OnResetTilesButtonUIClicked, register);
+		}
+
+		if(changeMapDimensionsButtonUI != null)
+		{
+			changeMapDimensionsButtonUI.RegisterToClickListener(OnChangeMapDimensionsButtonUIClicked, register);
+		}
+
+		if(takeMapScreenshotButtonUI != null)
+		{
+			takeMapScreenshotButtonUI.RegisterToClickListener(OnTakeMapScreenshotButtonUIClicked, register);
+		}
+
+		if(informationButtonUI != null)
+		{
+			informationButtonUI.RegisterToClickListener(OnInformationButtonUIClicked, register);
+		}
+		
+		if(exitButtonUI != null)
+		{
+			exitButtonUI.RegisterToClickListener(OnExitButtonUIClicked, register);
+		}
+		
 		if(register)
 		{
-			if(findPathButtonUI != null)
-			{
-				findPathButtonUI.onClick.AddListener(OnFindPathButtonUIClicked);
-			}
-
-			if(clearResultsButtonUI != null)
-			{
-				clearResultsButtonUI.onClick.AddListener(OnClearResultsButtonUIClicked);
-			}
-
-			if(resetTilesButtonUI != null)
-			{
-				resetTilesButtonUI.onClick.AddListener(OnResetTilesButtonUIClicked);
-			}
-
-			if(changeMapDimensionsButtonUI != null)
-			{
-				changeMapDimensionsButtonUI.onClick.AddListener(OnChangeMapDimensionsButtonUIClicked);
-			}
-
-			if(takeMapScreenshotButtonUI != null)
-			{
-				takeMapScreenshotButtonUI.onClick.AddListener(OnTakeMapScreenshotButtonUIClicked);
-			}
-
-			if(informationButtonUI != null)
-			{
-				informationButtonUI.onClick.AddListener(OnInformationButtonUIClicked);
-			}
-			
-			if(exitButtonUI != null)
-			{
-				exitButtonUI.onClick.AddListener(OnExitButtonUIClicked);
-			}
-
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
@@ -87,41 +86,6 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 		else
 		{
-			if(findPathButtonUI != null)
-			{
-				findPathButtonUI.onClick.RemoveListener(OnFindPathButtonUIClicked);
-			}
-
-			if(clearResultsButtonUI != null)
-			{
-				clearResultsButtonUI.onClick.RemoveListener(OnClearResultsButtonUIClicked);
-			}
-
-			if(resetTilesButtonUI != null)
-			{
-				resetTilesButtonUI.onClick.RemoveListener(OnResetTilesButtonUIClicked);
-			}
-
-			if(changeMapDimensionsButtonUI != null)
-			{
-				changeMapDimensionsButtonUI.onClick.RemoveListener(OnChangeMapDimensionsButtonUIClicked);
-			}
-
-			if(takeMapScreenshotButtonUI != null)
-			{
-				takeMapScreenshotButtonUI.onClick.RemoveListener(OnTakeMapScreenshotButtonUIClicked);
-			}
-
-			if(informationButtonUI != null)
-			{
-				informationButtonUI.onClick.RemoveListener(OnInformationButtonUIClicked);
-			}
-
-			if(exitButtonUI != null)
-			{
-				exitButtonUI.onClick.RemoveListener(OnExitButtonUIClicked);
-			}
-
 			if(pathfindingManager != null)
 			{
 				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
@@ -187,20 +151,16 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void OnPathfindingProcessStateWasChanged(bool started)
 	{
-		var buttonUIs = new List<Button>()
-		{
-			findPathButtonUI,
-			clearResultsButtonUI,
-			resetTilesButtonUI,
-			changeMapDimensionsButtonUI
-		};
+		var buttonUIs = new List<ButtonUI>(){findPathButtonUI, clearResultsButtonUI, resetTilesButtonUI, changeMapDimensionsButtonUI};
 
-		buttonUIs.ForEach(buttonUI =>
+		buttonUIs.ForEach(buttonUI => SetButtonUIInteractable(buttonUI, !started));
+	}
+
+	private void SetButtonUIInteractable(ButtonUI buttonUI, bool interactable)
+	{
+		if(buttonUI != null)
 		{
-			if(buttonUI != null)
-			{
-				buttonUI.interactable = !started;
-			}
-		});
+			buttonUI.SetInteractable(interactable);
+		}
 	}
 }

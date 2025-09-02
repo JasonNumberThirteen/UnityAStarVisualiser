@@ -2,15 +2,13 @@ using TMPro;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 {
 	[SerializeField] private TMP_InputField widthMapDimensionInputFieldUI;
 	[SerializeField] private TMP_InputField heightMapDimensionInputFieldUI;
-	
-	[SerializeField] private Button changeDimensionsButtonUI;
-	[SerializeField] private Button cancelButtonUI;
+	[SerializeField] private ButtonUI changeDimensionsButtonUI;
+	[SerializeField] private ButtonUI cancelButtonUI;
 
 	private MapGenerationManager mapGenerationManager;
 
@@ -36,29 +34,14 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 
 	private void RegisterToListeners(bool register)
 	{
-		if(register)
+		if(changeDimensionsButtonUI != null)
 		{
-			if(changeDimensionsButtonUI != null)
-			{
-				changeDimensionsButtonUI.onClick.AddListener(OnChangeDimensionsButtonUIClicked);
-			}
-
-			if(cancelButtonUI != null)
-			{
-				cancelButtonUI.onClick.AddListener(OnCancelButtonUIClicked);
-			}
+			changeDimensionsButtonUI.RegisterToClickListener(OnChangeDimensionsButtonUIClicked, register);
 		}
-		else
-		{
-			if(changeDimensionsButtonUI != null)
-			{
-				changeDimensionsButtonUI.onClick.RemoveListener(OnChangeDimensionsButtonUIClicked);
-			}
 
-			if(cancelButtonUI != null)
-			{
-				cancelButtonUI.onClick.RemoveListener(OnCancelButtonUIClicked);
-			}
+		if(cancelButtonUI != null)
+		{
+			cancelButtonUI.RegisterToClickListener(OnCancelButtonUIClicked, register);
 		}
 
 		RegisterToMapGenerationListeners(register);
