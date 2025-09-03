@@ -1,10 +1,5 @@
-using TMPro;
-using UnityEngine;
-
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
+public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEditingElement
 {
-	private TextMeshProUGUI textUI;
 	private MapTile hoveredMapTile;
 	private MapTile selectedMapTile;
 	private MapTile currentMapTile;
@@ -40,9 +35,10 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 		UpdateActiveState();
 	}
 
-	private void Awake()
+	protected override void Awake()
 	{
-		textUI = GetComponent<TextMeshProUGUI>();
+		base.Awake();
+
 		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
 		mapTileWeightController = ObjectMethods.FindComponentOfType<MapTileWeightController>();
@@ -119,7 +115,7 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 
 	private void OnWeightWasChanged(int weight)
 	{
-		SetMapTileWeightText(weight.ToString());
+		SetText(weight.ToString());
 		UpdateActiveState();
 	}
 
@@ -131,11 +127,6 @@ public class MapTileWeightCounterTextUI : MonoBehaviour, IPrimaryWindowElement, 
 		{
 			CurrentMapTile = hoveredMapTile;
 		}
-	}
-
-	private void SetMapTileWeightText(string text)
-	{
-		textUI.SetText(text);
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
