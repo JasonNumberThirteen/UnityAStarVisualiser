@@ -10,17 +10,10 @@ public class MapTilePathTrailIndicator : MonoBehaviour
 	
 	public void Setup(MapTileNode currentMapTileNode, MapTileNode nextMapTileNode)
 	{
-		if(currentMapTileNode != null)
-		{
-			transform.SetParent(currentMapTileNode.transform);
-		}
-
-		if(nextMapTileNode != null)
-		{
-			transform.up = nextMapTileNode.transform.position - transform.position;
-		}
-
-		StartMoving();
+		SetParentAs(currentMapTileNode);
+		SetFacingTo(nextMapTileNode);
+		movementTween?.Kill();
+		StartMovingIfPossible();
 	}
 
 	public void SetActive(bool active)
@@ -28,18 +21,35 @@ public class MapTilePathTrailIndicator : MonoBehaviour
 		gameObject.SetActive(active);
 	}
 
+	private void SetParentAs(MapTileNode mapTileNode)
+	{
+		if(mapTileNode != null)
+		{
+			transform.SetParent(mapTileNode.transform);
+		}
+	}
+
+	private void SetFacingTo(MapTileNode mapTileNode)
+	{
+		if(mapTileNode != null)
+		{
+			transform.up = mapTileNode.transform.position - transform.position;
+		}
+	}
+
+	private void StartMovingIfPossible()
+	{
+		if(!Mathf.Approximately(movementPeriodOfOscillation, 0f))
+		{
+			StartMoving();
+		}
+	}
+
 	private void StartMoving()
 	{
-		if(Mathf.Approximately(movementPeriodOfOscillation, 0f))
-		{
-			return;
-		}
-		
 		var positionOffset = transform.up*movementDistanceFromCenterOfTile;
 		var startPosition = transform.position - positionOffset;
 		var endPosition = startPosition + 2*positionOffset;
-
-		movementTween?.Kill();
 
 		transform.position = startPosition;
 		movementTween = transform.DOMove(endPosition, movementPeriodOfOscillation*0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
