@@ -1,39 +1,16 @@
-using UnityEngine;
-using UnityEngine.UI;
-
-[RequireComponent(typeof(Slider))]
-public class SimulationStepDelaySliderUI : MonoBehaviour
+public class SimulationStepDelayListenableSliderUI : ListenableSliderUI
 {
-	private Slider slider;
 	private SimulationManager simulationManager;
 
-	private void Awake()
+	protected override void Awake()
 	{
-		slider = GetComponent<Slider>();
 		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
-
-		RegisterToListeners(true);
-		SetSimulationStepDelay(slider.value);
+		
+		base.Awake();
+		OnValueWasChanged(slider.value);
 	}
 
-	private void OnDestroy()
-	{
-		RegisterToListeners(false);
-	}
-
-	private void RegisterToListeners(bool register)
-	{
-		if(register)
-		{
-			slider.onValueChanged.AddListener(SetSimulationStepDelay);
-		}
-		else
-		{
-			slider.onValueChanged.RemoveListener(SetSimulationStepDelay);
-		}
-	}
-
-	private void SetSimulationStepDelay(float value)
+	protected override void OnValueWasChanged(float value)
 	{
 		if(simulationManager != null)
 		{

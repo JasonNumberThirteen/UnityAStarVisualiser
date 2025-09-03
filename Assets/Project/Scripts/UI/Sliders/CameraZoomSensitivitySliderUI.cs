@@ -1,39 +1,16 @@
-using UnityEngine;
-using UnityEngine.UI;
-
-[RequireComponent(typeof(Slider))]
-public class CameraZoomSensitivitySliderUI : MonoBehaviour
+public class CameraZoomSensitivityListenableSliderUI : ListenableSliderUI
 {
-	private Slider slider;
 	private MainCameraZoomController mainCameraZoomController;
 
-	private void Awake()
+	protected override void Awake()
 	{
-		slider = GetComponent<Slider>();
 		mainCameraZoomController = ObjectMethods.FindComponentOfType<MainCameraZoomController>();
 
-		RegisterToListeners(true);
-		SetZoomPerScroll(slider.value);
+		base.Awake();
+		OnValueWasChanged(slider.value);
 	}
 
-	private void OnDestroy()
-	{
-		RegisterToListeners(false);
-	}
-
-	private void RegisterToListeners(bool register)
-	{
-		if(register)
-		{
-			slider.onValueChanged.AddListener(SetZoomPerScroll);
-		}
-		else
-		{
-			slider.onValueChanged.RemoveListener(SetZoomPerScroll);
-		}
-	}
-
-	private void SetZoomPerScroll(float value)
+	protected override void OnValueWasChanged(float value)
 	{
 		if(mainCameraZoomController != null)
 		{
