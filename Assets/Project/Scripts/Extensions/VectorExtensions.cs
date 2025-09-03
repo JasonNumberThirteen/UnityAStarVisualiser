@@ -2,6 +2,8 @@ using UnityEngine;
 
 public static class VectorExtensions
 {
+	public static Vector3 ToVector3(this Vector2 vector, float z = 0f) => new(vector.x, vector.y, z);
+	
 	public static Vector3 ToTiledPosition(this Vector3 vector)
 	{
 		var x = MathMethods.GetTiledCoordinate(vector.x, 1);

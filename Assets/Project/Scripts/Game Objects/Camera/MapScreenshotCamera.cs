@@ -4,8 +4,8 @@ using UnityEngine;
 public class MapScreenshotCamera : MonoBehaviour
 {
 	private Camera thisCamera;
-	private MainCameraZoomController mainCameraZoomController;
 	private MapGenerationManager mapGenerationManager;
+	private MainCameraZoomController mainCameraZoomController;
 
 	public void SetTargetTexture(RenderTexture renderTexture)
 	{
@@ -20,8 +20,8 @@ public class MapScreenshotCamera : MonoBehaviour
 	private void Awake()
 	{
 		thisCamera = GetComponent<Camera>();
-		mainCameraZoomController = ObjectMethods.FindComponentOfType<MainCameraZoomController>();
 		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
+		mainCameraZoomController = ObjectMethods.FindComponentOfType<MainCameraZoomController>();
 
 		RegisterToListeners(true);
 		gameObject.SetActive(false);
@@ -54,13 +54,13 @@ public class MapScreenshotCamera : MonoBehaviour
 	{
 		thisCamera.orthographicSize = size;
 
-		if(mapGenerationManager == null)
-		{
-			return;
-		}
+		SetPositionToCenterOfMap();
+	}
 
-		var centerOfMap = mapGenerationManager.GetCenterOfMap();
+	private void SetPositionToCenterOfMap()
+	{
+		var centerOfMap = mapGenerationManager != null ? mapGenerationManager.GetCenterOfMap() : new Vector2();
 		
-		transform.position = new Vector3(centerOfMap.x, centerOfMap.y, transform.position.z);
+		transform.position = centerOfMap.ToVector3(transform.position.z);
 	}
 }
