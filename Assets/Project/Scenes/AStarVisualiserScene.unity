@@ -1828,7 +1828,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simulation Type Dropdown UI
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8629899303739353528, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1856,17 +1857,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 437bb6bb16a809145be018d289a9d091, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &515721293 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4101461325836307414, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
-  m_PrefabInstance: {fileID: 515721287}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 515721289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &531888951
@@ -2319,7 +2309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c71cc550ecba934d9d6b5438e00976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  simulationTypeDropdownUI: {fileID: 515721293}
+  simulationTypeDropdownUI: {fileID: 515721290}
   simulationStepDelaySliderUIPanelUI: {fileID: 2061554851}
   simulationStepForwardButtonUI: {fileID: 924490789}
   interruptSimulationButtonUI: {fileID: 1677280289}
@@ -10469,7 +10459,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heuristic Type Dropdown UI
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8629899303739353528, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

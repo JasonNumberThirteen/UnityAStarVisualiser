@@ -1,9 +1,8 @@
-using TMPro;
 using UnityEngine;
 
 public class SimulationSettingsPanelUI : PanelUI
 {
-	[SerializeField] private TMP_Dropdown simulationTypeDropdownUI;
+	[SerializeField] private DropdownUI simulationTypeDropdownUI;
 	[SerializeField] private PanelUI simulationStepDelaySliderUIPanelUI;
 	[SerializeField] private ButtonUI simulationStepForwardButtonUI;
 	[SerializeField] private ButtonUI interruptSimulationButtonUI;
@@ -103,7 +102,7 @@ public class SimulationSettingsPanelUI : PanelUI
 	{
 		if(simulationTypeDropdownUI != null)
 		{
-			simulationTypeDropdownUI.interactable = !interactable;
+			simulationTypeDropdownUI.SetInteractable(!interactable);
 		}
 
 		if(simulationStepForwardButtonUI != null)
