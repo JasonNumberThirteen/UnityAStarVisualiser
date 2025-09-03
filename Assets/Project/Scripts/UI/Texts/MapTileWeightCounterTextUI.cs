@@ -1,10 +1,10 @@
 public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEditingElement
 {
+	private bool textUIWasHidden;
+	private bool panelUIHoverWasDetected;
 	private MapTile hoveredMapTile;
 	private MapTile selectedMapTile;
 	private MapTile currentMapTile;
-	private bool textUIWasHidden;
-	private bool panelUIHoverWasDetected;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
 	private MapTileWeightController mapTileWeightController;
@@ -113,12 +113,6 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 		}
 	}
 
-	private void OnWeightWasChanged(int weight)
-	{
-		SetText(weight.ToString());
-		UpdateActiveState();
-	}
-
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
 		hoveredMapTile = mapTile;
@@ -133,6 +127,12 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 	{
 		selectedMapTile = mapTile;
 		CurrentMapTile = selectedMapTile == null ? hoveredMapTile : null;
+	}
+
+	private void OnWeightWasChanged(int weight)
+	{
+		SetText(weight.ToString());
+		UpdateActiveState();
 	}
 
 	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
