@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
@@ -5,12 +6,14 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 	[SerializeField, Min(0f)] private float animationTransitionDuration = 0.5f;
 
 	private static readonly float ANIMATION_TRANSITION_MINIMUM_SCALE = 0.8f;
+	private static readonly float ANIMATION_TRANSITION_MAXIMUM_SCALE = 0.9f;
 	
+	private bool indicatorWasHidden;
+	private bool panelUIHoverWasDetected;
+	private Tween movementTween;
 	private MapTile hoveredMapTile;
 	private MapTile selectedMapTile;
 	private MapTile currentMapTile;
-	private bool indicatorWasHidden;
-	private bool panelUIHoverWasDetected;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
@@ -37,11 +40,13 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
+		StartMovingIfPossible();
 	}
 
 	private void OnDestroy()
 	{
 		RegisterToListeners(false);
+		movementTween?.Kill();
 	}
 
 	private void OnEnable()
@@ -129,18 +134,14 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 		gameObject.SetActive(!indicatorWasHidden && !panelUIHoverWasDetected && currentMapTile != null);
 	}
 
-	private void Update()
+	private void StartMovingIfPossible()
 	{
 		if(Mathf.Approximately(animationTransitionDuration, 0f))
 		{
 			return;
 		}
-		
-		var scale = transform.localScale;
-		var scalePercent = Mathf.PingPong(Time.time, animationTransitionDuration);
-		var scaleInterpolation = Mathf.Lerp(ANIMATION_TRANSITION_MINIMUM_SCALE, 1f, scalePercent);
 
-		scale.x = scale.y = scaleInterpolation;
-		transform.localScale = scale;
+		transform.localScale = ANIMATION_TRANSITION_MINIMUM_SCALE.ToUniformVector2();
+		movementTween = transform.DOScale(ANIMATION_TRANSITION_MAXIMUM_SCALE.ToUniformVector2(), animationTransitionDuration).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).SetRelative(false);
 	}
 }
