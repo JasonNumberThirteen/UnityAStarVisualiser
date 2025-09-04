@@ -6,10 +6,10 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 {
 	public UnityEvent<int> weightWasChangedEvent;
 	
-	private MapTile mapTile;
 	private bool tileIsBeingDragged;
 	private bool hoveringTilesIsLocked;
 	private bool panelUIHoverWasDetected;
+	private MapTile mapTile;
 	private UserInputController userInputController;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
@@ -92,11 +92,14 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
-		if(tileIsBeingDragged || hoveringTilesIsLocked || panelUIHoverWasDetected)
+		if(!tileIsBeingDragged && !hoveringTilesIsLocked && !panelUIHoverWasDetected)
 		{
-			return;
+			ModifyWeightOfMapTileIfPossible(Mathf.RoundToInt(scrollVector.y));
 		}
-		
+	}
+
+	private void ModifyWeightOfMapTileIfPossible(int weight)
+	{
 		var allowedMapTileTypes = new List<MapTileType>()
 		{
 			MapTileType.Passable,
@@ -105,18 +108,18 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		
 		if(mapTile != null && allowedMapTileTypes.Contains(mapTile.GetTileType()))
 		{
-			ModifyWeightOfMapTile(Mathf.RoundToInt(scrollVector.y));
+			ModifyWeightOfMapTile(weight);
 		}
 	}
 
-	private void ModifyWeightOfMapTile(int weightValue)
+	private void ModifyWeightOfMapTile(int weight)
 	{
-		if(mapTile == null || weightValue == 0)
+		if(mapTile == null || weight == 0)
 		{
 			return;
 		}
 
-		mapTile.ModifyWeightBy(weightValue);
+		mapTile.ModifyWeightBy(weight);
 		weightWasChangedEvent?.Invoke(mapTile.GetWeight());
 	}
 
