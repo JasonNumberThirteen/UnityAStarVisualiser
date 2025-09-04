@@ -10,15 +10,15 @@ public class MapTile : MonoBehaviour
 	public UnityEvent<MapTileType> tileTypeWasChangedEvent;
 	public UnityEvent<int> weightWasChangedEvent;
 	
-	private MapTileType tileType;
 	private int weight;
+	private MapTileType tileType;
 	private MapTileNode mapTileNode;
 	private VisualiserEventsManager visualiserEventsManager;
 
 	public bool IsActive() => gameObject.activeInHierarchy;
 	public Vector3 GetPosition() => transform.position;
-	public MapTileType GetTileType() => tileType;
 	public int GetWeight() => weight;
+	public MapTileType GetTileType() => tileType;
 	public MapTileNode GetMapTileNode() => mapTileNode;
 
 	public void SetActive(bool active)
@@ -30,6 +30,11 @@ public class MapTile : MonoBehaviour
 	{
 		SetWeightTo(0);
 		SetTileType(MapTileType.Passable);
+	}
+
+	public void ModifyWeightBy(int weight)
+	{
+		SetWeightTo(this.weight + weight);
 	}
 
 	public void SetTileType(MapTileType tileType)
@@ -44,11 +49,6 @@ public class MapTile : MonoBehaviour
 		this.tileType = tileType;
 
 		tileTypeWasChangedEvent?.Invoke(this.tileType);
-	}
-
-	public void ModifyWeightBy(int weight)
-	{
-		SetWeightTo(this.weight + weight);
 	}
 
 	private void Awake()
