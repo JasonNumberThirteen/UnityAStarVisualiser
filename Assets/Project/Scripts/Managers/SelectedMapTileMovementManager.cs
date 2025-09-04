@@ -1,17 +1,16 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	[SerializeField] private LayerMask unacceptableGameObjects;
 	
-	private Camera mainCamera;
-	private MapTile mapTile;
 	private bool selectingTilesIsLocked;
 	private bool panelUIHoverWasDetected;
+	private MapTile mapTile;
 	private Vector3 translationPositionOffset;
 	private MapAreaManager mapAreaManager;
+	private MainSceneCamera mainSceneCamera;
 	private SelectedMapTileManager selectedMapTileManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
@@ -32,8 +31,8 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 
 	private void Awake()
 	{
-		mainCamera = Camera.main;
 		mapAreaManager = ObjectMethods.FindComponentOfType<MapAreaManager>();
+		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
 		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
@@ -106,9 +105,9 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 
 	private Vector3 GetMousePositionToWorldPoint()
 	{
-		var mousePositionToWorldPoint = mainCamera != null ? mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue()) : Vector3.zero;
+		var mousePositionToWorldPoint = mainSceneCamera != null ? (Vector2)mainSceneCamera.GetScreenToWorldPointFromMousePosition() : Vector2.zero;
 
-		return new Vector3(mousePositionToWorldPoint.x, mousePositionToWorldPoint.y, 0f);
+		return mousePositionToWorldPoint.ToVector3();
 	}
 
 	private bool AnyUnacceptableColliderWasDetected(Vector2 position)

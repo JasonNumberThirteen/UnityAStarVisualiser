@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapScreenshotTaker : MonoBehaviour
 {
-	private MapScreenshotCamera mapScreenshotCamera;
+	private MapScreenshotSceneCamera mapScreenshotSceneCamera;
 	
 	private static readonly string DIRECTORY_NAME = "Screenshots";
 	private static readonly string SCREENSHOT_NAME = "Screenshot";
@@ -22,7 +22,7 @@ public class MapScreenshotTaker : MonoBehaviour
 
 	private void Awake()
 	{
-		mapScreenshotCamera = ObjectMethods.FindComponentOfType<MapScreenshotCamera>();
+		mapScreenshotSceneCamera = ObjectMethods.FindComponentOfType<MapScreenshotSceneCamera>();
 	}
 
 	private void EnsureExistanceOfDirectory(string path)
@@ -61,16 +61,16 @@ public class MapScreenshotTaker : MonoBehaviour
 
 	private void SetRenderTextureResult(RenderTexture renderTexture)
 	{
-		if(mapScreenshotCamera == null)
+		if(mapScreenshotSceneCamera == null)
 		{
 			return;
 		}
 		
-		mapScreenshotCamera.SetTargetTexture(renderTexture);
+		mapScreenshotSceneCamera.SetTargetTexture(renderTexture);
 		
 		if(renderTexture != null)
 		{
-			mapScreenshotCamera.Render();
+			mapScreenshotSceneCamera.Render();
 		}
 
 		RenderTexture.active = renderTexture;
