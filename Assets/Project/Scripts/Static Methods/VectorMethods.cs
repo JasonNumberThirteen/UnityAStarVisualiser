@@ -3,9 +3,9 @@ using UnityEngine;
 
 public static class VectorMethods
 {
-	public static Vector2Int GetNorthEastDirection() => Vector2Int.one;
+	public static Vector2Int GetNorthEastDirection() => Vector2Int.RoundToInt(GetUniformVector2());
 	public static Vector2Int GetSouthEastDirection() => new(1, -1);
-	public static Vector2Int GetSouthWestDirection() => -Vector2Int.one;
+	public static Vector2Int GetSouthWestDirection() => Vector2Int.RoundToInt(GetUniformVector2(-1));
 	public static Vector2Int GetNorthWestDirection() => new(-1, 1);
 	public static Vector2 GetUniformVector2(float value = 1f) => Vector2.one*value;
 	
