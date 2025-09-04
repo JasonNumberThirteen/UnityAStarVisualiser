@@ -15,10 +15,16 @@ public class MapTile : MonoBehaviour
 	private MapTileNode mapTileNode;
 	private VisualiserEventsManager visualiserEventsManager;
 
-	public Vector2 GetPosition() => transform.position;
+	public bool IsActive() => gameObject.activeInHierarchy;
+	public Vector3 GetPosition() => transform.position;
 	public MapTileType GetTileType() => tileType;
 	public int GetWeight() => weight;
 	public MapTileNode GetMapTileNode() => mapTileNode;
+
+	public void SetActive(bool active)
+	{
+		gameObject.SetActive(active);
+	}
 
 	public void ResetTile()
 	{

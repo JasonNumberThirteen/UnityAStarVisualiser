@@ -78,7 +78,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 
 		if(this.mapTile != null)
 		{
-			translationPositionOffset = this.mapTile.gameObject.transform.position - GetMousePositionToWorldPoint();
+			translationPositionOffset = this.mapTile.GetPosition() - GetMousePositionToWorldPoint();
 		}
 	}
 

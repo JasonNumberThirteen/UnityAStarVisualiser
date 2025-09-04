@@ -11,7 +11,7 @@ public class MapTilesPooler : MonoBehaviour
 
 	public MapTile GetFirstAvailableMapTile(Transform parentTransform, Action<MapTile> onMapTileWasFound = null)
 	{
-		var mapTile = mapTiles.FirstOrDefault(mapTile => !mapTile.gameObject.activeInHierarchy);
+		var mapTile = mapTiles.FirstOrDefault(mapTile => !mapTile.IsActive());
 
 		if(mapTile != null)
 		{
@@ -36,7 +36,7 @@ public class MapTilesPooler : MonoBehaviour
 			return;
 		}
 
-		mapTile.gameObject.SetActive(active);
+		mapTile.SetActive(active);
 		mapTile.transform.SetParent(parentTransform);
 		action?.Invoke(mapTile);
 	}
