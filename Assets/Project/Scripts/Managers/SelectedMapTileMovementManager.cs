@@ -112,27 +112,18 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 
 	private bool AnyUnacceptableColliderWasDetected(Vector2 position)
 	{
-		var collisionBoxSize = Vector2.one;
-		var collisionBoxSizeOffset = Vector2.one*COLLISION_BOX_SIZE_OFFSET;
-		var colliders = Physics2D.OverlapBoxAll(position, collisionBoxSize - collisionBoxSizeOffset, 0f, unacceptableGameObjects);
+		var size = VectorMethods.GetUniformVector2(1f - COLLISION_BOX_SIZE_OFFSET);
+		var colliders = Physics2D.OverlapBoxAll(position, size, 0f, unacceptableGameObjects);
 
 		return colliders.Any(collider => collider.gameObject != gameObject);
 	}
 
 	private Vector2 GetPositionWithinArea(Vector2 position)
 	{
-		if(mapAreaManager == null)
-		{
-			return position;
-		}
+		var mapArea = mapAreaManager != null ? mapAreaManager.GetMapArea() : Rect.zero;
+		var offsetFromMapArea = VectorMethods.GetUniformVector2(0.5f);
+		var movementArea = new Rect(mapArea.position + offsetFromMapArea, mapArea.size - offsetFromMapArea);
 
-		var mapArea = mapAreaManager.GetMapArea();
-		var positionWithinArea = new Vector2
-		{
-			x = Mathf.Clamp(position.x, mapArea.x + 0.5f, mapArea.width - 0.5f),
-			y = Mathf.Clamp(position.y, mapArea.y + 0.5f, mapArea.height - 0.5f)
-		};
-
-		return positionWithinArea;
+		return position.GetClampedWithin(movementArea);
 	}
 }
