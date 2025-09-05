@@ -6,9 +6,6 @@ using UnityEngine.Events;
 [DefaultExecutionOrder(1)]
 public class MapGenerationManager : MonoBehaviour
 {
-	public static readonly int MAP_DIMENSION_LOWER_BOUND = 3;
-	public static readonly int MAP_DIMENSION_UPPER_BOUND = 50;
-	
 	public UnityEvent mapWasGeneratedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereAddedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereRemovedEvent;
@@ -135,7 +132,10 @@ public class MapGenerationManager : MonoBehaviour
 
 	private void GenerateInitialMap(int size)
 	{
-		var initialMapSize = Mathf.Clamp(size, MAP_DIMENSION_LOWER_BOUND, MAP_DIMENSION_UPPER_BOUND);
+		var mapBoundariesManager = ObjectMethods.FindComponentOfType<MapBoundariesManager>();
+		var mapDimensionLowerBound = mapBoundariesManager != null ? mapBoundariesManager.GetLowerBound() : 0;
+		var mapDimensionUpperBound = mapBoundariesManager != null ? mapBoundariesManager.GetUpperBound() : 0;
+		var initialMapSize = Mathf.Clamp(size, mapDimensionLowerBound, mapDimensionUpperBound);
 		
 		ChangeMapDimensionsIfNeeded(Vector2Int.one*initialMapSize);
 	}

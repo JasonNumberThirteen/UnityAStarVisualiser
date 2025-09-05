@@ -12,6 +12,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	private float zoomPerScroll;
 	private MainSceneCamera mainSceneCamera;
 	private UserInputController userInputController;
+	private MapBoundariesManager mapBoundariesManager;
 	private MapGenerationManager mapGenerationManager;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
@@ -32,6 +33,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	{
 		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
+		mapBoundariesManager = ObjectMethods.FindComponentOfType<MapBoundariesManager>();
 		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
 		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
@@ -161,6 +163,6 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 		return Mathf.Max(GetMinimumSize(), maximumMapDimension);
 	}
 
-	private float GetMinimumSize() => GetSizeBy(MapGenerationManager.MAP_DIMENSION_LOWER_BOUND);
+	private float GetMinimumSize() => GetSizeBy(mapBoundariesManager != null ? mapBoundariesManager.GetLowerBound() : 0);
 	private float GetSizeBy(float value) => value*0.5f + ADDITIONAL_OFFSET_FROM_MAP_EDGES;
 }

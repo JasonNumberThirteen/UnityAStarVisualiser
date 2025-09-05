@@ -48,7 +48,8 @@ public class MapTilesPooler : MonoBehaviour
 			return;
 		}
 		
-		var mapDimensionUpperBound = MapGenerationManager.MAP_DIMENSION_UPPER_BOUND;
+		var mapBoundariesManager = ObjectMethods.FindComponentOfType<MapBoundariesManager>();
+		var mapDimensionUpperBound = mapBoundariesManager != null ? mapBoundariesManager.GetUpperBound() : 0;
 		var numberOfTiles = mapDimensionUpperBound*mapDimensionUpperBound;
 
 		for (var i = 0; i < numberOfTiles; ++i)

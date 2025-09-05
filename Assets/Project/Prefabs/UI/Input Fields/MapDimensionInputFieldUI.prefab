@@ -145,3 +145,5 @@ MonoBehaviour:
   valueWasChangedEvent:
     m_PersistentCalls:
       m_Calls: []
+  minimumValue: 3
+  maximumValue: 50
