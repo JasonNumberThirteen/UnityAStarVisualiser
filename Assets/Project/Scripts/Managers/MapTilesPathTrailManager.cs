@@ -51,30 +51,31 @@ public class MapTilesPathTrailManager : MonoBehaviour
 
 	private void OnPathWasFound(List<MapTileNode> mapTileNodes)
 	{
-		if(mapTilePathTrailIndicatorPrefab == null)
-		{
-			return;
-		}
-
-		for (var i = mapTileNodes.Count - 1; i >= 1; --i)
-		{
-			var currentMapTileNode = mapTileNodes[i];
-			var mapTilePathTrailIndicator = Instantiate(mapTilePathTrailIndicatorPrefab, currentMapTileNode.transform.position, Quaternion.identity);
-			
-			mapTilePathTrailIndicator.Setup(currentMapTileNode, mapTileNodes[i - 1]);
-			mapTilePathTrailIndicator.SetActive(pathTrailIsEnabled);
-			mapTilePathTrailIndicators.Add(mapTilePathTrailIndicator);
-		}
+		mapTileNodes.ForEachReversed(CreateMapTilePathTrailIndicator);
 	}
 
 	private void OnResultsWereCleared()
 	{
-		for (var i = mapTilePathTrailIndicators.Count - 1; i >= 0; --i)
-		{
-			var mapTilePathTrailIndicator = mapTilePathTrailIndicators[i];
+		mapTilePathTrailIndicators.ForEachReversed(RemoveMapTilePathTrailIndicator);
+	}
 
-			mapTilePathTrailIndicators.Remove(mapTilePathTrailIndicator);
-			Destroy(mapTilePathTrailIndicator.gameObject);
+	private void CreateMapTilePathTrailIndicator(MapTileNode currentMapTileNode, MapTileNode nextMapTileNode)
+	{
+		if(mapTilePathTrailIndicatorPrefab == null || currentMapTileNode == null || nextMapTileNode == null)
+		{
+			return;
 		}
+		
+		var mapTilePathTrailIndicator = Instantiate(mapTilePathTrailIndicatorPrefab, currentMapTileNode.GetPosition(), Quaternion.identity);
+		
+		mapTilePathTrailIndicator.Setup(currentMapTileNode, nextMapTileNode);
+		mapTilePathTrailIndicator.SetActive(pathTrailIsEnabled);
+		mapTilePathTrailIndicators.Add(mapTilePathTrailIndicator);
+	}
+
+	private void RemoveMapTilePathTrailIndicator(MapTilePathTrailIndicator mapTilePathTrailIndicator)
+	{
+		mapTilePathTrailIndicators.Remove(mapTilePathTrailIndicator);
+		Destroy(mapTilePathTrailIndicator.gameObject);
 	}
 }
