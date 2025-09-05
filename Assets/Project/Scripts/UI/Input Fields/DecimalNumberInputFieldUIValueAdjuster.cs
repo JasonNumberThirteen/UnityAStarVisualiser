@@ -14,6 +14,7 @@ public class DecimalNumberInputFieldUIValueAdjuster : MonoBehaviour
 
 	private readonly StringBuilder stringBuilder = new();
 
+	private float cachedValue;
 	private TMP_InputField inputField;
 
 	private void Awake()
@@ -47,24 +48,36 @@ public class DecimalNumberInputFieldUIValueAdjuster : MonoBehaviour
 		{
 			ValidateText(text);
 		}
-
-		inputField.text = GetCachedString();
 	}
 
 	private void ValidateText(string text)
 	{
 		var textRepresentsDecimalNumber = float.TryParse(text, out var decimalNumber);
-		var decimalNumberValue = textRepresentsDecimalNumber ? Mathf.Clamp(decimalNumber, minimumNumber, maximumNumber) : 0f;
 
-		if(GetCachedString().Equals(text))
+		if(textRepresentsDecimalNumber)
+		{
+			UpdateValueIfNeeded(Mathf.Clamp(decimalNumber, minimumNumber, maximumNumber));
+		}
+	}
+
+	private void UpdateValueIfNeeded(float value)
+	{
+		if(Mathf.Approximately(cachedValue, value))
 		{
 			return;
 		}
-			
-		stringBuilder.Clear();
-		stringBuilder.Append(decimalNumberValue);
-		valueWasChangedEvent?.Invoke(decimalNumberValue);
+
+		cachedValue = value;
+
+		SetText(cachedValue.ToString());
+		valueWasChangedEvent?.Invoke(cachedValue);
 	}
 
-	private string GetCachedString() => stringBuilder.ToString();
+	private void SetText(string text)
+	{
+		stringBuilder.Clear();
+		stringBuilder.Append(text);
+
+		inputField.text = stringBuilder.ToString();
+	}
 }
