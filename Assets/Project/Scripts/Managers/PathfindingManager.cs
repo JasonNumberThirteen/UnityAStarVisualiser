@@ -104,7 +104,7 @@ public class PathfindingManager : MonoBehaviour
 		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 
-		mapEditingElements.AddRange(ObjectMethods.FindComponentsOfType<MonoBehaviour>().OfType<IMapEditingElement>());
+		mapEditingElements.AddRange(ObjectMethods.FindInterfacesOfType<IMapEditingElement>());
 		RegisterToListeners(true);
 	}
 

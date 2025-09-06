@@ -1,6 +1,4 @@
-using System.Linq;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class PopupPanelUI : PanelUI
 {
@@ -8,7 +6,7 @@ public class PopupPanelUI : PanelUI
 
 	protected virtual void Awake()
 	{
-		primaryWindowElements.AddRange(ObjectMethods.FindComponentsOfType<MonoBehaviour>().OfType<IPrimaryWindowElement>());
+		primaryWindowElements.AddRange(ObjectMethods.FindInterfacesOfType<IPrimaryWindowElement>());
 	}
 
 	protected virtual void OnEnable()
