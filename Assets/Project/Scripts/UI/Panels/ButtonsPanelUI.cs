@@ -11,6 +11,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	[SerializeField] private ButtonUI informationButtonUI;
 	[SerializeField] private ButtonUI exitButtonUI;
 
+	private MapPathManager mapPathManager;
 	private PathfindingManager pathfindingManager;
 	private MapGenerationManager mapGenerationManager;
 	private ChangeMapDimensionsPopupPanelUI changeMapDimensionsPopupPanelUI;
@@ -25,6 +26,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 
 	private void Awake()
 	{
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
 		changeMapDimensionsPopupPanelUI = ObjectMethods.FindComponentOfType<ChangeMapDimensionsPopupPanelUI>();
@@ -79,16 +81,16 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		
 		if(register)
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 		else
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 	}
@@ -97,7 +99,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		if(pathfindingManager != null)
 		{
-			pathfindingManager.FindPath();
+			pathfindingManager.InitiatePathfindingProcessIfPossible();
 		}
 	}
 
@@ -113,7 +115,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		if(mapGenerationManager != null)
 		{
-			mapGenerationManager.ResetTiles();
+			mapGenerationManager.ResetMapTiles();
 		}
 	}
 

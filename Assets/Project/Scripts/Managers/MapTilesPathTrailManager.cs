@@ -6,7 +6,7 @@ public class MapTilesPathTrailManager : MonoBehaviour
 	[SerializeField] private MapTilePathTrailIndicator mapTilePathTrailIndicatorPrefab;
 
 	private bool pathTrailIsEnabled;
-	private PathfindingManager pathfindingManager;
+	private MapPathManager mapPathManager;
 
 	private readonly List<MapTilePathTrailIndicator> mapTilePathTrailIndicators = new();
 
@@ -19,7 +19,7 @@ public class MapTilesPathTrailManager : MonoBehaviour
 
 	private void Awake()
 	{
-		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
 
 		RegisterToListeners(true);
 	}
@@ -33,18 +33,18 @@ public class MapTilesPathTrailManager : MonoBehaviour
 	{
 		if(register)
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathWasFoundEvent.AddListener(OnPathWasFound);
-				pathfindingManager.resultsWereClearedEvent.AddListener(OnResultsWereCleared);
+				mapPathManager.pathWasFoundEvent.AddListener(OnPathWasFound);
+				mapPathManager.resultsWereClearedEvent.AddListener(OnResultsWereCleared);
 			}
 		}
 		else
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathWasFoundEvent.RemoveListener(OnPathWasFound);
-				pathfindingManager.resultsWereClearedEvent.RemoveListener(OnResultsWereCleared);
+				mapPathManager.pathWasFoundEvent.RemoveListener(OnPathWasFound);
+				mapPathManager.resultsWereClearedEvent.RemoveListener(OnResultsWereCleared);
 			}
 		}
 	}

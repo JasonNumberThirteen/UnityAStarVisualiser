@@ -12,7 +12,7 @@ public class SimulationManager : MonoBehaviour
 	private bool simulationIsPaused;
 	private float simulationStepDelay;
 	private SimulationType simulationType;
-	private PathfindingManager pathfindingManager;
+	private MapPathManager mapPathManager;
 
 	public bool SimulationIsEnabled() => simulationIsEnabled;
 	public bool SimulationIsPaused() => simulationIsPaused;
@@ -59,7 +59,7 @@ public class SimulationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
 
 		RegisterToListeners(true);
 	}
@@ -73,18 +73,18 @@ public class SimulationManager : MonoBehaviour
 	{
 		if(register)
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
-				pathfindingManager.mapTileNodeWasVisitedEvent.AddListener(OnMapTileNodeWasVisited);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
+				mapPathManager.mapTileNodeWasVisitedEvent.AddListener(OnMapTileNodeWasVisited);
 			}
 		}
 		else
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
-				pathfindingManager.mapTileNodeWasVisitedEvent.RemoveListener(OnMapTileNodeWasVisited);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
+				mapPathManager.mapTileNodeWasVisitedEvent.RemoveListener(OnMapTileNodeWasVisited);
 			}
 		}
 	}

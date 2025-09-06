@@ -15,10 +15,12 @@ public class MapGenerationManager : MonoBehaviour
 	private Vector2Int mapDimensions;
 	private MapTilesManager mapTilesManager;
 
+	public List<MapTile> GetMapTiles() => mapTiles;
 	public Vector2 GetMapDimensions() => mapDimensions;
 	public Vector2 GetCenterOfMap() => GetPositionOfBottomRightCorner()*0.5f;
+	public MapTile GetMapTileOfType(MapTileType mapTileType) => mapTiles.FirstOrDefault(mapTile => mapTile.GetTileType() == mapTileType);
 	
-	public void ResetTiles()
+	public void ResetMapTiles()
 	{
 		var allowedMapTileTypes = new List<MapTileType>()
 		{

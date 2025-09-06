@@ -49,6 +49,20 @@ public class MapTileNode : MonoBehaviour
 		directions.ForEach(direction => AddNeighbourIfPossible(mapTileNodes, direction));
 	}
 
+	public float GetTotalCostToReach(MapTileNode mapTileNode)
+	{
+		if(mapTileNode == null)
+		{
+			return 0f;
+		}
+		
+		var thisMapTileNodeRealValue = GetMapTileNodeData().RealValue;
+		var distanceToOtherMapTileNode = DistanceMethods.DistanceBetweenPositionsIsSingleAxis(GetPosition(), mapTileNode.GetPosition()) ? 1 : Mathf.Sqrt(2);
+		var otherMapTileNodeRealValue = distanceToOtherMapTileNode*mapTileNode.Weight;
+		
+		return thisMapTileNodeRealValue + otherMapTileNodeRealValue;
+	}
+
 	private void Awake()
 	{
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();

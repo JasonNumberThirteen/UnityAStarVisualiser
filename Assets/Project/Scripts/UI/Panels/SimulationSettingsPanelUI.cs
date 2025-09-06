@@ -7,11 +7,13 @@ public class SimulationSettingsPanelUI : PanelUI
 	[SerializeField] private ButtonUI simulationStepForwardButtonUI;
 	[SerializeField] private ButtonUI interruptSimulationButtonUI;
 	
+	private MapPathManager mapPathManager;
 	private SimulationManager simulationManager;
 	private PathfindingManager pathfindingManager;
 
 	private void Awake()
 	{
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
 		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 
@@ -27,16 +29,16 @@ public class SimulationSettingsPanelUI : PanelUI
 	{
 		if(register)
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
 			}
 		}
 		else
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
 			}
 		}
 
@@ -84,7 +86,7 @@ public class SimulationSettingsPanelUI : PanelUI
 	{
 		if(pathfindingManager != null)
 		{
-			pathfindingManager.InterruptPathfindingIfNeeded();
+			pathfindingManager.InterruptPathfindingIfPossible();
 		}
 	}
 

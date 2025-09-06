@@ -12,6 +12,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	private MapTilesLegendPanelUI mapTilesLegendPanelUI;
 	private InstructionsPanelUI instructionsPanelUI;
 	private SimulationSettingsPanelUI simulationSettingsPanelUI;
+	private MapPathManager mapPathManager;
 	private PathfindingManager pathfindingManager;
 	private SimulationManager simulationManager;
 	private MapTilesPathTrailManager mapTilesPathTrailManager;
@@ -27,6 +28,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		mapTilesLegendPanelUI = ObjectMethods.FindComponentOfType<MapTilesLegendPanelUI>();
 		instructionsPanelUI = ObjectMethods.FindComponentOfType<InstructionsPanelUI>();
 		simulationSettingsPanelUI = ObjectMethods.FindComponentOfType<SimulationSettingsPanelUI>();
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 		mapTilesPathTrailManager = ObjectMethods.FindComponentOfType<MapTilesPathTrailManager>();
@@ -87,16 +89,16 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		
 		if(register)
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 		else
 		{
-			if(pathfindingManager != null)
+			if(mapPathManager != null)
 			{
-				pathfindingManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 	}

@@ -1392,7 +1392,6 @@ MonoBehaviour:
   mapTilesWereRemovedEvent:
     m_PersistentCalls:
       m_Calls: []
-  goParentTransform: {fileID: 958042500}
 --- !u!1001 &490427204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2927,6 +2926,62 @@ Transform:
   - {fileID: 1042661577}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &723574039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 723574040}
+  - component: {fileID: 723574041}
+  m_Layer: 0
+  m_Name: Map Path Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &723574040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723574039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 925085157}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &723574041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723574039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ec45e682d174c4caa77c2f5dcc16ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resultsWereClearedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  mapTileNodeWasVisitedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  pathWasFoundEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  pathfindingProcessStateWasChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &740075743
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,6 +3235,50 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &757118255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 757118256}
+  - component: {fileID: 757118257}
+  m_Layer: 0
+  m_Name: Map Tile Nodes Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &757118256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757118255}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 925085157}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &757118257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757118255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52b5d86983454540b34f3365b65fdc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &759818814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3927,11 +4026,13 @@ Transform:
   m_Children:
   - {fileID: 1595584976}
   - {fileID: 91064940}
+  - {fileID: 723574040}
   - {fileID: 1762662346}
   - {fileID: 817443041}
   - {fileID: 1519585487}
   - {fileID: 1284377660}
   - {fileID: 469971225}
+  - {fileID: 757118256}
   - {fileID: 1699436368}
   - {fileID: 1123758778}
   - {fileID: 1843710903}
@@ -7771,18 +7872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8c0627e8fc46b4193aab20c2717e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathfindingProcessStateWasChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  mapTileNodeWasVisitedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  pathWasFoundEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  resultsWereClearedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1528366970 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4980545537695532620, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
