@@ -276,7 +276,7 @@ public class MapPathManager : MonoBehaviour
 			return;
 		}
 		
-		var neighbours = parentMapTileNode.GetNeighbours().Where(neighbour => neighbour.GetMapTileNodeType() != MapTileNodeType.Visited).ToList();
+		var neighbours = parentMapTileNode.GetNeighbours().Where(neighbour => neighbour.GetMapTileNodeType() != MapTileNodeType.Visited);
 
 		neighbours.ForEach(neighbour => OperateOnNeighbourIfNeeded(parentMapTileNode, neighbour));
 	}

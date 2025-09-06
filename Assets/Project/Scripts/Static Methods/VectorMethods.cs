@@ -28,11 +28,11 @@ public static class VectorMethods
 		return directions;
 	}
 
-	public static List<Vector2Int> GetTiledPositionsWithin(Vector2Int size)
+	public static IEnumerable<Vector2Int> GetTiledPositionsWithin(Vector2Int size)
 	{
 		var width = size.x;
 		
-		return Enumerable.Range(0, width*size.y).Select(i => new Vector2Int(i % width, i / width)).ToList();
+		return Enumerable.Range(0, width*size.y).Select(i => new Vector2Int(i % width, i / width));
 	}
 
 	public static Vector2 GetPositionWithinRect(Vector2 position, Rect rect, float innerOffsetFromRect = 0f)

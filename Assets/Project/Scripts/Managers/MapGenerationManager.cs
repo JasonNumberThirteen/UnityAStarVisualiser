@@ -27,7 +27,7 @@ public class MapGenerationManager : MonoBehaviour
 			MapTileType.Passable,
 			MapTileType.Impassable
 		};
-		var mapTiles = ObjectMethods.FindComponentsOfType<MapTile>(false).Where(mapTile => allowedMapTileTypes.Contains(mapTile.GetTileType())).ToList();
+		var mapTiles = ObjectMethods.FindComponentsOfType<MapTile>(false).Where(mapTile => allowedMapTileTypes.Contains(mapTile.GetTileType()));
 
 		mapTiles.ForEach(mapTile => mapTile.ResetTile());
 	}
@@ -61,23 +61,24 @@ public class MapGenerationManager : MonoBehaviour
 		var mapTilesToAdd = new List<MapTile>();
 		var positionsForMapTiles = GetPositionsForMapTilesToAdd(newMapSize);
 
-		if(mapTilesManager == null || positionsForMapTiles.Count == 0)
+		if(mapTilesManager == null || positionsForMapTiles.Count() == 0)
 		{
 			return;
 		}
 
-		var newMapTiles = mapTilesManager.GetMapTiles(positionsForMapTiles.Count, mapTile => mapTilesToAdd.Add(mapTile));
+		var newMapTiles = mapTilesManager.GetMapTiles(positionsForMapTiles.Count(), mapTile => mapTilesToAdd.Add(mapTile));
+		var positionsToMapTiles = newMapTiles.Zip(positionsForMapTiles, (mapTile, position) => new MapTilePosition(mapTile, position));
 
-		mapTilesToAdd.ForEach(mapTile => mapTile.Setup(positionsForMapTiles.PopFirst()));
+		positionsToMapTiles.ForEach(mapTilePosition => mapTilePosition.MapTile.Setup(mapTilePosition.Position));
 		mapTiles.AddRange(mapTilesToAdd);
 		mapTilesWereAddedEvent?.Invoke(mapTilesToAdd);
 	}
 
-	private List<Vector2Int> GetPositionsForMapTilesToAdd(Vector2Int newMapSize)
+	private IEnumerable<Vector2Int> GetPositionsForMapTilesToAdd(Vector2Int newMapSize)
 	{
 		var alreadyTakenPositions = GetAlreadyTakenPositionsByMapTiles();
 
-		return VectorMethods.GetTiledPositionsWithin(newMapSize).Where(position => !alreadyTakenPositions.Contains(position)).ToList();
+		return VectorMethods.GetTiledPositionsWithin(newMapSize).Where(position => !alreadyTakenPositions.Contains(position));
 	}
 
 	private List<MapTile> GetMapTilesToRemove(Vector2Int newMapSize)

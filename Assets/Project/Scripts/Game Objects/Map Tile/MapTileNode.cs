@@ -40,7 +40,7 @@ public class MapTileNode : MonoBehaviour
 		mapTileNodeData.SetValues(null, 0, 0);
 	}
 
-	public void FindNeighbours(List<MapTileNode> mapTileNodes)
+	public void FindNeighbours(IEnumerable<MapTileNode> mapTileNodes)
 	{
 		var diagonalMovementIsEnabled = pathfindingManager != null && pathfindingManager.DiagonalMovementIsEnabled();
 		var directions = VectorMethods.GetCardinalDirections(diagonalMovementIsEnabled);
@@ -68,7 +68,7 @@ public class MapTileNode : MonoBehaviour
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 	}
 
-	private void AddNeighbourIfPossible(List<MapTileNode> mapTileNodes, Vector2Int direction)
+	private void AddNeighbourIfPossible(IEnumerable<MapTileNode> mapTileNodes, Vector2Int direction)
 	{
 		var neighbouringPosition = GetPosition() + direction;
 		var neighbouringNode = mapTileNodes.FirstOrDefault(mapTileNode => mapTileNode.GetPosition() == neighbouringPosition);

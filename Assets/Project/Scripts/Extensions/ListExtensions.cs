@@ -34,18 +34,4 @@ public static class ListExtensions
 			action(list[i], i >= 1 ? list[i - 1] : default);
 		}
 	}
-
-	public static T PopFirst<T>(this List<T> list)
-	{
-		if(list.Count == 0)
-		{
-			return default;
-		}
-
-		var firstElement = list.First();
-
-		list.RemoveAt(0);
-
-		return firstElement;
-	}
 }

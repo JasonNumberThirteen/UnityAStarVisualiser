@@ -18,7 +18,7 @@ public class MapTilesManager : MonoBehaviour
 
 		var mapTiles = new List<MapTile>();
 
-		Enumerable.Range(1, numberOfTiles).ToList().ForEach(i => mapTiles.Add(mapTilesPooler.GetFirstAvailableMapTile(goParentTransform, onMapTileWasGot)));
+		Enumerable.Range(1, numberOfTiles).ForEach(i => mapTiles.Add(mapTilesPooler.GetFirstAvailableMapTile(goParentTransform, onMapTileWasGot)));
 		
 		return mapTiles;
 	}
