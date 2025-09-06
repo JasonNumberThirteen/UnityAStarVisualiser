@@ -34,4 +34,12 @@ public static class VectorMethods
 		
 		return Enumerable.Range(0, width*size.y).Select(i => new Vector2Int(i % width, i / width)).ToList();
 	}
+
+	public static Vector2 GetPositionWithinRect(Vector2 position, Rect rect, float innerOffsetFromRect = 0f)
+	{
+		var innerOffset = GetUniformVector2(innerOffsetFromRect);
+		var areaWithOffset = new Rect(rect.position + innerOffset, rect.size - innerOffset);
+
+		return position.GetClampedWithin(areaWithOffset);
+	}
 }

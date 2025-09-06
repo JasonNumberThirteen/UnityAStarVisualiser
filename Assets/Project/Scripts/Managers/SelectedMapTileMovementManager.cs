@@ -94,20 +94,21 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 			return;
 		}
 
+		var mapArea = mapAreaManager != null ? mapAreaManager.GetMapArea() : Rect.zero;
 		var mapTileRealPosition = GetMousePositionToWorldPoint() + translationPositionOffset;
-		var mapTileTiledPosition = GetPositionWithinArea(mapTileRealPosition.ToTiledPosition());
+		var mapTileTiledPosition = VectorMethods.GetPositionWithinRect(mapTileRealPosition.ToTiledPosition(), mapArea, 0.5f);
 
 		if(!AnyUnacceptableColliderWasDetected(mapTileTiledPosition))
 		{
-			mapTile.gameObject.transform.position = mapTileTiledPosition;
+			mapTile.SetPosition(Vector2Int.RoundToInt(mapTileTiledPosition));
 		}
 	}
 
 	private Vector3 GetMousePositionToWorldPoint()
 	{
-		var mousePositionToWorldPoint = mainSceneCamera != null ? (Vector2)mainSceneCamera.GetScreenToWorldPointFromMousePosition() : Vector2.zero;
+		var position = mainSceneCamera != null ? (Vector2)mainSceneCamera.GetScreenToWorldPointFromMousePosition() : Vector2.zero;
 
-		return mousePositionToWorldPoint.ToVector3();
+		return position.ToVector3();
 	}
 
 	private bool AnyUnacceptableColliderWasDetected(Vector2 position)
@@ -116,14 +117,5 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 		var colliders = Physics2D.OverlapBoxAll(position, size, 0f, unacceptableGameObjects);
 
 		return colliders.Any(collider => collider.gameObject != gameObject);
-	}
-
-	private Vector2 GetPositionWithinArea(Vector2 position)
-	{
-		var mapArea = mapAreaManager != null ? mapAreaManager.GetMapArea() : Rect.zero;
-		var offsetFromMapArea = VectorMethods.GetUniformVector2(0.5f);
-		var movementArea = new Rect(mapArea.position + offsetFromMapArea, mapArea.size - offsetFromMapArea);
-
-		return position.GetClampedWithin(movementArea);
 	}
 }
