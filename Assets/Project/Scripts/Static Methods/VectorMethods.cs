@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,5 +26,12 @@ public static class VectorMethods
 		}
 
 		return directions;
+	}
+
+	public static List<Vector2Int> GetTiledPositionsWithin(Vector2Int size)
+	{
+		var width = size.x;
+		
+		return Enumerable.Range(0, width*size.y).Select(i => new Vector2Int(i % width, i / width)).ToList();
 	}
 }

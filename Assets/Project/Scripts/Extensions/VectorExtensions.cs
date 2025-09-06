@@ -3,7 +3,9 @@ using UnityEngine;
 public static class VectorExtensions
 {
 	public static bool IsZero(this Vector2 vector) => vector == Vector2.zero;
+	public static float GetMaximumDimension(this Vector2 vector) => Mathf.Max(vector.x, vector.y);
 	public static Vector3 ToVector3(this Vector2 vector, float z = 0f) => new(vector.x, vector.y, z);
+	public static Vector3 ToVector3(this Vector2Int vector, float z = 0f) => new(vector.x, vector.y, z);
 
 	public static Vector2 GetClampedWithin(this Vector2 vector, Rect rect)
 	{

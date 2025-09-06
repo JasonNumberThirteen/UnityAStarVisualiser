@@ -50,10 +50,10 @@ public class MapAreaManager : MonoBehaviour
 		}
 
 		var centerOfMap = mapGenerationManager.GetCenterOfMap();
-		var halfOfMapSize = mapGenerationManager.GetMapSize()*0.5f;
+		var halfOfMapDimensions = mapGenerationManager.GetMapDimensions()*0.5f;
 		var additionalOffset = Vector2Int.one*additionalOffsetFromMapEdgesInTiles;
 
-		mapArea = new Rect(centerOfMap - halfOfMapSize - additionalOffset, centerOfMap + halfOfMapSize + additionalOffset);
+		mapArea = new Rect(centerOfMap - halfOfMapDimensions - additionalOffset, centerOfMap + halfOfMapDimensions + additionalOffset);
 
 		mapAreaWasChangedEvent?.Invoke(mapArea);
 	}

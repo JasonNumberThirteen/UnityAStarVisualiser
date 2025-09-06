@@ -158,7 +158,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 	private float GetMaximumSize()
 	{
-		var maximumMapDimension = GetSizeBy(mapGenerationManager != null ? mapGenerationManager.GetMaximumMapDimension() : 0f);
+		var maximumMapDimension = GetSizeBy(mapGenerationManager != null ? mapGenerationManager.GetMapDimensions().GetMaximumDimension() : 0f);
 		
 		return Mathf.Max(GetMinimumSize(), maximumMapDimension);
 	}

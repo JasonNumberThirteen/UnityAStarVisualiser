@@ -102,21 +102,16 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 
 	private void AssignMapSizeToInputFieldUIs()
 	{
-		if(mapGenerationManager == null)
-		{
-			return;
-		}
-
-		var mapSize = mapGenerationManager.GetMapSize();
+		var mapDimensions = mapGenerationManager != null ? mapGenerationManager.GetMapDimensions() : Vector2.zero;
 		
 		if(widthMapDimensionInputFieldUI != null)
 		{
-			widthMapDimensionInputFieldUI.text = mapSize.x.ToString();
+			widthMapDimensionInputFieldUI.text = mapDimensions.x.ToString();
 		}
 
 		if(heightMapDimensionInputFieldUI != null)
 		{
-			heightMapDimensionInputFieldUI.text = mapSize.y.ToString();
+			heightMapDimensionInputFieldUI.text = mapDimensions.y.ToString();
 		}
 	}
 }

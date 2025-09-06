@@ -9,19 +9,15 @@ public class MapGenerationManager : MonoBehaviour
 	public UnityEvent mapWasGeneratedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereAddedEvent;
 	public UnityEvent<List<MapTile>> mapTilesWereRemovedEvent;
-	
-	[SerializeField] private Transform goParentTransform;
 
 	private readonly List<MapTile> mapTiles = new();
 
 	private Vector2Int mapDimensions;
-	private MapTilesPooler mapTilesPooler;
+	private MapTilesManager mapTilesManager;
 
-	public Vector2 GetCenterOfMap() => (GetMapSize() - Vector2.one)*0.5f;
-	public Vector2 GetMapSize() => GetMapDimensions();
 	public Vector2 GetMapDimensions() => mapDimensions;
-	public int GetMaximumMapDimension() => Mathf.Max(mapDimensions.x, mapDimensions.y);
-
+	public Vector2 GetCenterOfMap() => GetPositionOfBottomRightCorner()*0.5f;
+	
 	public void ResetTiles()
 	{
 		var allowedMapTileTypes = new List<MapTileType>()
@@ -38,74 +34,55 @@ public class MapGenerationManager : MonoBehaviour
 	{
 		mapDimensions = newMapSize;
 		
-		RemoveTilesFromShrinkingIfNeeded(mapDimensions);
-		AddTilesFromExtendingIfNeeded(mapDimensions);
+		RemoveMapTilesFromShrinkingIfNeeded(mapDimensions);
+		AddMapTilesFromExtendingIfNeeded(mapDimensions);
 		EnsureExistanceOfMapTileOfType(MapTileType.Start, Vector2.zero);
-		EnsureExistanceOfMapTileOfType(MapTileType.Destination, GetMapSize() - Vector2.one);
+		EnsureExistanceOfMapTileOfType(MapTileType.Destination, GetPositionOfBottomRightCorner());
 		mapWasGeneratedEvent?.Invoke();
 	}
 
-	private void RemoveTilesFromShrinkingIfNeeded(Vector2Int newMapSize)
+	private void RemoveMapTilesFromShrinkingIfNeeded(Vector2Int newMapSize)
 	{
 		var mapTilesToRemove = GetMapTilesToRemove(newMapSize);
 
-		if(mapTilesPooler == null || mapTilesToRemove.Count() == 0)
+		if(mapTilesManager == null || mapTilesToRemove.Count == 0)
 		{
 			return;
 		}
 
-		mapTilesToRemove.ForEach(mapTile => mapTilesPooler.ReturnMapTileToPooler(mapTile, mapTile => mapTiles.Remove(mapTile)));
+		mapTilesManager.RemoveMapTiles(mapTilesToRemove, mapTile => mapTiles.Remove(mapTile));
 		mapTilesWereRemovedEvent?.Invoke(mapTilesToRemove);
 	}
 
-	private void AddTilesFromExtendingIfNeeded(Vector2Int newMapSize)
+	private void AddMapTilesFromExtendingIfNeeded(Vector2Int newMapSize)
 	{
-		var mapTilesToAdd = GetMapTilesToAdd(newMapSize);
+		var mapTilesToAdd = new List<MapTile>();
+		var positionsForMapTiles = GetPositionsForMapTilesToAdd(newMapSize);
 
-		if(mapTilesToAdd.Count() == 0)
+		if(mapTilesManager == null || positionsForMapTiles.Count == 0)
 		{
 			return;
 		}
 
-		mapTilesToAdd.ForEach(mapTile =>
-		{
-			mapTile.SetTileType(MapTileType.Passable);
-			mapTiles.Add(mapTile);
-		});
+		var newMapTiles = mapTilesManager.GetMapTiles(positionsForMapTiles.Count, mapTile => mapTilesToAdd.Add(mapTile));
 
+		mapTilesToAdd.ForEach(mapTile => mapTile.Setup(positionsForMapTiles.PopFirst()));
+		mapTiles.AddRange(mapTilesToAdd);
 		mapTilesWereAddedEvent?.Invoke(mapTilesToAdd);
+	}
+
+	private List<Vector2Int> GetPositionsForMapTilesToAdd(Vector2Int newMapSize)
+	{
+		var alreadyTakenPositions = GetAlreadyTakenPositionsByMapTiles();
+
+		return VectorMethods.GetTiledPositionsWithin(newMapSize).Where(position => !alreadyTakenPositions.Contains(position)).ToList();
 	}
 
 	private List<MapTile> GetMapTilesToRemove(Vector2Int newMapSize)
 	{
-		var mapTilesToRemove = new List<MapTile>();
 		var rectangleArea = RectMethods.GetRectWithSize(newMapSize);
 
-		mapTilesToRemove.AddRange(mapTiles.Where(mapTile => !rectangleArea.Contains(mapTile.transform.position)).ToList());
-
-		return mapTilesToRemove;
-	}
-
-	private List<MapTile> GetMapTilesToAdd(Vector2Int newMapSize)
-	{
-		if(mapTilesPooler == null)
-		{
-			return new List<MapTile>();
-		}
-		
-		var mapTilesToAdd = new List<MapTile>();
-		var alreadyTakenPositions = new List<Vector2Int>(mapTiles.Select(mapTile => Vector2Int.RoundToInt(mapTile.GetPosition())));
-		var allTilesPositions = Enumerable.Range(0, newMapSize.x*newMapSize.y).Select(i => new Vector2Int(i % newMapSize.x, i / newMapSize.x));
-		var missingTilesPositions = allTilesPositions.Where(position => !alreadyTakenPositions.Contains(position)).ToList();
-
-		missingTilesPositions.ForEach(position => mapTilesPooler.GetFirstAvailableMapTile(goParentTransform, mapTile =>
-		{
-			mapTile.transform.position = (Vector2)position;
-
-			mapTilesToAdd.Add(mapTile);
-		}));
-
-		return mapTilesToAdd;
+		return mapTiles.Where(mapTile => !rectangleArea.Contains(mapTile.GetPosition())).ToList();
 	}
 
 	private void EnsureExistanceOfMapTileOfType(MapTileType mapTileType, Vector2 position)
@@ -115,7 +92,7 @@ public class MapGenerationManager : MonoBehaviour
 			return;
 		}
 
-		var mapTile = mapTiles.FirstOrDefault(mapTile => (Vector2)mapTile.transform.position == position);
+		var mapTile = mapTiles.FirstOrDefault(mapTile => (Vector2)mapTile.GetPosition() == position);
 
 		if(mapTile != null)
 		{
@@ -125,7 +102,7 @@ public class MapGenerationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		mapTilesPooler = ObjectMethods.FindComponentOfType<MapTilesPooler>();
+		mapTilesManager = ObjectMethods.FindComponentOfType<MapTilesManager>();
 		
 		GenerateInitialMap(10);
 	}
@@ -139,4 +116,7 @@ public class MapGenerationManager : MonoBehaviour
 		
 		ChangeMapDimensionsIfNeeded(Vector2Int.one*initialMapSize);
 	}
+
+	private Vector2 GetPositionOfBottomRightCorner() => GetMapDimensions() - Vector2.one;
+	private List<Vector2Int> GetAlreadyTakenPositionsByMapTiles() => new(mapTiles.Select(mapTile => Vector2Int.RoundToInt(mapTile.GetPosition())));
 }

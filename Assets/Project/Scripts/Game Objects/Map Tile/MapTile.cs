@@ -21,9 +21,20 @@ public class MapTile : MonoBehaviour
 	public MapTileType GetTileType() => tileType;
 	public MapTileNode GetMapTileNode() => mapTileNode;
 
+	public void Setup(Vector2Int position)
+	{
+		SetPosition(position);
+		SetTileType(MapTileType.Passable);
+	}
+
 	public void SetActive(bool active)
 	{
 		gameObject.SetActive(active);
+	}
+
+	public void SetPosition(Vector2Int position)
+	{
+		transform.position = position.ToVector3(transform.position.z);
 	}
 
 	public void ResetTile()
