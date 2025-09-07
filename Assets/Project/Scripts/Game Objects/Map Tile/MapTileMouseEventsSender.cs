@@ -4,8 +4,10 @@ using UnityEngine;
 public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 {
 	private bool inputIsActive = true;
+	private bool hoverWasDetected;
 	private MapTile mapTile;
 	private VisualiserEventsManager visualiserEventsManager;
+	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -16,6 +18,37 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 	{
 		mapTile = GetComponent<MapTile>();
 		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
+		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
+
+		RegisterToListeners(true);
+	}
+
+	private void OnDestroy()
+	{
+		RegisterToListeners(false);
+	}
+
+	private void RegisterToListeners(bool register)
+	{
+		if(register)
+		{
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
+			}
+		}
+		else
+		{
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
+			}
+		}
+	}
+
+	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
+	{
+		hoverWasDetected = detected;
 	}
 
 	private void OnMouseEnter()
@@ -30,12 +63,18 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnMouseDown()
 	{
-		SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, true);
+		if(!hoverWasDetected)
+		{
+			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, true);
+		}
 	}
 
 	private void OnMouseUp()
 	{
-		SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, false);
+		if(!hoverWasDetected)
+		{
+			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, false);
+		}
 	}
 
 	private void SendEvent(VisualiserEventType visualiserEventType, bool enabled)
