@@ -6663,9 +6663,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1404510073}
-    - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1404510075}
   m_SourcePrefab: {fileID: 100100000, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
 --- !u!224 &1404510071 stripped
 RectTransform:
@@ -6701,18 +6698,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 1
---- !u!114 &1404510075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404510072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d396b55efb16594daebba1d63534a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1409543916
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9478,6 +9463,7 @@ GameObject:
   - component: {fileID: 1812739192}
   - component: {fileID: 1812739194}
   - component: {fileID: 1812739195}
+  - component: {fileID: 1812739196}
   m_Layer: 5
   m_Name: Settings Panel UI
   m_TagString: Untagged
@@ -9562,6 +9548,18 @@ MonoBehaviour:
   showPathTrailToggleUI: {fileID: 187261749}
   enableDiagonalMovementToggleUI: {fileID: 632029023}
   enableSimulationModeToggleUI: {fileID: 1339275431}
+--- !u!114 &1812739196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812739190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d396b55efb16594daebba1d63534a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1827461245
 PrefabInstance:
   m_ObjectHideFlags: 0
