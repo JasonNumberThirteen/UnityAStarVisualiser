@@ -3198,6 +3198,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 744491061}
+    - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 744491063}
   m_SourcePrefab: {fileID: 100100000, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
 --- !u!224 &744491057 stripped
 RectTransform:
@@ -3235,6 +3238,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &744491063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744491058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88b625d2ef53e7a44aa732e716449a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heuristicTypeDropdownUI: {fileID: 1811142119}
+  heuristicWeightInputFieldUI: {fileID: 1875015811}
 --- !u!1 &757118255
 GameObject:
   m_ObjectHideFlags: 0
@@ -9817,6 +9834,17 @@ MonoBehaviour:
       m_Calls: []
   minimumValue: 0
   maximumValue: 100
+--- !u!114 &1875015811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7165129147473597596, guid: 1a0576eaf8244bf46bc594801c86ea7d, type: 3}
+  m_PrefabInstance: {fileID: 2479077492404672257}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875015803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a4019d6799d8547be55bf0f3f38739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1888621699
 PrefabInstance:
   m_ObjectHideFlags: 0

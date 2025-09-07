@@ -16,6 +16,11 @@ public class InputFieldUI : MonoBehaviour
 		inputField.text = text;
 	}
 
+	public void SetInteractable(bool interactable)
+	{
+		inputField.interactable = interactable;
+	}
+
 	public void SetCharacterLimit(int characterLimit)
 	{
 		inputField.characterLimit = characterLimit;
