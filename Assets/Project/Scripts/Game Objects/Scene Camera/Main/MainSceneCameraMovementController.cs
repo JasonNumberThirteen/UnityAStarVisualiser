@@ -12,8 +12,6 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 	public void SetPrimaryWindowElementActive(bool active)
 	{
 		inputIsActive = active;
-
-		ResetMovementDirectionIfNeeded();
 	}
 
 	private void Awake()
@@ -49,25 +47,14 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 
 	private void OnMovementKeyWasPressed(Vector2 movementVector)
 	{
-		if(inputIsActive)
-		{
-			movementDirection = movementVector;
-		}
+		movementDirection = movementVector;
 	}
 
 	private void LateUpdate()
 	{
-		if(mainSceneCamera != null && !movementDirection.IsZero())
+		if(mainSceneCamera != null && inputIsActive && !movementDirection.IsZero())
 		{
 			mainSceneCamera.Translate(movementSpeed*Time.deltaTime*movementDirection);
-		}
-	}
-
-	private void ResetMovementDirectionIfNeeded()
-	{
-		if(!inputIsActive && !movementDirection.IsZero())
-		{
-			movementDirection = Vector2.zero;
 		}
 	}
 }
