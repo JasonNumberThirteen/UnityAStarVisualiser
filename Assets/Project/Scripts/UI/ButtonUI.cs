@@ -20,6 +20,11 @@ public class ButtonUI : MonoBehaviour
 		}
 	}
 
+	public void SetActive(bool active)
+	{
+		gameObject.SetActive(active);
+	}
+
 	public void SetInteractable(bool interactable)
 	{
 		button.interactable = interactable;

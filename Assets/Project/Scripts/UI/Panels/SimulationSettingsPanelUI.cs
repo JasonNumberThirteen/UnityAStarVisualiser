@@ -7,6 +7,7 @@ public class SimulationSettingsPanelUI : PanelUI
 	[SerializeField] private ButtonUI simulationStepForwardButtonUI;
 	[SerializeField] private ButtonUI interruptSimulationButtonUI;
 	
+	private bool pathfindingWasStarted;
 	private MapPathManager mapPathManager;
 	private SimulationManager simulationManager;
 	private PathfindingManager pathfindingManager;
@@ -31,14 +32,14 @@ public class SimulationSettingsPanelUI : PanelUI
 		{
 			if(mapPathManager != null)
 			{
-				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 		else
 		{
 			if(mapPathManager != null)
 			{
-				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnPathfindingProcessState);
+				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
 		}
 
@@ -65,13 +66,20 @@ public class SimulationSettingsPanelUI : PanelUI
 		if(register)
 		{
 			simulationManager.simulationEnabledStateWasChangedEvent.AddListener(SetActive);
-			simulationManager.simulationTypeWasChangedEvent.AddListener(SetSelectableUIsInteractableDependingOnSimulationType);
+			simulationManager.simulationTypeWasChangedEvent.AddListener(SetUIElementsActiveDependingOnSimulationType);
 		}
 		else
 		{
 			simulationManager.simulationEnabledStateWasChangedEvent.RemoveListener(SetActive);
-			simulationManager.simulationTypeWasChangedEvent.RemoveListener(SetSelectableUIsInteractableDependingOnSimulationType);
+			simulationManager.simulationTypeWasChangedEvent.RemoveListener(SetUIElementsActiveDependingOnSimulationType);
 		}
+	}
+
+	private void OnPathfindingProcessStateWasChanged(bool started)
+	{
+		pathfindingWasStarted = started;
+
+		SetUIElementsInteractableDependingOnPathfindingProcessState();
 	}
 
 	private void OnSimulationStepForwardButtonUIClicked()
@@ -92,33 +100,33 @@ public class SimulationSettingsPanelUI : PanelUI
 
 	private void OnEnable()
 	{
-		SetSelectableUIsInteractableDependingOnPathfindingProcessState(false);
+		SetUIElementsInteractableDependingOnPathfindingProcessState();
 		
 		if(simulationManager != null)
 		{
-			SetSelectableUIsInteractableDependingOnSimulationType(simulationManager.GetSimulationType());
+			SetUIElementsActiveDependingOnSimulationType(simulationManager.GetSimulationType());
 		}
 	}
 
-	private void SetSelectableUIsInteractableDependingOnPathfindingProcessState(bool interactable)
+	private void SetUIElementsInteractableDependingOnPathfindingProcessState()
 	{
 		if(simulationTypeDropdownUI != null)
 		{
-			simulationTypeDropdownUI.SetInteractable(!interactable);
+			simulationTypeDropdownUI.SetInteractable(!pathfindingWasStarted);
 		}
 
 		if(simulationStepForwardButtonUI != null)
 		{
-			simulationStepForwardButtonUI.SetInteractable(interactable);
+			simulationStepForwardButtonUI.SetInteractable(pathfindingWasStarted);
 		}
 		
 		if(interruptSimulationButtonUI != null)
 		{
-			interruptSimulationButtonUI.SetInteractable(interactable);
+			interruptSimulationButtonUI.SetInteractable(pathfindingWasStarted);
 		}
 	}
 
-	private void SetSelectableUIsInteractableDependingOnSimulationType(SimulationType simulationType)
+	private void SetUIElementsActiveDependingOnSimulationType(SimulationType simulationType)
 	{
 		if(simulationStepDelaySliderUIPanelUI != null)
 		{
@@ -127,7 +135,7 @@ public class SimulationSettingsPanelUI : PanelUI
 		
 		if(simulationStepForwardButtonUI != null)
 		{
-			simulationStepForwardButtonUI.gameObject.SetActive(simulationType == SimulationType.Stepwise);
+			simulationStepForwardButtonUI.SetActive(simulationType == SimulationType.Stepwise);
 		}
 	}
 }
