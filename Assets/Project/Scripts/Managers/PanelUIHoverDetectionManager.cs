@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class PanelUIHoverDetectionManager : MonoBehaviour, IPrimaryWindowElement
 {
-	public UnityEvent<bool> panelUIHoverDetectionStateWasChangedEvent;
+	public UnityEvent<bool> hoverDetectionStateWasChangedEvent;
 	
 	private bool hoverWasDetected;
 	private VisualiserEventsManager visualiserEventsManager;
@@ -62,6 +62,6 @@ public class PanelUIHoverDetectionManager : MonoBehaviour, IPrimaryWindowElement
 
 		hoverWasDetected = detected;
 		
-		panelUIHoverDetectionStateWasChangedEvent?.Invoke(hoverWasDetected);
+		hoverDetectionStateWasChangedEvent?.Invoke(hoverWasDetected);
 	}
 }

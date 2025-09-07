@@ -73,7 +73,7 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.AddListener(OnHoverDetectionStateWasChanged);
 			}
 		}
 		else
@@ -90,7 +90,7 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.RemoveListener(OnHoverDetectionStateWasChanged);
 			}
 		}
 	}
@@ -122,7 +122,7 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 		UpdateActiveState();
 	}
 
-	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
+	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
 		panelUIHoverWasDetected = detected;
 		

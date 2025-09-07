@@ -73,7 +73,7 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.AddListener(OnHoverDetectionStateWasChanged);
 			}
 		}
 		else
@@ -95,7 +95,7 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.RemoveListener(OnHoverDetectionStateWasChanged);
 			}
 		}
 	}
@@ -135,7 +135,7 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 		UpdateActiveState();
 	}
 
-	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
+	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
 		panelUIHoverWasDetected = detected;
 

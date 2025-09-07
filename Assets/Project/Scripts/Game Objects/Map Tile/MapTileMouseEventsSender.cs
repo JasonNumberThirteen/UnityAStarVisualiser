@@ -4,7 +4,7 @@ using UnityEngine;
 public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 {
 	private bool inputIsActive = true;
-	private bool hoverWasDetected;
+	private bool panelUIHoverWasDetected;
 	private MapTile mapTile;
 	private VisualiserEventsManager visualiserEventsManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
@@ -34,21 +34,21 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 		{
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.AddListener(OnPanelUIHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.AddListener(OnHoverDetectionStateWasChanged);
 			}
 		}
 		else
 		{
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.panelUIHoverDetectionStateWasChangedEvent.RemoveListener(OnPanelUIHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.RemoveListener(OnHoverDetectionStateWasChanged);
 			}
 		}
 	}
 
-	private void OnPanelUIHoverDetectionStateWasChanged(bool detected)
+	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
-		hoverWasDetected = detected;
+		panelUIHoverWasDetected = detected;
 	}
 
 	private void OnMouseEnter()
@@ -63,7 +63,7 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnMouseDown()
 	{
-		if(!hoverWasDetected)
+		if(!panelUIHoverWasDetected)
 		{
 			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, true);
 		}
@@ -71,7 +71,7 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnMouseUp()
 	{
-		if(!hoverWasDetected)
+		if(!panelUIHoverWasDetected)
 		{
 			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, false);
 		}
