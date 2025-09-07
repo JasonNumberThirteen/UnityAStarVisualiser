@@ -9694,11 +9694,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6243704357328755008, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_Name
-      value: Simulation Step Delay Slider UI Panel UI
+      value: Simulation Step Delay Listenable Slider UI Panel UI
       objectReference: {fileID: 0}
     - target: {fileID: 6528604358933740926, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_Name
-      value: Simulation Step Delay Slider UI
+      value: Simulation Step Delay Listenable Slider UI
       objectReference: {fileID: 0}
     - target: {fileID: 8900560432932223456, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -10531,11 +10531,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6243704357328755008, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_Name
-      value: Camera Zoom Sensitivity Slider UI Panel UI
+      value: Camera Zoom Sensitivity Listenable Slider UI Panel UI
       objectReference: {fileID: 0}
     - target: {fileID: 6528604358933740926, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_Name
-      value: Camera Zoom Sensitivity Slider UI
+      value: Camera Zoom Sensitivity Listenable Slider UI
       objectReference: {fileID: 0}
     - target: {fileID: 8900560432932223456, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_AnchorMax.x
