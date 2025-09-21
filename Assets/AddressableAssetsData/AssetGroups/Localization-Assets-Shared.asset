@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Shared
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-Assets-Shared
+  m_GUID: c70624fb0bd0bdf4eb5852650c494112
+  m_SerializeEntries:
+  - m_GUID: 14797d9e19675ce4bb4ec0b19fb1f6d8
+    m_Address: Assets/Localization/Instructions Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25e6c111d2ad6a440957dd9cfaeb438a
+    m_Address: Assets/Localization/Information Popup Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37069dd89b79dc2458c5ae538cf23587
+    m_Address: Assets/Localization/Main Window Settings Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a8222cf0454f174abadef8bc2e4d177
+    m_Address: Assets/Localization/Map Tiles Legend Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5fd61c343f9bdaf4e98a094ae8d4a9a8
+    m_Address: Assets/Localization/Heuristic Settings Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67a8076626dfc524ba27232e75dc6717
+    m_Address: Assets/Localization/Change Map Dimensions Popup Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7eb8f66df263f8d449cf13447eed97b5
+    m_Address: Assets/Localization/Exit Popup Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba10b5a292c1dff4db32b545a3a4878d
+    m_Address: Assets/Localization/Simulation Settings Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb1f3579bb0d7bc498f8163641a9c698
+    m_Address: Assets/Localization/LocalizationTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 6fdcb029c2e55394ea05c613c7783ccc, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 17b93363bd278ce469e94d620e28677f, type: 2}
+    - {fileID: 11400000, guid: 42ae0c194ed18a741a3db29f9beb6650, type: 2}

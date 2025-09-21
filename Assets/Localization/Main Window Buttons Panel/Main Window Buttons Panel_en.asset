@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Main Window Buttons Panel_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: bb1f3579bb0d7bc498f8163641a9c698, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1190344980828160
+    m_Localized: Find Path
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2677044026413056
+    m_Localized: Clear Results
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2677116000669696
+    m_Localized: Reset Tiles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2677158207950848
+    m_Localized: Change Map Dimensions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2677221390946304
+    m_Localized: Take Map Screenshot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2677430539915264
+    m_Localized: Switch Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2677612266524672
+    m_Localized: Information
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2677638980046848
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

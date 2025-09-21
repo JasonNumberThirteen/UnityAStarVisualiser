@@ -1,11 +1,14 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class MapTileLegendItemPanelUI : MonoBehaviour
 {
 	private Graphic graphic;
-	private TextMeshProUGUI text;
+	private LocalizeStringEvent localizeStringEvent;
+
+	private static readonly string MAP_TILES_LEGEND_PANEL_LOCALIZATION_TABLE_REFERENCE_KEY = "Map Tiles Legend Panel";
 
 	public void Setup(MapTileLegendData mapTileLegendData)
 	{
@@ -14,15 +17,15 @@ public class MapTileLegendItemPanelUI : MonoBehaviour
 			graphic.color = mapTileLegendData.Color;
 		}
 
-		if(text != null)
+		if(localizeStringEvent != null)
 		{
-			text.text = mapTileLegendData.Text;
+			localizeStringEvent.StringReference = new LocalizedString(MAP_TILES_LEGEND_PANEL_LOCALIZATION_TABLE_REFERENCE_KEY, mapTileLegendData.Text);
 		}
 	}
 
 	private void Awake()
 	{
 		graphic = GetComponentInChildren<Graphic>();
-		text = GetComponentInChildren<TextMeshProUGUI>();
+		localizeStringEvent = GetComponentInChildren<LocalizeStringEvent>();
 	}
 }

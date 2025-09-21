@@ -9,5 +9,7 @@ EditorBuildSettings:
     path: Assets/Project/Scenes/AStarVisualiserScene.unity
     guid: ee2dc5ea9b3038e4a826656bcd7e8b9c
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: be637e1e1b9680d4daedb53171433ad3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 7e52661fb9473ea41a1806eb694db209, type: 2}
   m_UseUCBPForAssetBundles: 0

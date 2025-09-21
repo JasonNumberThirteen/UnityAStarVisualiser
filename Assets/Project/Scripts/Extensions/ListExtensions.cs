@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
 public static class ListExtensions
@@ -7,6 +6,13 @@ public static class ListExtensions
 	public static void AddRange<T>(this List<T> list, params T[] elements)
 	{
 		list.AddRange(elements);
+	}
+
+	public static void ForEachIndexed<T>(this List<T> list, Action<T, int> action, int counterInitialValue = 0)
+	{
+		var i = counterInitialValue;
+
+		list.ForEach(element => action?.Invoke(element, i++));
 	}
 
 	public static void ForEachReversed<T>(this List<T> list, Action<T> action)

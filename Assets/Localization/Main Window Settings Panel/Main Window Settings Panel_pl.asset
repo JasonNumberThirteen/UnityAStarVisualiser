@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Main Window Settings Panel_pl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: 37069dd89b79dc2458c5ae538cf23587, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 11689398272
+    m_Localized: "Wy\u015Bwietl legend\u0119 kafelk\xF3w mapy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 238949371904
+    m_Localized: "Wy\u015Bwietl instrukcje"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 275821498368
+    m_Localized: "Wy\u015Bwietl \u015Blad \u015Bcie\u017Cki"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 321996591104
+    m_Localized: "W\u0142\u0105cz poruszanie si\u0119 na ukos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 413029765120
+    m_Localized: "W\u0142\u0105cz tryb symulacji"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 505539334144
+    m_Localized: "Czu\u0142o\u015B\u0107 przybli\u017Cania/oddalania kamery"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

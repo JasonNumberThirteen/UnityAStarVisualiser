@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Heuristic Settings Panel_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 5fd61c343f9bdaf4e98a094ae8d4a9a8, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 3200126976
+    m_Localized: Heuristic Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 77321867264
+    m_Localized: Heuristic Type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 259656650752
+    m_Localized: Manhattan Distance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339952406528
+    m_Localized: Euclidean Distance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 420952805376
+    m_Localized: Chebyshev Distance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640461705216
+    m_Localized: Heuristic Weight
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

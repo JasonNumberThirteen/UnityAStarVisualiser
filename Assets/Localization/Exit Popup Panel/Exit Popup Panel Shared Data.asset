@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Exit Popup Panel Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Exit Popup Panel
+  m_TableCollectionNameGuidString: 7eb8f66df263f8d449cf13447eed97b5
+  m_Entries:
+  - m_Id: 47248707584
+    m_Key: AreYouSure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127343136768
+    m_Key: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 158712336384
+    m_Key: No
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1137817847858200678
+  references:
+    version: 2
+    RefIds:
+    - rid: 1137817847858200678
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1757884005957

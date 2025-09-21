@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Heuristic Settings Panel Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Heuristic Settings Panel
+  m_TableCollectionNameGuidString: 5fd61c343f9bdaf4e98a094ae8d4a9a8
+  m_Entries:
+  - m_Id: 3200126976
+    m_Key: HeuristicSettings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 77321867264
+    m_Key: HeuristicType
+    m_Metadata:
+      m_Items: []
+  - m_Id: 259656650752
+    m_Key: ManhattanDistance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 339952406528
+    m_Key: EuclideanDistance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 420952805376
+    m_Key: ChebyshevDistance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640461705216
+    m_Key: HeuristicWeight
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1137817847858200667
+  references:
+    version: 2
+    RefIds:
+    - rid: 1137817847858200667
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1757882008113

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 {
@@ -8,6 +9,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	[SerializeField] private ButtonUI resetTilesButtonUI;
 	[SerializeField] private ButtonUI changeMapDimensionsButtonUI;
 	[SerializeField] private ButtonUI takeMapScreenshotButtonUI;
+	[SerializeField] private ButtonUI switchLanguageButtonUI;
 	[SerializeField] private ButtonUI informationButtonUI;
 	[SerializeField] private ButtonUI exitButtonUI;
 
@@ -67,6 +69,11 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		if(takeMapScreenshotButtonUI != null)
 		{
 			takeMapScreenshotButtonUI.RegisterToClickListener(OnTakeMapScreenshotButtonUIClicked, register);
+		}
+
+		if(switchLanguageButtonUI != null)
+		{
+			switchLanguageButtonUI.RegisterToClickListener(OnSwitchLanguageButtonUIClicked, register);
 		}
 
 		if(informationButtonUI != null)
@@ -133,6 +140,21 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		{
 			mapScreenshotTaker.TakeMapScreenshot();
 		}
+	}
+
+	private void OnSwitchLanguageButtonUIClicked()
+	{
+		if(switchLanguageButtonUI == null)
+		{
+			return;
+		}
+
+		var selectedLocale = LocalizationSettings.SelectedLocale;
+		var availableLocales = LocalizationSettings.AvailableLocales.Locales;
+		var selectedLocaleIndex = availableLocales.IndexOf(selectedLocale);
+		var nextLocaleIndex = (selectedLocaleIndex + 1) % availableLocales.Count;
+
+		LocalizationSettings.SelectedLocale = availableLocales[nextLocaleIndex];
 	}
 
 	private void OnInformationButtonUIClicked()

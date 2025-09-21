@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class HeuristicTypeEnumDropdownUI : EnumDropdownUI<HeuristicManager, HeuristicType>
 {
 	protected override HeuristicType GetInitialValue() => HeuristicType.ManhattanDistance;
+	protected override string GetLocalizationTableReferenceKey() => "Heuristic Settings Panel";
 
 	protected override List<string> GetOptions()
 	{

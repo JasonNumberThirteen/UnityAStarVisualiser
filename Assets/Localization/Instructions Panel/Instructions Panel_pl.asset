@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Instructions Panel_pl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: 14797d9e19675ce4bb4ec0b19fb1f6d8, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 3053326336
+    m_Localized: Instrukcje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 101162291200
+    m_Localized: "Najed\u017A na kafelek mapy, aby wy\u015Bwietli\u0107 jego obecn\u0105
+      wag\u0119.\r\nPoruszaj kafelek mapy przeci\u0105gaj\u0105c go za pomoc\u0105
+      myszy.\r\nPoruszaj si\u0119 dooko\u0142a mapy przy pomocy klawiszy kierunkowych.\r\nPrzybli\u017Caj/oddalaj
+      oraz zmieniaj wag\u0119 kafelka przewijaj\u0105c k\xF3\u0142kiem myszy.\r\nJe\u017Celi
+      waga kafelka jest poni\u017Cej 0, wtedy staje si\u0119 nieprzejezdny."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
