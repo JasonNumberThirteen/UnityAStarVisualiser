@@ -17,7 +17,7 @@
 - The project presents my programming skills and how I write code taking care of several optimisations.
 
 ## Used technologies
-- [Unity](https://unity.com/ "Unity Real-Time Development Platform | 3D, 2D, VR &amp; AR Engine") game engine (version **6000.0.47f1**),
+- [Unity](https://unity.com/ "Unity Real-Time Development Platform | 3D, 2D, VR &amp; AR Engine") game engine (version **6000.0.58f2**),
 - [Visual Studio Code](https://code.visualstudio.com/ "Visual Studio Code - Code Editing. Redefined") IDE for writing code,
 - [GIMP](https://www.gimp.org/ "GIMP - GNU Image Manipulation Program") for making graphics,
 - [DOTween](https://dotween.demigiant.com/ "DOTween (HOTween v2)") plugin for using tweens.
