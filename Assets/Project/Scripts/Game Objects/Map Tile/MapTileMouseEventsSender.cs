@@ -4,10 +4,32 @@ using UnityEngine;
 public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 {
 	private bool inputIsActive = true;
+	private bool isHovered;
+	private bool isSelected;
 	private bool panelUIHoverWasDetected;
 	private MapTile mapTile;
 	private VisualiserEventsManager visualiserEventsManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
+
+	private bool IsHovered
+	{
+		set
+		{
+			isHovered = value;
+
+			SendEvent(VisualiserEventType.MapTileHoverStateWasChanged, isHovered);
+		}
+	}
+
+	private bool IsSelected
+	{
+		set
+		{
+			isSelected = value;
+
+			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, isSelected);
+		}
+	}
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -53,27 +75,27 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnMouseEnter()
 	{
-		SendEvent(VisualiserEventType.MapTileHoverStateWasChanged, true);
+		IsHovered = true;
 	}
 
 	private void OnMouseExit()
 	{
-		SendEvent(VisualiserEventType.MapTileHoverStateWasChanged, false);
+		IsHovered = false;
 	}
 
 	private void OnMouseDown()
 	{
 		if(!panelUIHoverWasDetected)
 		{
-			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, true);
+			IsSelected = true;
 		}
 	}
 
 	private void OnMouseUp()
 	{
-		if(!panelUIHoverWasDetected)
+		if(isSelected)
 		{
-			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, false);
+			IsSelected = false;
 		}
 	}
 
