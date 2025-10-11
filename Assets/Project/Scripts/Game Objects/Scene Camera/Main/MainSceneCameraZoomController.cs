@@ -16,6 +16,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	private MapGenerationManager mapGenerationManager;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
+	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
 	private static readonly float ADDITIONAL_OFFSET_FROM_MAP_EDGES = 1f;
 
@@ -37,6 +38,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 		mapGenerationManager = ObjectMethods.FindComponentOfType<MapGenerationManager>();
 		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
+		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
 	}
@@ -64,6 +66,11 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.AddListener(OnHoverDetectionStateWasChanged);
+			}
 		}
 		else
 		{
@@ -80,6 +87,11 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 			if(selectedMapTileManager != null)
 			{
 				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
+			}
+
+			if(panelUIHoverDetectionManager != null)
+			{
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.RemoveListener(OnHoverDetectionStateWasChanged);
 			}
 		}
 
@@ -154,6 +166,11 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
 		mapTileIsSelected = mapTile != null;
+	}
+
+	private void OnHoverDetectionStateWasChanged(bool detected)
+	{
+		zoomCanBeModified = !detected;
 	}
 
 	private float GetMaximumSize()
