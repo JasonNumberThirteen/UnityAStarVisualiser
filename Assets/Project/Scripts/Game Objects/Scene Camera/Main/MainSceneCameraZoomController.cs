@@ -122,7 +122,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
-		if(!inputIsActive || mapTileIsHovered || panelUIHoverWasDetected || mainSceneCamera == null || !mainSceneCamera.IsOrthographic())
+		if(!inputIsActive || (mapTileIsHovered && !mapTileIsSelected) || panelUIHoverWasDetected || mainSceneCamera == null || !mainSceneCamera.IsOrthographic())
 		{
 			return;
 		}
@@ -158,10 +158,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
-		if(!mapTileIsSelected)
-		{
-			mapTileIsHovered = mapTile != null;
-		}
+		mapTileIsHovered = mapTile != null;
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
