@@ -81,5 +81,7 @@ public class PathfindingManager : MonoBehaviour
 	private void OnPathfindingProcessWasStarted(bool started)
 	{
 		pathfindingWasStarted = started;
+
+		mapEditingElements.ForEach(mapEditingElement => mapEditingElement.SetMapEditingElementActive(!pathfindingWasStarted));
 	}
 }
