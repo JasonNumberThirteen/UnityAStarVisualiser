@@ -7,8 +7,9 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	public UnityEvent<float> cameraSizeWasUpdatedEvent;
 	
 	private bool inputIsActive = true;
+	private bool mapTileIsHovered;
 	private bool mapTileIsSelected;
-	private bool zoomCanBeModified = true;
+	private bool panelUIHoverWasDetected;
 	private float zoomPerScroll;
 	private MainSceneCamera mainSceneCamera;
 	private UserInputController userInputController;
@@ -121,7 +122,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
-		if(!inputIsActive || !zoomCanBeModified || mainSceneCamera == null || !mainSceneCamera.IsOrthographic())
+		if(!inputIsActive || mapTileIsHovered || panelUIHoverWasDetected || mainSceneCamera == null || !mainSceneCamera.IsOrthographic())
 		{
 			return;
 		}
@@ -159,7 +160,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	{
 		if(!mapTileIsSelected)
 		{
-			zoomCanBeModified = mapTile == null;
+			mapTileIsHovered = mapTile != null;
 		}
 	}
 
@@ -170,7 +171,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
-		zoomCanBeModified = !detected;
+		panelUIHoverWasDetected = detected;
 	}
 
 	private float GetMaximumSize()
