@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class ApplicationSceneManager : MonoBehaviour
 {
-	public static readonly string VISUALISER_SCENE_NAME = "AStarVisualiserScene";
+	public static readonly string VISUALISER_SCENE_NAME = "VisualiserScene";
 
 	private FadeScreenPanelUI fadeScreenPanelUI;
 	
