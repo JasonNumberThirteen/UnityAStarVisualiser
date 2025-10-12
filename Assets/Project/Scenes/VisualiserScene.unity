@@ -4930,6 +4930,7 @@ GameObject:
   - component: {fileID: 961739751}
   - component: {fileID: 961739750}
   - component: {fileID: 961739754}
+  - component: {fileID: 961739755}
   m_Layer: 0
   m_Name: Main Scene Camera
   m_TagString: MainCamera
@@ -4999,7 +5000,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.9372549, g: 0.9372549, b: 0.9372549, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5065,6 +5066,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c791695843d0554196fdea9de934f06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &961739755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961739749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb95b3371739f7b42bbf88c79a6b0bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &998585325
@@ -10901,6 +10914,7 @@ GameObject:
   - component: {fileID: 2040106546}
   - component: {fileID: 2040106545}
   - component: {fileID: 2040106549}
+  - component: {fileID: 2040106550}
   m_Layer: 0
   m_Name: Map Screenshot Scene Camera
   m_TagString: Untagged
@@ -10970,7 +10984,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.9372549, g: 0.9372549, b: 0.9372549, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -11036,6 +11050,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7992bc32a02bc1747bbc855acc476423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2040106550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040106544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb95b3371739f7b42bbf88c79a6b0bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2058048531
