@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -7,6 +8,7 @@ using UnityEngine.Events;
 public class ButtonUI : MonoBehaviour
 {
 	private Button button;
+	private TextMeshProUGUI buttonText;
 	
 	public void RegisterToClickListener(UnityAction action, bool register)
 	{
@@ -25,13 +27,22 @@ public class ButtonUI : MonoBehaviour
 		gameObject.SetActive(active);
 	}
 
+	public void SetText(string text)
+	{
+		if(buttonText != null)
+		{
+			buttonText.text = text;
+		}
+	}
+
 	public void SetInteractable(bool interactable)
 	{
 		button.interactable = interactable;
 	}
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		button = GetComponent<Button>();
+		buttonText = GetComponentInChildren<TextMeshProUGUI>();
 	}
 }

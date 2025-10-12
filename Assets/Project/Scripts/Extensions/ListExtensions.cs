@@ -3,6 +3,15 @@ using System.Collections.Generic;
 
 public static class ListExtensions
 {
+	public static List<T> GetReversedList<T>(this List<T> list)
+	{
+		var listCopy = new List<T>(list);
+		
+		listCopy.Reverse();
+
+		return listCopy;
+	}
+	
 	public static void AddRange<T>(this List<T> list, params T[] elements)
 	{
 		list.AddRange(elements);

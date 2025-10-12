@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Project/Scenes/LanguageSelectionScene.unity
+    guid: ae8573a91636a6b499e400413ca1142c
+  - enabled: 1
     path: Assets/Project/Scenes/AStarVisualiserScene.unity
     guid: ee2dc5ea9b3038e4a826656bcd7e8b9c
   m_configObjects:
