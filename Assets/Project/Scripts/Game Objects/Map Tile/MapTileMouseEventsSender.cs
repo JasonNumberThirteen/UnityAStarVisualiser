@@ -6,7 +6,6 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 	private bool inputIsActive = true;
 	private bool isHovered;
 	private bool isSelected;
-	private bool panelUIHoverWasDetected;
 	private MapTile mapTile;
 	private VisualiserEventsManager visualiserEventsManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
@@ -70,12 +69,15 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
-		panelUIHoverWasDetected = detected;
+		inputIsActive = !detected;
 	}
 
 	private void OnMouseEnter()
 	{
-		IsHovered = true;
+		if(inputIsActive)
+		{
+			IsHovered = true;
+		}
 	}
 
 	private void OnMouseExit()
@@ -85,7 +87,7 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnMouseDown()
 	{
-		if(!panelUIHoverWasDetected)
+		if(inputIsActive)
 		{
 			IsSelected = true;
 		}
@@ -101,7 +103,7 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void SendEvent(VisualiserEventType visualiserEventType, bool enabled)
 	{
-		if(inputIsActive && visualiserEventsManager != null)
+		if(visualiserEventsManager != null)
 		{
 			visualiserEventsManager.SendEvent(new MapTileBoolVisualiserEvent(mapTile, visualiserEventType, enabled));
 		}
