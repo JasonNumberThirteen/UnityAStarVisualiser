@@ -44,13 +44,10 @@ TagManager:
   - name: Map Area Indicator
     uniqueID: 1518819359
     locked: 0
-  - name: Grid Cell
-    uniqueID: 3283900707
-    locked: 0
   - name: Map Tile
     uniqueID: 2963450531
     locked: 0
-  - name: Indicator
+  - name: Indicator On Map Tile
     uniqueID: 375696419
     locked: 0
   - name: Map Tile Weight Counter Text UI Canvas
