@@ -39,6 +39,10 @@ MonoBehaviour:
     m_Key: CameraZoomSensitivity
     m_Metadata:
       m_Items: []
+  - m_Id: 10519403355312128
+    m_Key: ShowMapArea
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

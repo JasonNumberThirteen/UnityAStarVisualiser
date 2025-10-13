@@ -5,12 +5,14 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 {
 	[SerializeField] private ToggleUI showMapTilesLegendToggleUI;
 	[SerializeField] private ToggleUI showInstructionsToggleUI;
+	[SerializeField] private ToggleUI showMapAreaToggleUI;
 	[SerializeField] private ToggleUI showPathTrailToggleUI;
 	[SerializeField] private ToggleUI enableDiagonalMovementToggleUI;
 	[SerializeField] private ToggleUI enableSimulationModeToggleUI;
 
 	private MapTilesLegendPanelUI mapTilesLegendPanelUI;
 	private InstructionsPanelUI instructionsPanelUI;
+	private MapAreaIndicator mapAreaIndicator;
 	private SimulationSettingsPanelUI simulationSettingsPanelUI;
 	private MapPathManager mapPathManager;
 	private PathfindingManager pathfindingManager;
@@ -27,6 +29,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		mapTilesLegendPanelUI = ObjectMethods.FindComponentOfType<MapTilesLegendPanelUI>();
 		instructionsPanelUI = ObjectMethods.FindComponentOfType<InstructionsPanelUI>();
+		mapAreaIndicator = ObjectMethods.FindComponentOfType<MapAreaIndicator>();
 		simulationSettingsPanelUI = ObjectMethods.FindComponentOfType<SimulationSettingsPanelUI>();
 		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
@@ -34,6 +37,7 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		mapTilesPathTrailManager = ObjectMethods.FindComponentOfType<MapTilesPathTrailManager>();
 
 		UpdateUIElementsDependantOnToggleUIStates();
+		SetMapAreaIndicatorActive(showMapAreaToggleUI != null && showMapAreaToggleUI.IsOn());
 		SetPathTrailEnabled(showPathTrailToggleUI != null && showPathTrailToggleUI.IsOn());
 		SetDiagonalMovementEnabled(enableDiagonalMovementToggleUI != null && enableDiagonalMovementToggleUI.IsOn());
 		SetSimulationEnabled(enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.IsOn());
@@ -70,6 +74,11 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		if(showInstructionsToggleUI != null)
 		{
 			showInstructionsToggleUI.RegisterToValueChangeListener(OnShowInstructionsToggleUIValueChanged, register);
+		}
+
+		if(showMapAreaToggleUI != null)
+		{
+			showMapAreaToggleUI.RegisterToValueChangeListener(SetMapAreaIndicatorActive, register);
 		}
 
 		if(showPathTrailToggleUI != null)
@@ -118,6 +127,14 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		if(panelUI != null)
 		{
 			panelUI.SetActive(active);
+		}
+	}
+
+	private void SetMapAreaIndicatorActive(bool enabled)
+	{
+		if(mapAreaIndicator != null)
+		{
+			mapAreaIndicator.SetActive(enabled);
 		}
 	}
 

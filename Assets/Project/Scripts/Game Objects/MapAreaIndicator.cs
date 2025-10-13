@@ -12,6 +12,11 @@ public class MapAreaIndicator : MonoBehaviour
 
 	private Tween fadeTween;
 
+	public void SetActive(bool active)
+	{
+		gameObject.SetActive(active);
+	}
+
 	private void Awake()
 	{
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -26,7 +31,7 @@ public class MapAreaIndicator : MonoBehaviour
 		RegisterToListeners(false);
 		fadeTween?.Kill();
 	}
-	
+
 	private void RegisterToListeners(bool register)
 	{
 		if(register)
