@@ -6039,6 +6039,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fade Screen Panel UI
       objectReference: {fileID: 0}
+    - target: {fileID: 2035460434495961479, guid: 6d3f0689233e32244a37575e0196d526, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5213756085414940935, guid: 6d3f0689233e32244a37575e0196d526, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6696,6 +6700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 1
+  initialNormalizedPosition: 1
 --- !u!1 &1275537822
 GameObject:
   m_ObjectHideFlags: 0

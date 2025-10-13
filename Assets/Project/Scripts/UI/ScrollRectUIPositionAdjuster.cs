@@ -5,18 +5,17 @@ using UnityEngine.UI;
 public class ScrollRectUIPositionAdjuster : MonoBehaviour
 {
 	[SerializeField] private Direction direction;
+	[SerializeField][Range(0f, 1f)] private float initialNormalizedPosition = 1f;
 	
 	private ScrollRect scrollRect;
 	private float lastNormalizedPosition;
 
 	private static readonly float LAST_NORMALIZED_POSITION_UPDATE_ON_ENABLE_DELAY = 0.1f;
-	private static readonly float LAST_NORMALIZED_POSITION_SETTING_ON_START_DELAY = 0.5f;
 
 	private void Awake()
 	{
 		scrollRect = GetComponent<ScrollRect>();
-
-		CoroutineMethods.ExecuteAfterDelayInSeconds(this, UpdateLastNormalizedPosition, LAST_NORMALIZED_POSITION_SETTING_ON_START_DELAY);
+		lastNormalizedPosition = initialNormalizedPosition;
 	}
 
 	private void OnEnable()
@@ -26,7 +25,7 @@ public class ScrollRectUIPositionAdjuster : MonoBehaviour
 
 	private void OnDisable()
 	{
-		UpdateLastNormalizedPosition();
+		lastNormalizedPosition = GetNormalizedPosition();
 	}
 
 	private void SetLastNormalizedPosition()
@@ -41,11 +40,6 @@ public class ScrollRectUIPositionAdjuster : MonoBehaviour
 				scrollRect.verticalNormalizedPosition = lastNormalizedPosition;
 				break;
 		}
-	}
-
-	private void UpdateLastNormalizedPosition()
-	{
-		lastNormalizedPosition = GetNormalizedPosition();
 	}
 
 	private float GetNormalizedPosition()
