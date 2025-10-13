@@ -24,6 +24,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	public void SetPrimaryWindowElementActive(bool active)
 	{
 		inputIsActive = active;
+		panelUIHoverWasDetected = false;
 	}
 
 	public void SetZoomPerScroll(float zoomPerScroll)
