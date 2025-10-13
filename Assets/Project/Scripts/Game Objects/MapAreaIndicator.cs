@@ -9,7 +9,6 @@ public class MapAreaIndicator : MonoBehaviour
 	
 	private SpriteRenderer spriteRenderer;
 	private MapAreaManager mapAreaManager;
-
 	private Tween fadeTween;
 
 	public void SetActive(bool active)
