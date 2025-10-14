@@ -42,9 +42,9 @@ public class CameraSettingsPanelUI : PanelUI
 			SetMainCameraMovementSpeed(cameraMovementSpeedSliderUI.GetValue());
 		}
 
-		if(cameraMovementSpeedSliderUI != null)
+		if(cameraZoomSensitivitySliderUI != null)
 		{
-			SetMainCameraZoom(cameraMovementSpeedSliderUI.GetValue());
+			SetMainCameraZoom(cameraZoomSensitivitySliderUI.GetValue());
 		}
 	}
 
