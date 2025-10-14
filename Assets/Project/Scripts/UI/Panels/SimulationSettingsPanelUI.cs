@@ -4,6 +4,7 @@ public class SimulationSettingsPanelUI : PanelUI
 {
 	[SerializeField] private DropdownUI simulationTypeDropdownUI;
 	[SerializeField] private PanelUI simulationStepDelaySliderUIPanelUI;
+	[SerializeField] private SliderUI simulationStepDelaySliderUI;
 	[SerializeField] private ButtonUI simulationStepForwardButtonUI;
 	[SerializeField] private ButtonUI interruptSimulationButtonUI;
 	
@@ -18,6 +19,7 @@ public class SimulationSettingsPanelUI : PanelUI
 		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 
+		SetInitialValues();
 		RegisterToListeners(true);
 	}
 
@@ -41,6 +43,11 @@ public class SimulationSettingsPanelUI : PanelUI
 			{
 				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
+		}
+
+		if(simulationStepDelaySliderUI != null)
+		{
+			simulationStepDelaySliderUI.RegisterToValueChangeListener(SetSimulationStepDelay, register);
 		}
 
 		if(simulationStepForwardButtonUI != null)
@@ -75,11 +82,27 @@ public class SimulationSettingsPanelUI : PanelUI
 		}
 	}
 
+	private void SetInitialValues()
+	{
+		if(simulationStepDelaySliderUI != null)
+		{
+			SetSimulationStepDelay(simulationStepDelaySliderUI.GetValue());
+		}
+	}
+
 	private void OnPathfindingProcessStateWasChanged(bool started)
 	{
 		pathfindingWasStarted = started;
 
 		SetUIElementsInteractableDependingOnPathfindingProcessState();
+	}
+
+	private void SetSimulationStepDelay(float delay)
+	{
+		if(simulationManager != null)
+		{
+			simulationManager.SetSimulationStepDelay(delay);
+		}
 	}
 
 	private void OnSimulationStepForwardButtonUIClicked()

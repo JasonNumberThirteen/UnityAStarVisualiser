@@ -2880,6 +2880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simulationTypeDropdownUI: {fileID: 515721290}
+  simulationStepDelaySliderUI: {fileID: 1827461247}
   simulationStepDelaySliderUIPanelUI: {fileID: 2061554851}
   simulationStepForwardButtonUI: {fileID: 924490789}
   interruptSimulationButtonUI: {fileID: 1677280289}
@@ -11239,11 +11240,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6243704357328755008, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_Name
-      value: Simulation Step Delay Listenable Slider UI Panel UI
+      value: Simulation Step Delay Slider UI Panel UI
       objectReference: {fileID: 0}
     - target: {fileID: 6528604358933740926, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_Name
-      value: Simulation Step Delay Listenable Slider UI
+      value: Simulation Step Delay Slider UI
       objectReference: {fileID: 0}
     - target: {fileID: 8900560432932223456, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -11257,35 +11258,25 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3776083828802473018, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6528604358933740926, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1827461251}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
 --- !u!224 &1827461246 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4576714332110738380, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
   m_PrefabInstance: {fileID: 1827461245}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1827461247 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6528604358933740926, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
+--- !u!114 &1827461247 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3776083828802473018, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
   m_PrefabInstance: {fileID: 1827461245}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1827461251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827461247}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da249bc0f138c94281b4aa79c0ed082, type: 3}
+  m_Script: {fileID: 11500000, guid: c956e30ee89f79b4faa8081a8274aca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1843710902
