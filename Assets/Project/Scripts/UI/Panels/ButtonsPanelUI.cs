@@ -49,47 +49,47 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	{
 		if(findPathButtonUI != null)
 		{
-			findPathButtonUI.RegisterToClickListener(OnFindPathButtonUIClicked, register);
+			findPathButtonUI.RegisterToClickListener(OnFindPathButtonUIWasClicked, register);
 		}
 
 		if(clearResultsButtonUI != null)
 		{
-			clearResultsButtonUI.RegisterToClickListener(OnClearResultsButtonUIClicked, register);
+			clearResultsButtonUI.RegisterToClickListener(OnClearResultsButtonUIWasClicked, register);
 		}
 
 		if(resetTilesButtonUI != null)
 		{
-			resetTilesButtonUI.RegisterToClickListener(OnResetTilesButtonUIClicked, register);
+			resetTilesButtonUI.RegisterToClickListener(OnResetTilesButtonUIWasClicked, register);
 		}
 
 		if(changeMapDimensionsButtonUI != null)
 		{
-			changeMapDimensionsButtonUI.RegisterToClickListener(OnChangeMapDimensionsButtonUIClicked, register);
+			changeMapDimensionsButtonUI.RegisterToClickListener(OnChangeMapDimensionsButtonUIWasClicked, register);
 		}
 
 		if(takeMapScreenshotButtonUI != null)
 		{
-			takeMapScreenshotButtonUI.RegisterToClickListener(OnTakeMapScreenshotButtonUIClicked, register);
+			takeMapScreenshotButtonUI.RegisterToClickListener(OnTakeMapScreenshotButtonUIWasClicked, register);
 		}
 
 		if(switchLanguageButtonUI != null)
 		{
-			switchLanguageButtonUI.RegisterToClickListener(OnSwitchLanguageButtonUIClicked, register);
+			switchLanguageButtonUI.RegisterToClickListener(OnSwitchLanguageButtonUIWasClicked, register);
 		}
 
 		if(fullscreenWindowedModeButtonUI != null)
 		{
-			fullscreenWindowedModeButtonUI.RegisterToClickListener(OnFullscreenWindowedModeButtonUIClicked, register);
+			fullscreenWindowedModeButtonUI.RegisterToClickListener(OnFullscreenWindowedModeButtonUIWasClicked, register);
 		}
 
 		if(informationButtonUI != null)
 		{
-			informationButtonUI.RegisterToClickListener(OnInformationButtonUIClicked, register);
+			informationButtonUI.RegisterToClickListener(OnInformationButtonUIWasClicked, register);
 		}
 		
 		if(exitButtonUI != null)
 		{
-			exitButtonUI.RegisterToClickListener(OnExitButtonUIClicked, register);
+			exitButtonUI.RegisterToClickListener(OnExitButtonUIWasClicked, register);
 		}
 		
 		if(register)
@@ -108,7 +108,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnFindPathButtonUIClicked()
+	private void OnFindPathButtonUIWasClicked()
 	{
 		if(pathfindingManager != null)
 		{
@@ -116,7 +116,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnClearResultsButtonUIClicked()
+	private void OnClearResultsButtonUIWasClicked()
 	{
 		if(pathfindingManager != null)
 		{
@@ -124,7 +124,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnResetTilesButtonUIClicked()
+	private void OnResetTilesButtonUIWasClicked()
 	{
 		if(mapGenerationManager != null)
 		{
@@ -132,7 +132,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnChangeMapDimensionsButtonUIClicked()
+	private void OnChangeMapDimensionsButtonUIWasClicked()
 	{
 		if(changeMapDimensionsPopupPanelUI != null)
 		{
@@ -140,7 +140,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnTakeMapScreenshotButtonUIClicked()
+	private void OnTakeMapScreenshotButtonUIWasClicked()
 	{
 		if(takeMapScreenshotButtonUI != null)
 		{
@@ -148,12 +148,12 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnFullscreenWindowedModeButtonUIClicked()
+	private void OnFullscreenWindowedModeButtonUIWasClicked()
 	{
 		Screen.fullScreen = !Screen.fullScreen;
 	}
 
-	private void OnSwitchLanguageButtonUIClicked()
+	private void OnSwitchLanguageButtonUIWasClicked()
 	{
 		if(switchLanguageButtonUI == null)
 		{
@@ -168,7 +168,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		LocalizationSettings.SelectedLocale = availableLocales[nextLocaleIndex];
 	}
 
-	private void OnInformationButtonUIClicked()
+	private void OnInformationButtonUIWasClicked()
 	{
 		if(informationPopupPanelUI != null)
 		{
@@ -176,7 +176,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		}
 	}
 
-	private void OnExitButtonUIClicked()
+	private void OnExitButtonUIWasClicked()
 	{
 		if(exitPopupPanelUI != null)
 		{
