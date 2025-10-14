@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+[DefaultExecutionOrder(-100)]
 [RequireComponent(typeof(Slider))]
 public class SliderUI : MonoBehaviour
 {
