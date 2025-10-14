@@ -30,6 +30,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44211fad17157654fa91351e5d75c253
+    m_Address: Assets/Localization/Camera Settings Panel/Camera Settings Panel Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a8222cf0454f174abadef8bc2e4d177
     m_Address: Assets/Localization/Map Tiles Legend Shared Data.asset
     m_ReadOnly: 1

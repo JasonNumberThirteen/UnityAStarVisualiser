@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Polish (pl)
   m_GUID: 1ddeaf9387772944fbbef19468d1c120
   m_SerializeEntries:
+  - m_GUID: 0e39c5df12ea38f4c90a254b426415b1
+    m_Address: Camera Settings Panel_pl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-pl
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2a7542bf71fdf0c408d744d53fb8d587
     m_Address: Instructions Panel_pl
     m_ReadOnly: 1

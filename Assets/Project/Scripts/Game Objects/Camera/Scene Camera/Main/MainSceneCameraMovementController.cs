@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowElement
 {
-	[SerializeField, Min(0f)] private float movementSpeed = 10f;
-	
+	private float movementSpeed;
 	private bool inputIsActive = true;
 	private Vector2 movementDirection;
 	private MainSceneCamera mainSceneCamera;
@@ -12,6 +11,11 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 	public void SetPrimaryWindowElementActive(bool active)
 	{
 		inputIsActive = active;
+	}
+
+	public void SetMovementSpeed(float movementSpeed)
+	{
+		this.movementSpeed = movementSpeed;
 	}
 
 	private void Awake()

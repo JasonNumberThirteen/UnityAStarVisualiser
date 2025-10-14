@@ -38,10 +38,6 @@ MonoBehaviour:
     m_Localized: "W\u0142\u0105cz tryb symulacji"
     m_Metadata:
       m_Items: []
-  - m_Id: 505539334144
-    m_Localized: "Czu\u0142o\u015B\u0107 przybli\u017Cania/oddalania kamery"
-    m_Metadata:
-      m_Items: []
   - m_Id: 10519403355312128
     m_Localized: "Wy\u015Bwietl obszar mapy"
     m_Metadata:
