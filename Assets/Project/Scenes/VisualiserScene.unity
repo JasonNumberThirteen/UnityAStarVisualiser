@@ -9606,7 +9606,7 @@ PrefabInstance:
       propertyPath: m_text
       value: '"A* Visualiser"
 
-        1.0
+        1.1
 
         2025'
       objectReference: {fileID: 0}
