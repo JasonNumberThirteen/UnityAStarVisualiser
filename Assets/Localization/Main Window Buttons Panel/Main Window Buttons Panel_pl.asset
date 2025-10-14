@@ -50,6 +50,10 @@ MonoBehaviour:
     m_Localized: "Wyjd\u017A"
     m_Metadata:
       m_Items: []
+  - m_Id: 13529249830801408
+    m_Localized: "Tryb pe\u0142noekranowy/okienkowy"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

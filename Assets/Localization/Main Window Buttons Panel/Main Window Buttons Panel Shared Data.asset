@@ -47,6 +47,10 @@ MonoBehaviour:
     m_Key: Exit
     m_Metadata:
       m_Items: []
+  - m_Id: 13529249830801408
+    m_Key: FullscreenWindowedMode
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

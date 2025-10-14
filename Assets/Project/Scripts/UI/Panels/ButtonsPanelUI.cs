@@ -9,6 +9,7 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 	[SerializeField] private ButtonUI resetTilesButtonUI;
 	[SerializeField] private ButtonUI changeMapDimensionsButtonUI;
 	[SerializeField] private ButtonUI takeMapScreenshotButtonUI;
+	[SerializeField] private ButtonUI fullscreenWindowedModeButtonUI;
 	[SerializeField] private ButtonUI switchLanguageButtonUI;
 	[SerializeField] private ButtonUI informationButtonUI;
 	[SerializeField] private ButtonUI exitButtonUI;
@@ -76,6 +77,11 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 			switchLanguageButtonUI.RegisterToClickListener(OnSwitchLanguageButtonUIClicked, register);
 		}
 
+		if(fullscreenWindowedModeButtonUI != null)
+		{
+			fullscreenWindowedModeButtonUI.RegisterToClickListener(OnFullscreenWindowedModeButtonUIClicked, register);
+		}
+
 		if(informationButtonUI != null)
 		{
 			informationButtonUI.RegisterToClickListener(OnInformationButtonUIClicked, register);
@@ -140,6 +146,11 @@ public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
 		{
 			mapScreenshotTaker.TakeMapScreenshot();
 		}
+	}
+
+	private void OnFullscreenWindowedModeButtonUIClicked()
+	{
+		Screen.fullScreen = !Screen.fullScreen;
 	}
 
 	private void OnSwitchLanguageButtonUIClicked()
