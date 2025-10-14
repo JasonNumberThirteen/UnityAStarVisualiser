@@ -1071,7 +1071,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2328345792272703469, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_Text
-      value: Show Instructions
+      value: Show Map Area
       objectReference: {fileID: 0}
     - target: {fileID: 2572779296420157048, guid: 8375bdc52fc8e62469a9abd06567941c, type: 3}
       propertyPath: m_Name
@@ -5024,7 +5024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d358173c33cb85c4fa00e52a2886285e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMovementSpeedSliderUI: {fileID: 2123239578}
+  cameraMovementSpeedSliderUI: {fileID: 2123239584}
   cameraZoomSensitivitySliderUI: {fileID: 22029301780047056}
 --- !u!1001 &924490787
 PrefabInstance:
@@ -12125,7 +12125,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4576714332110738380, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
   m_PrefabInstance: {fileID: 2123239576}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2123239578 stripped
+--- !u!114 &2123239584 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3776083828802473018, guid: 73735e43a2af94c4c8f1d6ba345e4b3f, type: 3}
   m_PrefabInstance: {fileID: 2123239576}
