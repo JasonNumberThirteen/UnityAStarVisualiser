@@ -9604,11 +9604,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1406665024879607929, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_text
-      value: '"A* Visualiser"
-
-        1.1
-
-        2025'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1406665024879607929, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_lineSpacing
@@ -9698,16 +9694,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Information Text UI
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3770375313759607597, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4980545537695532620, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1647978543}
   m_SourcePrefab: {fileID: 100100000, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
 --- !u!224 &1647978541 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
   m_PrefabInstance: {fileID: 1647978540}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1647978542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4980545537695532620, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
+  m_PrefabInstance: {fileID: 1647978540}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1647978543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647978542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d83d32d152bdb740bb59bd1798138c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1677280287
 PrefabInstance:
   m_ObjectHideFlags: 0
