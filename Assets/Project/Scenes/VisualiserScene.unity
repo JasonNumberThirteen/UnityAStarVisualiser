@@ -9168,6 +9168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93531339c79d9b746b03b9fc627fc80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateIfWebGLIsSelected: 0
 --- !u!114 &1503308077 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1634908101182980764, guid: 8eea8f8db6931bd4c9a0db45c778f0e3, type: 3}
@@ -11719,7 +11720,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6924651245519305095, guid: 8eea8f8db6931bd4c9a0db45c778f0e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1930425928}
   m_SourcePrefab: {fileID: 100100000, guid: 8eea8f8db6931bd4c9a0db45c778f0e3, type: 3}
 --- !u!224 &1930425925 stripped
 RectTransform:
@@ -11731,12 +11735,30 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1634908101182980764, guid: 8eea8f8db6931bd4c9a0db45c778f0e3, type: 3}
   m_PrefabInstance: {fileID: 1930425924}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1930425927}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c0364f344839eb4e80ac303af46758b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1930425927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6924651245519305095, guid: 8eea8f8db6931bd4c9a0db45c778f0e3, type: 3}
+  m_PrefabInstance: {fileID: 1930425924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1930425928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930425927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93531339c79d9b746b03b9fc627fc80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateIfWebGLIsSelected: 1
 --- !u!224 &1950890059 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4707104546248415023, guid: 8eea8f8db6931bd4c9a0db45c778f0e3, type: 3}
@@ -11754,6 +11776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93531339c79d9b746b03b9fc627fc80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateIfWebGLIsSelected: 0
 --- !u!114 &1950890068 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1634908101182980764, guid: 8eea8f8db6931bd4c9a0db45c778f0e3, type: 3}

@@ -3,10 +3,19 @@ using UnityEngine;
 [DefaultExecutionOrder(-100)]
 public class WebGLGameObjectActivationController : MonoBehaviour
 {
-#if UNITY_WEBGL
+	[SerializeField] private bool activateIfWebGLIsSelected;
+
 	private void Awake()
 	{
-		gameObject.SetActive(false);
+		gameObject.SetActive(ShouldActivateGO());
 	}
+
+	private bool ShouldActivateGO()
+	{
+#if UNITY_WEBGL
+		return activateIfWebGLIsSelected;
+#else
+		return !activateIfWebGLIsSelected;
 #endif
+	}
 }
