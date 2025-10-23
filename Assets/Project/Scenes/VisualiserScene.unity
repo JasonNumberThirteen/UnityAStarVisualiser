@@ -12644,6 +12644,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heuristic Type Dropdown UI
       objectReference: {fileID: 0}
+    - target: {fileID: 6299930088384143177, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
+      propertyPath: m_MinWidth
+      value: 368
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8629899303739353528, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
     m_RemovedGameObjects: []
