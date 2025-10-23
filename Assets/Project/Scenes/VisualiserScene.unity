@@ -594,6 +594,54 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8389107266723750128, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
   m_PrefabInstance: {fileID: 145940214}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &149438896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 149438897}
+  - component: {fileID: 149438898}
+  m_Layer: 0
+  m_Name: Canvas UI Refresher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &149438897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149438896}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &149438898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149438896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d396b55efb16594daebba1d63534a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasWasRebuiltEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  canvas: {fileID: 325799242}
 --- !u!1 &149740283
 GameObject:
   m_ObjectHideFlags: 0
@@ -11012,7 +11060,6 @@ GameObject:
   - component: {fileID: 1812739192}
   - component: {fileID: 1812739194}
   - component: {fileID: 1812739195}
-  - component: {fileID: 1812739196}
   - component: {fileID: 1812739197}
   m_Layer: 5
   m_Name: Settings Panel UI
@@ -11100,18 +11147,6 @@ MonoBehaviour:
   showPathTrailToggleUI: {fileID: 187261749}
   enableDiagonalMovementToggleUI: {fileID: 632029023}
   enableSimulationModeToggleUI: {fileID: 1339275431}
---- !u!114 &1812739196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812739190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d396b55efb16594daebba1d63534a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1812739197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13415,3 +13450,4 @@ SceneRoots:
   - {fileID: 3575210234030208043}
   - {fileID: 903097585}
   - {fileID: 630120275}
+  - {fileID: 149438897}

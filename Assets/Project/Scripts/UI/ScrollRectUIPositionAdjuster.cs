@@ -9,23 +9,38 @@ public class ScrollRectUIPositionAdjuster : MonoBehaviour
 	
 	private ScrollRect scrollRect;
 	private float lastNormalizedPosition;
-
-	private static readonly float LAST_NORMALIZED_POSITION_UPDATE_ON_ENABLE_DELAY = 0.1f;
+	private CanvasUIRefresher canvasUIRefresher;
 
 	private void Awake()
 	{
 		scrollRect = GetComponent<ScrollRect>();
 		lastNormalizedPosition = initialNormalizedPosition;
+		canvasUIRefresher = ObjectMethods.FindComponentOfType<CanvasUIRefresher>();
+
+		RegisterToListeners(true);
 	}
 
-	private void OnEnable()
+	private void OnDestroy()
 	{
-		CoroutineMethods.ExecuteAfterDelayInSeconds(this, SetLastNormalizedPosition, LAST_NORMALIZED_POSITION_UPDATE_ON_ENABLE_DELAY);
+		RegisterToListeners(false);
 	}
 
-	private void OnDisable()
+	private void RegisterToListeners(bool register)
 	{
-		lastNormalizedPosition = GetNormalizedPosition();
+		if(register)
+		{
+			if(canvasUIRefresher != null)
+			{
+				canvasUIRefresher.canvasWasRebuiltEvent.AddListener(SetLastNormalizedPosition);
+			}
+		}
+		else
+		{
+			if(canvasUIRefresher != null)
+			{
+				canvasUIRefresher.canvasWasRebuiltEvent.RemoveListener(SetLastNormalizedPosition);
+			}
+		}
 	}
 
 	private void SetLastNormalizedPosition()
@@ -40,6 +55,11 @@ public class ScrollRectUIPositionAdjuster : MonoBehaviour
 				scrollRect.verticalNormalizedPosition = lastNormalizedPosition;
 				break;
 		}
+	}
+
+	private void OnDisable()
+	{
+		lastNormalizedPosition = GetNormalizedPosition();
 	}
 
 	private float GetNormalizedPosition()
