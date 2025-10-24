@@ -27,6 +27,10 @@ MonoBehaviour:
     m_Key: CameraZoomSensitivity
     m_Metadata:
       m_Items: []
+  - m_Id: 3651018122203136
+    m_Key: CameraTranslationSensitivity
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
