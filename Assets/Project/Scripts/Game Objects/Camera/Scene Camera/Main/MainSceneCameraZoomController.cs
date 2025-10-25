@@ -56,7 +56,9 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 		{
 			if(userInputController != null)
 			{
+#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.mouseWheelWasScrolledEvent.AddListener(OnMouseWheelWasScrolled);
+#endif
 			}
 
 			if(hoveredMapTileManager != null)
@@ -78,7 +80,9 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 		{
 			if(userInputController != null)
 			{
+#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.mouseWheelWasScrolledEvent.RemoveListener(OnMouseWheelWasScrolled);
+#endif
 			}
 
 			if(hoveredMapTileManager != null)
@@ -121,6 +125,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 		}
 	}
 
+#if UNITY_STANDALONE || UNITY_WEBGL
 	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
 		if(!inputIsActive || (mapTileIsHovered && !mapTileIsSelected) || panelUIHoverWasDetected || mainSceneCamera == null || !mainSceneCamera.IsOrthographic())
@@ -133,6 +138,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 		mainSceneCamera.SetOrthographicSize(orthographicSize);
 	}
+#endif
 
 	private void OnMapTilesWereAdded(List<MapTile> mapTiles)
 	{

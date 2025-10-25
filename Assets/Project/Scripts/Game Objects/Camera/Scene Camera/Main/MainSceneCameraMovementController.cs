@@ -37,18 +37,23 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 		{
 			if(userInputController != null)
 			{
+#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.movementKeyWasPressedEvent.AddListener(OnMovementKeyWasPressed);
+#endif
 			}
 		}
 		else
 		{
 			if(userInputController != null)
 			{
+#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.movementKeyWasPressedEvent.RemoveListener(OnMovementKeyWasPressed);
+#endif
 			}
 		}
 	}
 
+#if UNITY_STANDALONE || UNITY_WEBGL
 	private void OnMovementKeyWasPressed(Vector2 movementVector)
 	{
 		movementDirection = movementVector;
@@ -61,4 +66,5 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 			mainSceneCamera.Translate(movementSpeed*Time.deltaTime*movementDirection);
 		}
 	}
+#endif
 }

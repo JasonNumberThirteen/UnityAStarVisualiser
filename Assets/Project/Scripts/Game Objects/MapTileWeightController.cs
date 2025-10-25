@@ -1,4 +1,6 @@
+#if UNITY_STANDALONE || UNITY_WEBGL
 using System.Collections.Generic;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -48,7 +50,9 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		{
 			if(userInputController != null)
 			{
+#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.mouseWheelWasScrolledEvent.AddListener(OnMouseWheelWasScrolled);
+#endif
 			}
 
 			if(hoveredMapTileManager != null)
@@ -70,7 +74,9 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		{
 			if(userInputController != null)
 			{
+#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.mouseWheelWasScrolledEvent.RemoveListener(OnMouseWheelWasScrolled);
+#endif
 			}
 
 			if(hoveredMapTileManager != null)
@@ -90,6 +96,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		}
 	}
 
+#if UNITY_STANDALONE || UNITY_WEBGL
 	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
 		if(!tileIsBeingDragged && !hoveringTilesIsLocked && !panelUIHoverWasDetected)
@@ -122,6 +129,7 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		mapTile.ModifyWeightBy(weight);
 		weightWasChangedEvent?.Invoke(mapTile.GetWeight());
 	}
+#endif
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
