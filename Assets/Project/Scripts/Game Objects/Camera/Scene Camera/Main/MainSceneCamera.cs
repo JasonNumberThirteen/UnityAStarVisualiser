@@ -10,6 +10,13 @@ public class MainSceneCamera : SceneCamera
 		ClampPositionWithinMapArea();
 	}
 	
+	public void MoveBy(Vector2 position)
+	{
+		transform.position += position.ToVector3();
+
+		ClampPositionWithinMapArea();
+	}
+	
 	protected override void Awake()
 	{
 		mapAreaManager = ObjectMethods.FindComponentOfType<MapAreaManager>();
