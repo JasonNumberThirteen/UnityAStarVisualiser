@@ -6,11 +6,15 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 {
 	private float movementSpeed;
 	private bool inputIsActive = true;
+#if UNITY_ANDROID
+	private bool draggingIsActive = true;
+#endif
 	private Vector2 movementDirection;
 	private MainSceneCamera mainSceneCamera;
 	private UserInputController userInputController;
-
 #if UNITY_ANDROID
+	private VisualiserEventsManager visualiserEventsManager;
+
 	private static readonly float MOVEMENT_SPEED_ANDROID_TOUCH_DELTA_MULTIPLIER = 0.00125f;
 #endif
 
@@ -28,6 +32,9 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 	{
 		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
+#if UNITY_ANDROID	
+		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
+#endif
 
 		RegisterToListeners(true);
 	}
@@ -49,6 +56,13 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 				userInputController.touchesWereUpdatedEvent.AddListener(OnTouchesWereUpdated);
 #endif
 			}
+
+#if UNITY_ANDROID
+			if(visualiserEventsManager != null)
+			{
+				visualiserEventsManager.eventWasSentEvent.AddListener(OnEventWasSent);
+			}
+#endif
 		}
 		else
 		{
@@ -60,6 +74,13 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 				userInputController.touchesWereUpdatedEvent.RemoveListener(OnTouchesWereUpdated);
 #endif
 			}
+
+#if UNITY_ANDROID
+			if(visualiserEventsManager != null)
+			{
+				visualiserEventsManager.eventWasSentEvent.RemoveListener(OnEventWasSent);
+			}
+#endif
 		}
 	}
 
@@ -80,15 +101,21 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 
 		var touch = touches.First();
 
-		if(touch.phase == UnityEngine.InputSystem.TouchPhase.Moved)
+		ActivateDraggingOnTouchReleaseIfNeeded(touch);
+		MoveByTouch(touch);
+	}
+
+	private void ActivateDraggingOnTouchReleaseIfNeeded(UnityEngine.InputSystem.EnhancedTouch.Touch touch)
+	{
+		if(!draggingIsActive && !touch.isInProgress)
 		{
-			MoveByTouch(touch);
+			draggingIsActive = true;
 		}
 	}
 
 	private void MoveByTouch(UnityEngine.InputSystem.EnhancedTouch.Touch touch)
 	{
-		if(touch.phase != UnityEngine.InputSystem.TouchPhase.Moved)
+		if(!draggingIsActive || touch.phase != UnityEngine.InputSystem.TouchPhase.Moved)
 		{
 			return;
 		}
@@ -96,6 +123,14 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 		movementDirection = -touch.delta;
 		
 		mainSceneCamera.MoveBy(movementSpeed*MOVEMENT_SPEED_ANDROID_TOUCH_DELTA_MULTIPLIER*movementDirection);
+	}
+
+	private void OnEventWasSent(VisualiserEvent visualiserEvent)
+	{
+		if(draggingIsActive && visualiserEvent is PanelUIBoolVisualiserEvent panelUIBoolVisualiserEvent && panelUIBoolVisualiserEvent.GetBoolValue())
+		{
+			draggingIsActive = false;
+		}
 	}
 #endif
 
