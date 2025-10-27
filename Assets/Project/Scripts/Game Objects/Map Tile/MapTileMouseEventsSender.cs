@@ -1,44 +1,61 @@
 using UnityEngine;
+#if UNITY_STANDALONE || UNITY_WEBGL
+using UnityEngine.EventSystems;
+#endif
 
-[RequireComponent(typeof(MapTile))]
+[RequireComponent(typeof(MapTileStateController))]
 public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
+#if UNITY_STANDALONE || UNITY_WEBGL
+, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+#endif
 {
 	private bool inputIsActive = true;
-	private bool isHovered;
-	private bool isSelected;
-	private MapTile mapTile;
-	private VisualiserEventsManager visualiserEventsManager;
+#if UNITY_STANDALONE || UNITY_WEBGL
+	private MapTileStateController mapTileStateController;
+#endif
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
-
-	private bool IsHovered
-	{
-		set
-		{
-			isHovered = value;
-
-			SendEvent(VisualiserEventType.MapTileHoverStateWasChanged, isHovered);
-		}
-	}
-
-	private bool IsSelected
-	{
-		set
-		{
-			isSelected = value;
-
-			SendEvent(VisualiserEventType.MapTileSelectionStateWasChanged, isSelected);
-		}
-	}
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
 		inputIsActive = active;
 	}
 
+#if UNITY_STANDALONE || UNITY_WEBGL
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		if(inputIsActive)
+		{
+			mapTileStateController.IsHovered = true;
+		}
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		mapTileStateController.IsHovered = false;
+	}
+
+	public void OnPointerDown(PointerEventData eventData)
+	{
+		if(inputIsActive)
+		{
+			mapTileStateController.IsSelected = true;
+		}
+	}
+
+	public void OnPointerUp(PointerEventData eventData)
+	{
+		if(mapTileStateController.IsSelected)
+		{
+			mapTileStateController.IsSelected = false;
+		}
+	}
+#endif
+
 	private void Awake()
 	{
-		mapTile = GetComponent<MapTile>();
-		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
+#if UNITY_STANDALONE || UNITY_WEBGL
+		mapTileStateController = GetComponent<MapTileStateController>();
+#endif
 		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RegisterToListeners(true);
@@ -70,42 +87,5 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
 		inputIsActive = !detected;
-	}
-
-	private void OnMouseEnter()
-	{
-		if(inputIsActive)
-		{
-			IsHovered = true;
-		}
-	}
-
-	private void OnMouseExit()
-	{
-		IsHovered = false;
-	}
-
-	private void OnMouseDown()
-	{
-		if(inputIsActive)
-		{
-			IsSelected = true;
-		}
-	}
-
-	private void OnMouseUp()
-	{
-		if(isSelected)
-		{
-			IsSelected = false;
-		}
-	}
-
-	private void SendEvent(VisualiserEventType visualiserEventType, bool enabled)
-	{
-		if(visualiserEventsManager != null)
-		{
-			visualiserEventsManager.SendEvent(new MapTileBoolVisualiserEvent(mapTile, visualiserEventType, enabled));
-		}
 	}
 }

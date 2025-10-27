@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2006533442738954559}
   - component: {fileID: 1613367025640206180}
   - component: {fileID: 6790355574122249668}
+  - component: {fileID: 9020319418977262766}
   - component: {fileID: 3904528157514595355}
   m_Layer: 6
   m_Name: MapTile
@@ -79,7 +80,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1331516765
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d314f4daaca3f4f4687fff345664d495, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -149,6 +150,18 @@ MonoBehaviour:
   mapTileNodeTypeWasChangedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9020319418977262766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860449814226267721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb538f35bbb0fa42a073cc9443597c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &3904528157514595355
 BoxCollider2D:
   m_ObjectHideFlags: 0
