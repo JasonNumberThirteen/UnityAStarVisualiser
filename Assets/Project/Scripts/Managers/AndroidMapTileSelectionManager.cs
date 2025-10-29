@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Timer))]
-public class AndroidMapTileDetectionManager : MonoBehaviour
+public class AndroidMapTileSelectionManager : MonoBehaviour
 {
 #if UNITY_ANDROID
 	[SerializeField] private LayerMask detectableGameObjects;
