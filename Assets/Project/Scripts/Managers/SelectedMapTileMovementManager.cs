@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
@@ -106,7 +107,7 @@ public class SelectedMapTileMovementManager : MonoBehaviour, IPrimaryWindowEleme
 
 	private Vector3 GetMousePositionToWorldPoint()
 	{
-		var position = mainSceneCamera != null ? (Vector2)mainSceneCamera.GetScreenToWorldPointFromMousePosition() : Vector2.zero;
+		var position = mainSceneCamera != null ? (Vector2)mainSceneCamera.GetScreenToWorldPointFrom(Mouse.current.position.ReadValue()) : Vector2.zero;
 
 		return position.ToVector3();
 	}
