@@ -9651,7 +9651,7 @@ GameObject:
   - component: {fileID: 1567702934}
   - component: {fileID: 1567702935}
   m_Layer: 0
-  m_Name: Android Map Tile Detection Manager
+  m_Name: Android Map Tile Selection Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
