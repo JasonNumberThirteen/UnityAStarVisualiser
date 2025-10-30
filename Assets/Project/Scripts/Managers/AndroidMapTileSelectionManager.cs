@@ -7,11 +7,10 @@ using UnityEngine.EventSystems;
 public class AndroidMapTileSelectionManager : MonoBehaviour
 {
 #if UNITY_ANDROID
-	[SerializeField] private LayerMask detectableGameObjects;
-
-	private UnityEngine.InputSystem.EnhancedTouch.Touch touch;
 	private Timer timer;
 	private UserInputController userInputController;
+	private AndroidMapTileRaycaster androidMapTileRaycaster;
+	private UnityEngine.InputSystem.EnhancedTouch.Touch touch;
 	private MapTileStateController mapTileStateController;
 #endif
 	
@@ -20,6 +19,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 #if UNITY_ANDROID
 		timer = GetComponent<Timer>();
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
+		androidMapTileRaycaster = ObjectMethods.FindComponentOfType<AndroidMapTileRaycaster>();
 
 		RemoveRaycasterFromMainCameraIfPossible();
 		RegisterToListeners(true);
@@ -48,8 +48,8 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 	{
 		if(register)
 		{
-			timer.timerStartedEvent.AddListener(DisableHoveringOfMapTileIfNeeded);
-			timer.timerFinishedEvent.AddListener(OnTimerWasFinished);
+			timer.timerStartedEvent.AddListener(OnTimerStarted);
+			timer.timerFinishedEvent.AddListener(OnTimerFinished);
 			
 			if(userInputController != null)
 			{
@@ -58,8 +58,8 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 		}
 		else
 		{
-			timer.timerStartedEvent.RemoveListener(DisableHoveringOfMapTileIfNeeded);
-			timer.timerFinishedEvent.RemoveListener(OnTimerWasFinished);
+			timer.timerStartedEvent.RemoveListener(OnTimerStarted);
+			timer.timerFinishedEvent.RemoveListener(OnTimerFinished);
 			
 			if(userInputController != null)
 			{
@@ -68,45 +68,75 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 		}
 	}
 
-	private void DisableHoveringOfMapTileIfNeeded()
+	private void OnTimerStarted()
 	{
-		if(mapTileStateController != null)
+		if(androidMapTileRaycaster != null && (!androidMapTileRaycaster.MapTileWasTapped(touch.screenPosition, out var mapTileStateController) || !MapTileStateControllersAreEqual(mapTileStateController)))
 		{
-			mapTileStateController.IsHovered = false;
+			UnassignMapTileCompletelyIfNeeded();
 		}
 	}
 
-	private void OnTimerWasFinished()
+	private void OnTimerFinished()
 	{
-		CheckIfMapTileWasTapped(touch);
-	}
-
-	private void CheckIfMapTileWasTapped(UnityEngine.InputSystem.EnhancedTouch.Touch touch)
-	{
-		var touchPosition = Camera.main.ScreenToWorldPoint(touch.screenPosition);
-		var raycastHit = Physics2D.Raycast(touchPosition, Vector2.zero, Mathf.Infinity, detectableGameObjects);
-
-		if(raycastHit.collider != null && raycastHit.collider.TryGetComponent<MapTileStateController>(out var mapTileStateController))
+		if(androidMapTileRaycaster != null && androidMapTileRaycaster.MapTileWasTapped(touch.screenPosition, out var mapTileStateController))
 		{
-			HoverTappedMapTile(mapTileStateController);
+			HandleTappedMapTile(mapTileStateController);
 		}
 	}
 
-	private void HoverTappedMapTile(MapTileStateController mapTileStateController)
+	private void HandleTappedMapTile(MapTileStateController mapTileStateController)
 	{
-		if(this.mapTileStateController != mapTileStateController)
+		EnsureReferenceToTappedMapTile(mapTileStateController);
+		SetNextMapTileState();
+	}
+
+	private void EnsureReferenceToTappedMapTile(MapTileStateController mapTileStateController)
+	{
+		if(!MapTileStateControllersAreEqual(mapTileStateController))
 		{
 			this.mapTileStateController = mapTileStateController;
 		}
+	}
+
+	private void SetNextMapTileState()
+	{
+		if(mapTileStateController == null)
+		{
+			return;
+		}
 		
-		this.mapTileStateController.IsHovered = true;
+		if(!mapTileStateController.IsHovered)
+		{
+			mapTileStateController.IsHovered = true;
+		}
+		else
+		{
+			mapTileStateController.IsSelected = true;
+		}
+	}
+
+	private void UnassignMapTileCompletelyIfNeeded()
+	{
+		if(mapTileStateController == null)
+		{
+			return;
+		}
+
+		mapTileStateController.IsHovered = mapTileStateController.IsSelected = false;
+		mapTileStateController = null;
 	}
 
 	private void OnTouchesWereUpdated(List<UnityEngine.InputSystem.EnhancedTouch.Touch> touches)
 	{
-		if(touches.Count == 1)
+		var numberOfTouches = touches.Count;
+		
+		if(numberOfTouches == 1)
 		{
 			HandleTouch(touches.First());
+		}
+		else if(MapTileShouldBeDeselected(numberOfTouches))
+		{
+			UnassignMapTileCompletelyIfNeeded();
 		}
 	}
 
@@ -140,7 +170,9 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 
 		return touchPhases.Contains(touch.phase);
 	}
-
+	
 	private bool TouchWasRegistered(UnityEngine.InputSystem.EnhancedTouch.Touch touch) => touch.phase == UnityEngine.InputSystem.TouchPhase.Began;
+	private bool MapTileShouldBeDeselected(int numberOfTouches) => numberOfTouches == 0 && mapTileStateController != null && mapTileStateController.IsSelected;
+	private bool MapTileStateControllersAreEqual(MapTileStateController mapTileStateController) => this.mapTileStateController == mapTileStateController;
 #endif
 }

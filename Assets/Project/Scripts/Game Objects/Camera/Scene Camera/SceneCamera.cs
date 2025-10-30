@@ -10,6 +10,7 @@ public class SceneCamera : MonoBehaviour
 	public bool IsOrthographic() => thisCamera.orthographic;
 	public float GetOrthographicSize() => thisCamera.orthographicSize;
 	public Vector3 GetPosition() => transform.position;
+	public Vector3 GetScreenToWorldPointFrom(Vector3 position) => thisCamera.ScreenToWorldPoint(position);
 	public Vector3 GetScreenToWorldPointFromMousePosition() => thisCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
 	public void SetPosition(Vector2 position)
