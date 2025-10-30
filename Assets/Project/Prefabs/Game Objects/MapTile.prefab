@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1613367025640206180}
   - component: {fileID: 6790355574122249668}
   - component: {fileID: 9020319418977262766}
+  - component: {fileID: 7822785922888641852}
   - component: {fileID: 3904528157514595355}
   m_Layer: 6
   m_Name: MapTile
@@ -160,6 +161,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcb538f35bbb0fa42a073cc9443597c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7822785922888641852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860449814226267721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f729486b4204b774496a779fef687fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!61 &3904528157514595355
