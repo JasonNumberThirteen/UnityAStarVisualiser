@@ -8,11 +8,13 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 	private bool inputIsActive = true;
 #if UNITY_ANDROID
 	private bool draggingIsActive = true;
+	private bool draggingDirectionIsOpposite;
 #endif
 	private Vector2 movementDirection;
 	private MainSceneCamera mainSceneCamera;
 	private UserInputController userInputController;
 #if UNITY_ANDROID
+	private SelectedMapTileManager selectedMapTileManager;
 	private VisualiserEventsManager visualiserEventsManager;
 
 	private static readonly float MOVEMENT_SPEED_ANDROID_TOUCH_DELTA_MULTIPLIER = 0.00125f;
@@ -32,7 +34,8 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 	{
 		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
-#if UNITY_ANDROID	
+#if UNITY_ANDROID
+		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
 		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 #endif
 
@@ -58,6 +61,11 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 			}
 
 #if UNITY_ANDROID
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
+			}
+
 			if(visualiserEventsManager != null)
 			{
 				visualiserEventsManager.eventWasSentEvent.AddListener(OnEventWasSent);
@@ -76,6 +84,11 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 			}
 
 #if UNITY_ANDROID
+			if(selectedMapTileManager != null)
+			{
+				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
+			}
+			
 			if(visualiserEventsManager != null)
 			{
 				visualiserEventsManager.eventWasSentEvent.RemoveListener(OnEventWasSent);
@@ -120,9 +133,16 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 			return;
 		}
 		
-		movementDirection = -touch.delta;
+		var delta = touch.delta;
+
+		movementDirection = draggingDirectionIsOpposite ? delta : -delta;
 		
 		mainSceneCamera.MoveBy(movementSpeed*MOVEMENT_SPEED_ANDROID_TOUCH_DELTA_MULTIPLIER*movementDirection);
+	}
+
+	private void OnSelectedMapTileWasChanged(MapTile mapTile)
+	{
+		draggingDirectionIsOpposite = mapTile != null;
 	}
 
 	private void OnEventWasSent(VisualiserEvent visualiserEvent)
