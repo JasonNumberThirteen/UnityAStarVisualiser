@@ -164,11 +164,10 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 		var touchPhases = new List<UnityEngine.InputSystem.TouchPhase>()
 		{
 			UnityEngine.InputSystem.TouchPhase.Ended,
-			UnityEngine.InputSystem.TouchPhase.Moved,
 			UnityEngine.InputSystem.TouchPhase.Canceled
 		};
 
-		return touchPhases.Contains(touch.phase);
+		return touch.MoveIsSufficientlyFast(Mathf.Epsilon) || touchPhases.Contains(touch.phase);
 	}
 	
 	private bool TouchWasRegistered(UnityEngine.InputSystem.EnhancedTouch.Touch touch) => touch.phase == UnityEngine.InputSystem.TouchPhase.Began;
