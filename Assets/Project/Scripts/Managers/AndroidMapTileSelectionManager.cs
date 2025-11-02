@@ -121,8 +121,17 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 		{
 			return;
 		}
+		
+		if(mapTileStateController.IsHovered)
+		{
+			mapTileStateController.IsHovered = false;
+		}
 
-		mapTileStateController.IsHovered = mapTileStateController.IsSelected = false;
+		if(mapTileStateController.IsSelected)
+		{
+			mapTileStateController.IsSelected = false;
+		}
+
 		mapTileStateController = null;
 	}
 
