@@ -28,20 +28,42 @@ MonoBehaviour:
       While hovering
       a tile, scroll the mouse wheel to change its weight.
 
-      If the weight
-      of the tile is below 0, then the tile is impassable.
+      If the weight of
+      the tile is below 0, then the tile is impassable.
 
-      Press and hold
-      a tile with the left mouse button to select it.
+      Press and hold a tile
+      with the left mouse button to select it.
 
-      Move the selected tile
-      by dragging with a mouse.
+      Move the selected tile by dragging
+      with a mouse.
 
       Move around the map by using the arrow keys.
 
       While
       not hovering any tile, zoom in and out the camera by scrolling with a mouse
       wheel.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17625467477430272
+    m_Localized: 'Touch and hold a tile the first time to display its current weight.
+
+      While
+      hovering a tile, touch it to adjust its weight.
+
+      If the weight of the
+      tile is below 0, then the tile is impassable.
+
+      Touch and hold the same
+      tile the second time to select it.
+
+      Move the selected tile by dragging
+      it in any direction.
+
+      Move around the map by dragging a finger in any
+      direction.
+
+      Zoom in and out the camera by dragging both fingers inward
+      or outward.'
     m_Metadata:
       m_Items: []
   references:

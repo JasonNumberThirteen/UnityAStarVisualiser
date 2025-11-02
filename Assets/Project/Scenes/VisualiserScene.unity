@@ -3155,6 +3155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ca8819913785247818738309c3879f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectableGameObjects:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &588365135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6713,6 +6716,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4980545537695532620, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1061890151}
+    - targetCorrespondingSourceObject: {fileID: 4980545537695532620, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1061890156}
   m_SourcePrefab: {fileID: 100100000, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
 --- !u!224 &1061890149 stripped
 RectTransform:
@@ -6738,6 +6744,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &1061890156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061890150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cf80da323b6c3439b3b76370b7c273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localizedString:
+    m_TableReference:
+      m_TableCollectionName: GUID:14797d9e19675ce4bb4ec0b19fb1f6d8
+    m_TableEntryReference:
+      m_KeyId: 17625467477430272
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &1064702791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7682,10 +7712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7529dabe9cfb44b98ad5dc51ef692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementKeyWasPressedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  mouseWheelWasScrolledEvent:
+  touchesWereUpdatedEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1284377659

@@ -33,6 +33,17 @@ MonoBehaviour:
       przybli\u017Caj i oddalaj kamer\u0119 przewijaj\u0105c k\xF3\u0142kiem myszy."
     m_Metadata:
       m_Items: []
+  - m_Id: 17625467477430272
+    m_Localized: "Dotknij i przytrzymaj kafelek po raz pierwszy, aby wy\u015Bwietli\u0107
+      jego obecn\u0105 wag\u0119.\r\nMaj\u0105c zaznaczony kafelek, dotknij go, aby
+      dostosowa\u0107 jego wag\u0119.\r\nJe\u017Celi waga kafelka jest poni\u017Cej
+      0, wtedy staje si\u0119 nieprzejezdny.\r\nDotknij i przytrzymaj ten sam kafelek
+      po raz drugi, aby go wybra\u0107.\r\nPoruszaj wybranym kafelkiem przeci\u0105gaj\u0105c
+      go w dowoln\u0105 stron\u0119.\r\nPoruszaj si\u0119 dooko\u0142a mapy przeci\u0105gaj\u0105c
+      palcem w dowoln\u0105 stron\u0119.\r\nPrzybli\u017Caj i oddalaj kamer\u0119
+      przeci\u0105gaj\u0105c dwoma palcami do siebie lub na zewn\u0105trz."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
