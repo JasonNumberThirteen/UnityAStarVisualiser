@@ -22,7 +22,7 @@ public class AndroidMapTileRaycaster : MonoBehaviour
 #if UNITY_ANDROID
 		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
 #else
-		Destroy(this);
+		Destroy(gameObject);
 #endif
 	}
 
