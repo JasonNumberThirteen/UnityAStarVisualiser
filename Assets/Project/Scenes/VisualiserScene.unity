@@ -2384,7 +2384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 358.1825
+      value: 339.01
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3155,9 +3155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ca8819913785247818738309c3879f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectableGameObjects:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1001 &588365135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6559,18 +6556,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1406665024879607929, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_text
-      value: 'Hover a map tile to display its current weight.
-
-        Move map tile
-        by dragging with a mouse.
-
-        Move around the map by using arrow keys.
-
-        Zoom
-        in/out & change tile weight by scrolling with a mouse button.
-
-        If
-        the weight of the tile is below 0, then the tile is impassable.'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1406665024879607929, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_fontSize
@@ -6654,7 +6640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 630.94
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6690,7 +6676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 323.47
+      value: 166.215
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7378,7 +7364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 106.405, y: -48}
+  m_AnchoredPosition: {x: 92.19, y: -48}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1209758094
@@ -7696,7 +7682,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7529dabe9cfb44b98ad5dc51ef692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchesWereUpdatedEvent:
+  movementKeyWasPressedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  mouseWheelWasScrolledEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1284377659

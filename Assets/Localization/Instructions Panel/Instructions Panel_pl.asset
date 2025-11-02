@@ -23,11 +23,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 101162291200
-    m_Localized: "Najed\u017A na kafelek mapy, aby wy\u015Bwietli\u0107 jego obecn\u0105
-      wag\u0119.\r\nPoruszaj kafelek mapy przeci\u0105gaj\u0105c go za pomoc\u0105
-      myszy.\r\nPoruszaj si\u0119 dooko\u0142a mapy przy pomocy klawiszy kierunkowych.\r\nPrzybli\u017Caj/oddalaj
-      oraz zmieniaj wag\u0119 kafelka przewijaj\u0105c k\xF3\u0142kiem myszy.\r\nJe\u017Celi
-      waga kafelka jest poni\u017Cej 0, wtedy staje si\u0119 nieprzejezdny."
+    m_Localized: "Najed\u017A na kafelek, aby wy\u015Bwietli\u0107 jego obecn\u0105
+      wag\u0119.\r\nNaje\u017Cd\u017Caj\u0105c na kafelek, przewi\u0144 k\xF3\u0142kiem
+      myszy, aby zmieni\u0107 jego wag\u0119.\r\nJe\u017Celi waga kafelka jest poni\u017Cej
+      0, wtedy staje si\u0119 nieprzejezdny.\r\nNaci\u015Bnij i przytrzymaj kafelek
+      lewym przyciskiem myszy, aby go zaznaczy\u0107.\r\nPoruszaj zaznaczonym kafelkiem
+      przeci\u0105gaj\u0105c go za pomoc\u0105 myszy.\r\nPoruszaj si\u0119 dooko\u0142a
+      mapy przy pomocy klawiszy kierunkowych.\r\nMaj\u0105c kursor poza kafelkami,
+      przybli\u017Caj i oddalaj kamer\u0119 przewijaj\u0105c k\xF3\u0142kiem myszy."
     m_Metadata:
       m_Items: []
   references:

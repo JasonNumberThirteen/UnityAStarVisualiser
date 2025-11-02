@@ -23,18 +23,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 101162291200
-    m_Localized: 'Hover a map tile to display its current weight.
+    m_Localized: 'Hover a tile to display its current weight.
 
-      Move map
-      tile by dragging with a mouse.
+      While hovering
+      a tile, scroll the mouse wheel to change its weight.
 
-      Move around the map by using arrow keys.
+      If the weight
+      of the tile is below 0, then the tile is impassable.
 
-      Zoom
-      in/out & change tile weight by scrolling with a mouse button.
+      Press and hold
+      a tile with the left mouse button to select it.
 
-      If the
-      weight of the tile is below 0, then the tile is impassable.'
+      Move the selected tile
+      by dragging with a mouse.
+
+      Move around the map by using the arrow keys.
+
+      While
+      not hovering any tile, zoom in and out the camera by scrolling with a mouse
+      wheel.'
     m_Metadata:
       m_Items: []
   references:
