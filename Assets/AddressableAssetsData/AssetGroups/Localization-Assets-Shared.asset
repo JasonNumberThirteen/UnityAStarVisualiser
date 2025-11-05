@@ -66,6 +66,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb0555aebfa3f4144aea93334dfe8164
+    m_Address: Assets/Localization/Map Tile Weight Editing Panel/Map Tile Weight
+      Editing Panel UI Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 6fdcb029c2e55394ea05c613c7783ccc, type: 2}
   m_SchemaSet:

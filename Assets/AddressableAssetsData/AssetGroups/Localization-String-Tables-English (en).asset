@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 591b2d7cb4430e44693466cffcbb92f6
+    m_Address: Change Map Tile Weight Panel_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6a0467d4059bf764186b7d8e66db9b3b
     m_Address: Change Map Dimensions Popup Panel_en
     m_ReadOnly: 1

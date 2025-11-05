@@ -144,7 +144,13 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 
 	private void UpdateActiveState()
 	{
-		SetActive(!textUIWasHidden && !panelUIHoverWasDetected && TextUIShouldBeVisible(currentMapTile));
+		var textShouldBeVisible = !textUIWasHidden && HoveredMapTileIsPassable(currentMapTile);
+
+#if UNITY_STANDALONE || UNITY_WEBGL
+		textShouldBeVisible = textShouldBeVisible && !panelUIHoverWasDetected;
+#endif
+
+		SetActive(textShouldBeVisible);
 	}
 
 	private void SetActive(bool active)
@@ -152,5 +158,5 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 		gameObject.SetActive(active);
 	}
 
-	private bool TextUIShouldBeVisible(MapTile mapTile) => mapTile != null && mapTile.GetTileType() == MapTileType.Passable;
+	private bool HoveredMapTileIsPassable(MapTile mapTile) => mapTile != null && mapTile.GetTileType() == MapTileType.Passable;
 }

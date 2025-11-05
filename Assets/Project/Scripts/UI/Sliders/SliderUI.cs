@@ -10,6 +10,21 @@ public class SliderUI : MonoBehaviour
 
 	public float GetValue() => slider.value;
 
+	public void SetValue(float value)
+	{
+		slider.value = value;
+	}
+
+	public void SetMinValue(float value)
+	{
+		slider.minValue = value;
+	}
+
+	public void SetMaxValue(float value)
+	{
+		slider.maxValue = value;
+	}
+
 	public void RegisterToValueChangeListener(UnityAction<float> onValueWasChanged, bool register)
 	{
 		if(register)

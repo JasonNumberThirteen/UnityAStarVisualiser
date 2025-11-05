@@ -131,7 +131,13 @@ public class HoveredMapTileIndicator : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void UpdateActiveState()
 	{
-		gameObject.SetActive(!indicatorWasHidden && !panelUIHoverWasDetected && currentMapTile != null);
+		var indicatorShouldBeVisible = !indicatorWasHidden && currentMapTile != null;
+
+#if UNITY_STANDALONE || UNITY_WEBGL
+		indicatorShouldBeVisible = indicatorShouldBeVisible && !panelUIHoverWasDetected;
+#endif
+
+		gameObject.SetActive(indicatorShouldBeVisible);
 	}
 
 	private void StartMovingIfPossible()

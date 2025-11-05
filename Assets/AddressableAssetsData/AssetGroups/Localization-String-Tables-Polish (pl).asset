@@ -75,6 +75,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-pl
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddbaa237039503e458e88503d42b5bc7
+    m_Address: Change Map Tile Weight Panel_pl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-pl
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 6fdcb029c2e55394ea05c613c7783ccc, type: 2}
   m_SchemaSet:

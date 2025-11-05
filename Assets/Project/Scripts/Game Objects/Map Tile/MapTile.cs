@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -48,6 +49,18 @@ public class MapTile : MonoBehaviour
 		SetWeightTo(this.weight + weight);
 	}
 
+	public void SetWeightTo(int weight)
+	{
+		var previousWeight = this.weight;
+		
+		this.weight = Mathf.Clamp(weight, MIN_WEIGHT, MAX_WEIGHT);
+
+		if(previousWeight != this.weight)
+		{
+			OnWeightWasChanged();
+		}
+	}
+
 	public void SetTileType(MapTileType tileType)
 	{
 		var previousTileType = this.tileType;
@@ -62,22 +75,21 @@ public class MapTile : MonoBehaviour
 		tileTypeWasChangedEvent?.Invoke(this.tileType);
 	}
 
+	public bool BelongsToPassableTypes()
+	{
+		var allowedMapTileTypes = new List<MapTileType>()
+		{
+			MapTileType.Passable,
+			MapTileType.Impassable
+		};
+
+		return allowedMapTileTypes.Contains(GetTileType());
+	}
+
 	private void Awake()
 	{
 		mapTileNode = GetComponent<MapTileNode>();
 		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
-	}
-
-	private void SetWeightTo(int weight)
-	{
-		var previousWeight = this.weight;
-		
-		this.weight = Mathf.Clamp(weight, MIN_WEIGHT, MAX_WEIGHT);
-
-		if(previousWeight != this.weight)
-		{
-			OnWeightWasChanged();
-		}
 	}
 
 	private void OnWeightWasChanged()

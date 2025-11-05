@@ -1,4 +1,5 @@
-#if UNITY_STANDALONE || UNITY_WEBGL
+#if UNITY_ANDROID
+using System;
 using System.Collections.Generic;
 #endif
 using UnityEngine;
@@ -16,6 +17,9 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
+#if UNITY_ANDROID
+	private AndroidChangeMapTileWeightSliderUI androidChangeMapTileWeightSliderUI;
+#endif
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -35,6 +39,9 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
 		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
+#if UNITY_ANDROID
+		androidChangeMapTileWeightSliderUI = ObjectMethods.FindComponentOfType<AndroidChangeMapTileWeightSliderUI>();
+#endif
 
 		RegisterToListeners(true);
 	}
@@ -46,6 +53,13 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void RegisterToListeners(bool register)
 	{
+#if UNITY_ANDROID
+		if(androidChangeMapTileWeightSliderUI != null)
+		{
+			androidChangeMapTileWeightSliderUI.RegisterToValueChangeListener(OnValueWasChanged, register);
+		}
+#endif
+		
 		if(register)
 		{
 			if(userInputController != null)
@@ -96,26 +110,25 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		}
 	}
 
+#if UNITY_ANDROID
+	private void OnValueWasChanged(float value)
+	{
+		if(!HoveredMapTileBelongsToPassableTypes())
+		{
+			return;
+		}
+
+		mapTile.SetWeightTo(Mathf.RoundToInt(value));
+		weightWasChangedEvent?.Invoke(mapTile.GetWeight());
+	}
+#endif
+
 #if UNITY_STANDALONE || UNITY_WEBGL
 	private void OnMouseWheelWasScrolled(Vector2 scrollVector)
 	{
-		if(!tileIsBeingDragged && !hoveringTilesIsLocked && !panelUIHoverWasDetected)
+		if(!tileIsBeingDragged && !hoveringTilesIsLocked && !panelUIHoverWasDetected && HoveredMapTileBelongsToPassableTypes())
 		{
-			ModifyWeightOfMapTileIfPossible(Mathf.RoundToInt(scrollVector.y));
-		}
-	}
-
-	private void ModifyWeightOfMapTileIfPossible(int weight)
-	{
-		var allowedMapTileTypes = new List<MapTileType>()
-		{
-			MapTileType.Passable,
-			MapTileType.Impassable
-		};
-		
-		if(mapTile != null && allowedMapTileTypes.Contains(mapTile.GetTileType()))
-		{
-			ModifyWeightOfMapTile(weight);
+			ModifyWeightOfMapTile(Mathf.RoundToInt(scrollVector.y));
 		}
 	}
 
@@ -145,4 +158,6 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 	{
 		panelUIHoverWasDetected = detected;
 	}
+
+	private bool HoveredMapTileBelongsToPassableTypes() => mapTile != null && mapTile.BelongsToPassableTypes();
 }
