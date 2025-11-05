@@ -22,12 +22,7 @@ public class MapGenerationManager : MonoBehaviour
 	
 	public void ResetMapTiles()
 	{
-		var allowedMapTileTypes = new List<MapTileType>()
-		{
-			MapTileType.Passable,
-			MapTileType.Impassable
-		};
-		var mapTiles = ObjectMethods.FindComponentsOfType<MapTile>(false).Where(mapTile => allowedMapTileTypes.Contains(mapTile.GetTileType()));
+		var mapTiles = ObjectMethods.FindComponentsOfType<MapTile>(false).Where(mapTile => mapTile.BelongsToPassableTypes());
 
 		mapTiles.ForEach(mapTile => mapTile.ResetTile());
 	}
