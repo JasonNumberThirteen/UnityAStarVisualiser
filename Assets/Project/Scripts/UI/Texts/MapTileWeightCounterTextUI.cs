@@ -5,6 +5,9 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 	private MapTile hoveredMapTile;
 	private MapTile selectedMapTile;
 	private MapTile currentMapTile;
+#if UNITY_ANDROID
+	private MapPathManager mapPathManager;
+#endif
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
 	private MapTileWeightController mapTileWeightController;
@@ -39,6 +42,9 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 	{
 		base.Awake();
 
+#if UNITY_ANDROID
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
+#endif
 		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
 		mapTileWeightController = ObjectMethods.FindComponentOfType<MapTileWeightController>();
@@ -56,6 +62,13 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 	{
 		if(register)
 		{
+#if UNITY_ANDROID
+			if(mapPathManager != null)
+			{
+				mapPathManager.resultsWereClearedEvent.AddListener(OnResultsWereCleared);
+			}
+#endif
+			
 			if(hoveredMapTileManager != null)
 			{
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
@@ -78,6 +91,13 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 		}
 		else
 		{
+#if UNITY_ANDROID
+			if(mapPathManager != null)
+			{
+				mapPathManager.resultsWereClearedEvent.RemoveListener(OnResultsWereCleared);
+			}
+#endif			
+			
 			if(hoveredMapTileManager != null)
 			{
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
@@ -112,6 +132,16 @@ public class MapTileWeightCounterTextUI : TextUI, IPrimaryWindowElement, IMapEdi
 			transform.position = currentMapTile.transform.position;
 		}
 	}
+
+#if UNITY_ANDROID
+	private void OnResultsWereCleared()
+	{
+		if(gameObject.activeSelf && currentMapTile != null)
+		{
+			SetText(currentMapTile.GetWeight().ToString());
+		}
+	}
+#endif
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
