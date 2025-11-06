@@ -5,6 +5,8 @@ public class AndroidChangeMapTileWeightPanelUI : PanelUI
 #if UNITY_ANDROID
 	[SerializeField] private SliderUI sliderUI;
 	
+	private MapTile mapTile;
+	private MapPathManager mapPathManager;
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
 #endif
@@ -12,6 +14,7 @@ public class AndroidChangeMapTileWeightPanelUI : PanelUI
 	private void Awake()
 	{
 #if UNITY_ANDROID
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
 		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
 
@@ -43,6 +46,11 @@ public class AndroidChangeMapTileWeightPanelUI : PanelUI
 	{
 		if(register)
 		{
+			if(mapPathManager != null)
+			{
+				mapPathManager.resultsWereClearedEvent.AddListener(UpdateSliderUIValueIfPossible);
+			}
+			
 			if(hoveredMapTileManager != null)
 			{
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.AddListener(OnHoveredMapTileWasChanged);
@@ -55,6 +63,11 @@ public class AndroidChangeMapTileWeightPanelUI : PanelUI
 		}
 		else
 		{
+			if(mapPathManager != null)
+			{
+				mapPathManager.resultsWereClearedEvent.RemoveListener(UpdateSliderUIValueIfPossible);
+			}
+			
 			if(hoveredMapTileManager != null)
 			{
 				hoveredMapTileManager.hoveredMapTileWasChangedEvent.RemoveListener(OnHoveredMapTileWasChanged);
@@ -69,24 +82,37 @@ public class AndroidChangeMapTileWeightPanelUI : PanelUI
 
 	private void OnHoveredMapTileWasChanged(MapTile mapTile)
 	{
-		var hoveredMapTileBelongsToPassableTypes = mapTile != null && mapTile.BelongsToPassableTypes();
+		this.mapTile = mapTile;
 		
-		if(sliderUI != null && hoveredMapTileBelongsToPassableTypes)
+		UpdateSliderUIValueIfPossible();
+		UpdateActiveState();
+	}
+
+	private void UpdateSliderUIValueIfPossible()
+	{
+		if(sliderUI != null && HoveredMapTileBelongsToPassableTypes())
 		{
 			sliderUI.SetValue(mapTile.GetWeight());
 		}
-		
-		SetActive(hoveredMapTileBelongsToPassableTypes);
 	}
 
 	private void OnSelectedMapTileWasChanged(MapTile mapTile)
 	{
-		SetActive(false);
+		this.mapTile = null;
+		
+		UpdateActiveState();
 	}
 
 	private void Start()
 	{
-		SetActive(false);
+		UpdateActiveState();
 	}
+
+	private void UpdateActiveState()
+	{
+		SetActive(HoveredMapTileBelongsToPassableTypes());
+	}
+
+	private bool HoveredMapTileBelongsToPassableTypes() => mapTile != null && mapTile.BelongsToPassableTypes();
 #endif
 }
