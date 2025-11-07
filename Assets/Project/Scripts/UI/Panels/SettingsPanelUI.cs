@@ -18,6 +18,9 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 	private PathfindingManager pathfindingManager;
 	private SimulationManager simulationManager;
 	private MapTilesPathTrailManager mapTilesPathTrailManager;
+#if UNITY_ANDROID
+	private AndroidTouchScreenKeyboardManager androidTouchScreenKeyboardManager;
+#endif
 
 	public void SetPrimaryWindowElementActive(bool active)
 	{
@@ -35,6 +38,9 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 		pathfindingManager = ObjectMethods.FindComponentOfType<PathfindingManager>();
 		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 		mapTilesPathTrailManager = ObjectMethods.FindComponentOfType<MapTilesPathTrailManager>();
+#if UNITY_ANDROID
+		androidTouchScreenKeyboardManager = ObjectMethods.FindComponentOfType<AndroidTouchScreenKeyboardManager>();
+#endif
 
 		UpdateUIElementsDependantOnToggleUIStates();
 		SetMapAreaIndicatorActive(showMapAreaToggleUI != null && showMapAreaToggleUI.IsOn());
@@ -102,6 +108,13 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 			{
 				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
 			}
+
+#if UNITY_ANDROID
+			if(androidTouchScreenKeyboardManager != null)
+			{
+				androidTouchScreenKeyboardManager.keyboardVisibilityStateWasChangedEvent.AddListener(OnKeyboardVisibilityStateWasChanged);
+			}
+#endif
 		}
 		else
 		{
@@ -109,6 +122,13 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 			{
 				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
+
+#if UNITY_ANDROID
+			if(androidTouchScreenKeyboardManager != null)
+			{
+				androidTouchScreenKeyboardManager.keyboardVisibilityStateWasChangedEvent.RemoveListener(OnKeyboardVisibilityStateWasChanged);
+			}
+#endif
 		}
 	}
 
@@ -176,4 +196,11 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 			toggleUI.SetInteractable(interactable);
 		}
 	}
+
+#if UNITY_ANDROID
+	private void OnKeyboardVisibilityStateWasChanged(bool visible)
+	{
+		SetSimulationEnabled(gameObject.activeSelf && !visible && enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.IsOn());
+	}
+#endif
 }

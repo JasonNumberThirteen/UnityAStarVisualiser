@@ -2348,7 +2348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 320
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3105,6 +3105,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1105054896}
+    - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1105054901}
   m_SourcePrefab: {fileID: 100100000, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
 --- !u!224 &579419992 stripped
 RectTransform:
@@ -5494,6 +5497,7 @@ Transform:
   - {fileID: 767186546}
   - {fileID: 1567702933}
   - {fileID: 1288450402}
+  - {fileID: 1762920853}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &926805934
@@ -5850,6 +5854,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1256294570}
+    - targetCorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1256294573}
   m_SourcePrefab: {fileID: 100100000, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
 --- !u!224 &955322122 stripped
 RectTransform:
@@ -7158,6 +7165,19 @@ MonoBehaviour:
   heightMapDimensionInputFieldUI: {fileID: 1292082218}
   changeDimensionsButtonUI: {fileID: 851396643}
   cancelButtonUI: {fileID: 1035816614}
+--- !u!114 &1105054901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105054891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0d7fa95a4d44949af031f5e43c3032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasScaler: {fileID: 325799241}
 --- !u!1 &1123758777
 GameObject:
   m_ObjectHideFlags: 0
@@ -7721,6 +7741,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 1
   initialNormalizedPosition: 1
+--- !u!114 &1256294573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256294541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0d7fa95a4d44949af031f5e43c3032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasScaler: {fileID: 325799241}
 --- !u!1 &1275537822
 GameObject:
   m_ObjectHideFlags: 0
@@ -11268,6 +11301,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goParentTransform: {fileID: 958042500}
+--- !u!1 &1762920852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1762920853}
+  - component: {fileID: 1762920854}
+  m_Layer: 0
+  m_Name: Android Touch Screen Keyboard Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1762920853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762920852}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 925085157}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1762920854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762920852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c065bd9dc8e554da78193e908dc2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardVisibilityStateWasChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1784170788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13158,7 +13238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 368
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_SizeDelta.y
