@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 #if UNITY_ANDROID
 [RequireComponent(typeof(RectTransform))]
@@ -7,10 +6,9 @@ using UnityEngine.UI;
 public class AndroidTouchScreenKeyboardRectTransformPositionAdjuster : MonoBehaviour
 {
 #if UNITY_ANDROID
-	[SerializeField] private CanvasScaler canvasScaler;
-	
 	private RectTransform rectTransform;
 	private Vector2 initialPosition;
+	private MainCanvasUI mainCanvasUI;
 	private AndroidTouchScreenKeyboardManager androidTouchScreenKeyboardManager;
 #endif
 
@@ -19,6 +17,7 @@ public class AndroidTouchScreenKeyboardRectTransformPositionAdjuster : MonoBehav
 #if UNITY_ANDROID
 		rectTransform = GetComponent<RectTransform>();
 		initialPosition = rectTransform.anchoredPosition;
+		mainCanvasUI = ObjectMethods.FindComponentOfType<MainCanvasUI>();
 		androidTouchScreenKeyboardManager = ObjectMethods.FindComponentOfType<AndroidTouchScreenKeyboardManager>();
 
 		RegisterToListeners(true);
@@ -60,6 +59,7 @@ public class AndroidTouchScreenKeyboardRectTransformPositionAdjuster : MonoBehav
 
 	private float GetOffsetDependingOnAnchor()
 	{
+		var canvasScaler = mainCanvasUI != null ? mainCanvasUI.GetCanvasScaler() : null;
 		var canvasHeight = canvasScaler != null ? canvasScaler.referenceResolution.y : 0f;
 		var rectTransformHeight = rectTransform.sizeDelta.y;
 		

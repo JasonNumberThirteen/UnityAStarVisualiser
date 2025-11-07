@@ -1,7 +1,4 @@
 using UnityEngine;
-#if UNITY_ANDROID
-using UnityEngine.UI;
-#endif
 
 #if UNITY_ANDROID
 [DefaultExecutionOrder(100)]
@@ -10,7 +7,6 @@ public class AndroidUIScaleAdjuster : MonoBehaviour
 {
 #if UNITY_ANDROID
 	[SerializeField, Range(0.01f, 1f)] private float scale = 0.8f;
-	[SerializeField] private CanvasScaler canvasScaler;
 	[SerializeField] private AndroidUIScaleAdjusterElement[] elements;
 #endif
 
@@ -27,9 +23,18 @@ public class AndroidUIScaleAdjuster : MonoBehaviour
 #if UNITY_ANDROID
 	private void AdjustCanvasScale()
 	{
-		if(canvasScaler != null)
+		var mainCanvasUI = ObjectMethods.FindComponentOfType<MainCanvasUI>();
+
+		if(mainCanvasUI == null)
 		{
-			canvasScaler.referenceResolution *= scale;
+			return;
+		}
+
+		var mainCanvasScaler = mainCanvasUI.GetCanvasScaler();
+		
+		if(mainCanvasScaler != null)
+		{
+			mainCanvasScaler.referenceResolution *= scale;
 		}
 	}
 
