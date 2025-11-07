@@ -22,7 +22,7 @@ public class AndroidTouchScreenKeyboardRectTransformPositionAdjuster : MonoBehav
 
 		RegisterToListeners(true);
 #else
-		Destroy(gameObject);
+		Destroy(this);
 #endif
 	}
 
