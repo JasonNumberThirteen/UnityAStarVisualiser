@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Jason
-  productName: AStar Visualiser
+  productName: A* Visualiser
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.9372549, g: 0.9372549, b: 0.9372549, a: 1}
@@ -164,6 +164,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
+    Android: pl.jasonxiii.astarvisualiser
     Standalone: com.DefaultCompany.2D-URP
   buildNumber:
     Standalone: 0
