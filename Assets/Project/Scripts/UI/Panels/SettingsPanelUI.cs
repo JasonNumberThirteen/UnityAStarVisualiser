@@ -200,7 +200,10 @@ public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
 #if UNITY_ANDROID
 	private void OnKeyboardVisibilityStateWasChanged(bool visible)
 	{
-		SetSimulationEnabled(gameObject.activeSelf && !visible && enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.IsOn());
+		if(gameObject.activeSelf)
+		{
+			SetSimulationEnabled(!visible && enableSimulationModeToggleUI != null && enableSimulationModeToggleUI.IsOn());
+		}
 	}
 #endif
 }
