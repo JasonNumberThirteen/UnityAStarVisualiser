@@ -1,9 +1,15 @@
+#if UNITY_ANDROID
 using System.Linq;
 using System.Collections.Generic;
+#endif
 using UnityEngine;
+#if UNITY_ANDROID
 using UnityEngine.EventSystems;
+#endif
 
+#if UNITY_ANDROID
 [RequireComponent(typeof(Timer))]
+#endif
 public class AndroidMapTileSelectionManager : MonoBehaviour
 {
 #if UNITY_ANDROID
@@ -27,7 +33,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 		RemoveRaycasterFromMainCameraIfPossible();
 		RegisterToListeners(true);
 #else
-		Destroy(this);
+		Destroy(gameObject);
 #endif
 	}
 

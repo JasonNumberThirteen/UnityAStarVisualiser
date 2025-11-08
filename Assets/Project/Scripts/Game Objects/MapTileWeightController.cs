@@ -13,7 +13,9 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 	private bool hoveringTilesIsLocked;
 	private bool panelUIHoverWasDetected;
 	private MapTile mapTile;
+#if UNITY_STANDALONE || UNITY_WEBGL
 	private UserInputController userInputController;
+#endif
 	private HoveredMapTileManager hoveredMapTileManager;
 	private SelectedMapTileManager selectedMapTileManager;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
@@ -35,7 +37,9 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 
 	private void Awake()
 	{
+#if UNITY_STANDALONE || UNITY_WEBGL
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
+#endif
 		hoveredMapTileManager = ObjectMethods.FindComponentOfType<HoveredMapTileManager>();
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
 		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
@@ -62,12 +66,12 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		
 		if(register)
 		{
+#if UNITY_STANDALONE || UNITY_WEBGL			
 			if(userInputController != null)
 			{
-#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.mouseWheelWasScrolledEvent.AddListener(OnMouseWheelWasScrolled);
-#endif
 			}
+#endif
 
 			if(hoveredMapTileManager != null)
 			{
@@ -86,12 +90,12 @@ public class MapTileWeightController : MonoBehaviour, IPrimaryWindowElement, IMa
 		}
 		else
 		{
+#if UNITY_STANDALONE || UNITY_WEBGL			
 			if(userInputController != null)
 			{
-#if UNITY_STANDALONE || UNITY_WEBGL
 				userInputController.mouseWheelWasScrolledEvent.RemoveListener(OnMouseWheelWasScrolled);
-#endif
 			}
+#endif
 
 			if(hoveredMapTileManager != null)
 			{

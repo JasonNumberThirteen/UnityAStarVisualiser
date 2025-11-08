@@ -1,11 +1,18 @@
+#if UNITY_ANDROID
 using System.Linq;
 using System.Collections.Generic;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
+#if UNITY_STANDALONE || UNITY_WEBGL
 using UnityEngine.InputSystem;
+#elif UNITY_ANDROID
 using UnityEngine.InputSystem.EnhancedTouch;
+#endif
 
+#if UNITY_STANDALONE || UNITY_WEBGL
 [RequireComponent(typeof(PlayerInput))]
+#endif
 public class UserInputController : MonoBehaviour
 {
 #if UNITY_STANDALONE || UNITY_WEBGL
@@ -25,9 +32,7 @@ public class UserInputController : MonoBehaviour
 	{
 		mouseWheelWasScrolledEvent?.Invoke(inputValue.Get<Vector2>());
 	}
-#endif
-
-#if UNITY_ANDROID
+#elif UNITY_ANDROID
 	private void Awake()
 	{
 		EnhancedTouchSupport.Enable();

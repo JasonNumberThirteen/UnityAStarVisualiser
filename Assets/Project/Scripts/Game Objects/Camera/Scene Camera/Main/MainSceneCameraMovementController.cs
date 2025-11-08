@@ -1,5 +1,7 @@
+#if UNITY_ANDROID
 using System.Linq;
 using System.Collections.Generic;
+#endif
 using UnityEngine;
 
 public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowElement
@@ -102,9 +104,7 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 	{
 		movementDirection = movementVector;
 	}
-#endif
-
-#if UNITY_ANDROID
+#elif UNITY_ANDROID
 	private void OnTouchesWereUpdated(List<UnityEngine.InputSystem.EnhancedTouch.Touch> touches)
 	{
 		if(mainSceneCamera == null || !inputIsActive || touches.Count != 1)

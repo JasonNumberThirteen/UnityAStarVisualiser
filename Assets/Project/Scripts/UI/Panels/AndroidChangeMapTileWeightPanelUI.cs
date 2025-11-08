@@ -1,4 +1,6 @@
+#if UNITY_ANDROID
 using UnityEngine;
+#endif
 
 public class AndroidChangeMapTileWeightPanelUI : PanelUI
 {

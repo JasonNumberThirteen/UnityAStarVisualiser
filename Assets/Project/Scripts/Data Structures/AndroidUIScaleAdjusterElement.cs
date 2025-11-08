@@ -1,7 +1,11 @@
+#if UNITY_ANDROID
 using System;
 using UnityEngine;
+#endif
 
+#if UNITY_ANDROID
 [Serializable]
+#endif
 public class AndroidUIScaleAdjusterElement
 {
 #if UNITY_ANDROID
