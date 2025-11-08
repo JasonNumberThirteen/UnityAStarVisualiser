@@ -11536,6 +11536,10 @@ PrefabInstance:
       propertyPath: m_ChildControlHeight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3976537489754870336, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
+      propertyPath: m_text
+      value: CHANGE MAP TILE
+      objectReference: {fileID: 0}
     - target: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
       propertyPath: m_Name
       value: Android Change Map Tile Weight Panel UI
