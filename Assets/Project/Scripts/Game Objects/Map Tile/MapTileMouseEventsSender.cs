@@ -86,6 +86,9 @@ public class MapTileMouseEventsSender : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
-		inputIsActive = !detected;
+		if(gameObject.activeSelf)
+		{
+			inputIsActive = !detected;
+		}
 	}
 }
