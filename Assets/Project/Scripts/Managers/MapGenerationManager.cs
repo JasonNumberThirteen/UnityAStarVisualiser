@@ -47,8 +47,19 @@ public class MapGenerationManager : MonoBehaviour
 			return;
 		}
 
-		mapTilesManager.RemoveMapTiles(mapTilesToRemove, mapTile => mapTiles.Remove(mapTile));
+		mapTilesManager.RemoveMapTiles(mapTilesToRemove, OnMapTileWasRemoved);
 		mapTilesWereRemovedEvent?.Invoke(mapTilesToRemove);
+	}
+
+	private void OnMapTileWasRemoved(MapTile mapTile)
+	{
+		if(mapTile == null)
+		{
+			return;
+		}
+		
+		mapTile.ResetTile();
+		mapTiles.Remove(mapTile);
 	}
 
 	private void AddMapTilesFromExtendingIfNeeded(Vector2Int newMapSize)
