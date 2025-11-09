@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 16
-    m_Right: 16
+    m_Left: 8
+    m_Right: 8
     m_Top: 8
     m_Bottom: 8
   m_ChildAlignment: 1
@@ -205,6 +205,14 @@ PrefabInstance:
     - target: {fileID: 368829687520818457, guid: e3800e1654a836347a3a4f8abc3b9eaf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968982279382404203, guid: e3800e1654a836347a3a4f8abc3b9eaf, type: 3}
+      propertyPath: m_margin.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968982279382404203, guid: e3800e1654a836347a3a4f8abc3b9eaf, type: 3}
+      propertyPath: m_margin.z
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
