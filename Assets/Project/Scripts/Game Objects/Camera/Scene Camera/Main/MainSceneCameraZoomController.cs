@@ -208,7 +208,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 		var currentDistanceBetweenTouches = Vector2.Distance(firstTouch.screenPosition, secondTouch.screenPosition);
 		var zoomDelta = previousDistanceBetweenTouches - currentDistanceBetweenTouches;
 		var sizeModifyStep = zoomPerScroll*zoomDelta*SIZE_MODIFY_STEP_ANDROID_TOUCH_DELTA_MULTIPLIER;
-		var orthographicSize = Mathf.Clamp(mainSceneCamera.GetOrthographicSize() - sizeModifyStep, GetMinimumSize(), GetMaximumSize());
+		var orthographicSize = Mathf.Clamp(mainSceneCamera.GetOrthographicSize() + sizeModifyStep, GetMinimumSize(), GetMaximumSize());
 
 		mainSceneCamera.SetOrthographicSize(orthographicSize);
 	}
