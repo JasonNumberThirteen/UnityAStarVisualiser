@@ -93,7 +93,7 @@ public class MapScreenshotTaker : MonoBehaviour
 		
 		return Path.Combine(absolutePath, ANDROID_SCREENSHOTS_FOLDER_NAME);
 #else
-		return Application.dataPath;
+		return Path.GetDirectoryName(Application.dataPath);
 #endif
 	}
 
