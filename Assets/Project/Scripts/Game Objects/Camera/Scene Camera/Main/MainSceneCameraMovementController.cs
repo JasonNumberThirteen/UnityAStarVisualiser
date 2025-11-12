@@ -11,6 +11,7 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 #if UNITY_ANDROID
 	private bool draggingIsActive = true;
 	private bool draggingDirectionIsOpposite;
+	private UnityEngine.InputSystem.EnhancedTouch.Touch touch;
 #endif
 	private Vector2 movementDirection;
 	private MainSceneCamera mainSceneCamera;
@@ -112,13 +113,13 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 			return;
 		}
 
-		var touch = touches.First();
+		touch = touches.First();
 
-		ActivateDraggingOnTouchReleaseIfNeeded(touch);
-		MoveByTouch(touch);
+		ActivateDraggingOnTouchReleaseIfNeeded();
+		MoveByTouch();
 	}
 
-	private void ActivateDraggingOnTouchReleaseIfNeeded(UnityEngine.InputSystem.EnhancedTouch.Touch touch)
+	private void ActivateDraggingOnTouchReleaseIfNeeded()
 	{
 		if(!draggingIsActive && !touch.isInProgress)
 		{
@@ -126,7 +127,7 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 		}
 	}
 
-	private void MoveByTouch(UnityEngine.InputSystem.EnhancedTouch.Touch touch)
+	private void MoveByTouch()
 	{
 		if(!draggingIsActive || touch.phase != UnityEngine.InputSystem.TouchPhase.Moved)
 		{
@@ -147,7 +148,9 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 
 	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
-		if(draggingIsActive && detected)
+		var panelWasTapped = touch.Equals(default) || !touch.inProgress;
+		
+		if(draggingIsActive && detected && panelWasTapped)
 		{
 			draggingIsActive = false;
 		}
