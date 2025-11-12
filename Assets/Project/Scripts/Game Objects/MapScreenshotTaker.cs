@@ -1,23 +1,29 @@
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapScreenshotTaker : MonoBehaviour
 {
-	private MapScreenshotSceneCamera mapScreenshotSceneCamera;
+	public UnityEvent<string> screenshotWasTakenEvent;
 	
-	private static readonly string DIRECTORY_NAME = "Screenshots";
+	private MapScreenshotSceneCamera mapScreenshotSceneCamera;
+
 	private static readonly string SCREENSHOT_NAME = "Screenshot";
 	private static readonly string SCREENSHOT_EXTENSION = ".png";
+#if UNITY_ANDROID
+	private static readonly string ANDROID_SCREENSHOTS_FOLDER_NAME = "Screenshots";
+#endif
 	private static readonly int RENDER_TEXTURE_DEPTH = 24;
 	private static readonly TextureFormat RENDER_TEXTURE_FORMAT = TextureFormat.RGB24;
 	
 	public void TakeMapScreenshot()
 	{
-		var directoryPath = $"{Application.dataPath}/{DIRECTORY_NAME}";
+		var directoryPathFolder = GetDirectoryPathFolder();
+		var directoryPath = $"{directoryPathFolder}/{GetDirectoryName()}";
 		
 		EnsureExistanceOfDirectory(directoryPath);
-		TakeScreenshotInDirectory(directoryPath);
+		TakeScreenshotInDirectory(directoryPath, directoryPathFolder);
 	}
 
 	private void Awake()
@@ -33,7 +39,7 @@ public class MapScreenshotTaker : MonoBehaviour
 		}
 	}
 
-	private void TakeScreenshotInDirectory(string path)
+	private void TakeScreenshotInDirectory(string path, string pathFolder)
 	{
 		var numberOfExistingScreenshots = new DirectoryInfo(path).GetFiles().Where(file => file.Extension.Equals(SCREENSHOT_EXTENSION)).Count();
 		var screenshotNumber = numberOfExistingScreenshots + 1;
@@ -41,6 +47,7 @@ public class MapScreenshotTaker : MonoBehaviour
 		var screenshotTexture = GetTextureForScreenshot();
 
 		File.WriteAllBytes(screenshotPath, screenshotTexture.EncodeToPNG());
+		screenshotWasTakenEvent?.Invoke(pathFolder);
 	}
 
 	private Texture2D GetTextureForScreenshot()
@@ -74,5 +81,28 @@ public class MapScreenshotTaker : MonoBehaviour
 		}
 
 		RenderTexture.active = renderTexture;
+	}
+
+	private string GetDirectoryPathFolder()
+	{
+#if UNITY_ANDROID
+		using var environment = new AndroidJavaClass(AndroidJNINames.OS_ENVIRONMENT_CLASS_NAME);
+		var directoryDCIM = environment.GetStatic<string>(AndroidJNINames.DIRECTORY_DCIM_FIELD_NAME);
+		using var externalStoragePublicDirectory = environment.CallStatic<AndroidJavaObject>(AndroidJNINames.GET_EXTERNAL_STORAGE_PUBLIC_DIRECTORY_METHOD_NAME, directoryDCIM);
+		var absolutePath = externalStoragePublicDirectory.Call<string>(AndroidJNINames.GET_ABSOLUTE_PATH_METHOD_NAME);
+		
+		return Path.Combine(absolutePath, ANDROID_SCREENSHOTS_FOLDER_NAME);
+#else
+		return Application.dataPath;
+#endif
+	}
+
+	private string GetDirectoryName()
+	{
+#if UNITY_ANDROID
+		return "AStar Visualiser";
+#else
+		return "Screenshots";
+#endif
 	}
 }
