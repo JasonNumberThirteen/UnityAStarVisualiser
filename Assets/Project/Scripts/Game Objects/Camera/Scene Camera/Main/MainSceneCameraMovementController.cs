@@ -17,7 +17,7 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 	private UserInputController userInputController;
 #if UNITY_ANDROID
 	private SelectedMapTileManager selectedMapTileManager;
-	private VisualiserEventsManager visualiserEventsManager;
+	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 
 	private static readonly float MOVEMENT_SPEED_ANDROID_TOUCH_DELTA_MULTIPLIER = 0.00125f;
 #endif
@@ -38,7 +38,7 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
 #if UNITY_ANDROID
 		selectedMapTileManager = ObjectMethods.FindComponentOfType<SelectedMapTileManager>();
-		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
+		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 #endif
 
 		RegisterToListeners(true);
@@ -68,9 +68,9 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 				selectedMapTileManager.selectedMapTileWasChangedEvent.AddListener(OnSelectedMapTileWasChanged);
 			}
 
-			if(visualiserEventsManager != null)
+			if(panelUIHoverDetectionManager != null)
 			{
-				visualiserEventsManager.eventWasSentEvent.AddListener(OnEventWasSent);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.AddListener(OnHoverDetectionStateWasChanged);
 			}
 #endif
 		}
@@ -91,9 +91,9 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 				selectedMapTileManager.selectedMapTileWasChangedEvent.RemoveListener(OnSelectedMapTileWasChanged);
 			}
 			
-			if(visualiserEventsManager != null)
+			if(panelUIHoverDetectionManager != null)
 			{
-				visualiserEventsManager.eventWasSentEvent.RemoveListener(OnEventWasSent);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.RemoveListener(OnHoverDetectionStateWasChanged);
 			}
 #endif
 		}
@@ -145,9 +145,9 @@ public class MainSceneCameraMovementController : MonoBehaviour, IPrimaryWindowEl
 		draggingDirectionIsOpposite = mapTile != null;
 	}
 
-	private void OnEventWasSent(VisualiserEvent visualiserEvent)
+	private void OnHoverDetectionStateWasChanged(bool detected)
 	{
-		if(draggingIsActive && visualiserEvent is PanelUIBoolVisualiserEvent panelUIBoolVisualiserEvent && panelUIBoolVisualiserEvent.GetBoolValue())
+		if(draggingIsActive && detected)
 		{
 			draggingIsActive = false;
 		}
