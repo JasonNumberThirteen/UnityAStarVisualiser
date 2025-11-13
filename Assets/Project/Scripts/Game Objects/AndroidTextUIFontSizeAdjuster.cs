@@ -12,14 +12,14 @@ public class AndroidTextUIFontSizeAdjuster : MonoBehaviour
 	private void Awake()
 	{
 #if UNITY_ANDROID
-		texts.ForEach(AdjustTextUIFontSizeIfNeeded);
+		texts.ForEach(AdjustTextFontSize);
 #else
 		Destroy(this);
 #endif
 	}
 
 #if UNITY_ANDROID
-	private void AdjustTextUIFontSizeIfNeeded(TextMeshProUGUI text)
+	private void AdjustTextFontSize(TextMeshProUGUI text)
 	{
 		if(text != null)
 		{
