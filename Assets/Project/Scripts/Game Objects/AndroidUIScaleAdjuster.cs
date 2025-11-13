@@ -6,7 +6,7 @@ using UnityEngine;
 public class AndroidUIScaleAdjuster : MonoBehaviour
 {
 	[SerializeField, Range(0.01f, 1f)] private float scale = 0.8f;
-	[SerializeField] private AndroidUIScaleAdjusterElement[] elements;
+	[SerializeField] private AndroidUIScaleAdjusterElement[] uiScaleAdjusterElements;
 
 	private void Start()
 	{
@@ -38,21 +38,21 @@ public class AndroidUIScaleAdjuster : MonoBehaviour
 
 	private void AdjustElements()
 	{
-		elements.ForEach(adjustableElement =>
+		uiScaleAdjusterElements.ForEach(uiScaleAdjusterElement =>
 		{
-			AdjustElementSizeIfNeeded(adjustableElement);
-			AdjustElementAnchoredPositionYIfNeeded(adjustableElement);
+			AdjustUIScaleAdjusterElementSizeIfNeeded(uiScaleAdjusterElement);
+			AdjustUIScaleAdjusterElementAnchoredPositionYIfNeeded(uiScaleAdjusterElement);
 		});
 	}
 
-	private void AdjustElementSizeIfNeeded(AndroidUIScaleAdjusterElement element)
+	private void AdjustUIScaleAdjusterElementSizeIfNeeded(AndroidUIScaleAdjusterElement uiScaleAdjusterElement)
 	{
-		if(!element.HeightShouldBeAdjusted())
+		if(!uiScaleAdjusterElement.HeightShouldBeAdjusted())
 		{
 			return;
 		}
 
-		var rectTransform = element.GetRectTransform();
+		var rectTransform = uiScaleAdjusterElement.GetRectTransform();
 
 		if(rectTransform != null)
 		{
@@ -60,14 +60,14 @@ public class AndroidUIScaleAdjuster : MonoBehaviour
 		}
 	}
 	
-	private void AdjustElementAnchoredPositionYIfNeeded(AndroidUIScaleAdjusterElement element)
+	private void AdjustUIScaleAdjusterElementAnchoredPositionYIfNeeded(AndroidUIScaleAdjusterElement uiScaleAdjusterElement)
 	{
-		if(!element.AnchoredPositionYShouldBeAdjusted())
+		if(!uiScaleAdjusterElement.AnchoredPositionYShouldBeAdjusted())
 		{
 			return;
 		}
 
-		var rectTransform = element.GetRectTransform();
+		var rectTransform = uiScaleAdjusterElement.GetRectTransform();
 
 		if(rectTransform != null)
 		{
