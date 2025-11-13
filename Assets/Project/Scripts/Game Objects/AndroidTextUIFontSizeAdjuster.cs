@@ -16,7 +16,7 @@ public class AndroidTextUIFontSizeAdjuster : MonoBehaviour
 #if UNITY_ANDROID
 		texts.ForEach(AdjustTextUIFontSizeIfNeeded);
 #else
-		Destroy(gameObject);
+		Destroy(this);
 #endif
 	}
 

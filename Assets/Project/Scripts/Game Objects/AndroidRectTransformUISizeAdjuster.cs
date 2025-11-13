@@ -15,7 +15,7 @@ public class AndroidRectTransformUISizeAdjuster : MonoBehaviour
 #if UNITY_ANDROID
 		rectTransformUISizeAdjusterElements.ForEach(AdjustRectTransformUISizeAdjusterElementIfNeeded);
 #else
-		Destroy(gameObject);
+		Destroy(this);
 #endif
 	}
 
