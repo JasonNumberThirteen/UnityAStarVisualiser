@@ -40,12 +40,12 @@ public class AndroidCanvasUIScaleAdjuster : MonoBehaviour
 	{
 		canvasUIScaleAdjusterElements.ForEach(canvasUIScaleAdjusterElement =>
 		{
-			AdjustCanvasUIScaleAdjusterElementSizeIfNeeded(canvasUIScaleAdjusterElement);
-			AdjustCanvasUIScaleAdjusterElementAnchoredPositionYIfNeeded(canvasUIScaleAdjusterElement);
+			AdjustElementSizeIfNeeded(canvasUIScaleAdjusterElement);
+			AdjustElementAnchoredPositionYIfNeeded(canvasUIScaleAdjusterElement);
 		});
 	}
 
-	private void AdjustCanvasUIScaleAdjusterElementSizeIfNeeded(AndroidCanvasUIScaleAdjusterElement canvasUIScaleAdjusterElement)
+	private void AdjustElementSizeIfNeeded(AndroidCanvasUIScaleAdjusterElement canvasUIScaleAdjusterElement)
 	{
 		if(!canvasUIScaleAdjusterElement.HeightShouldBeAdjusted())
 		{
@@ -60,7 +60,7 @@ public class AndroidCanvasUIScaleAdjuster : MonoBehaviour
 		}
 	}
 	
-	private void AdjustCanvasUIScaleAdjusterElementAnchoredPositionYIfNeeded(AndroidCanvasUIScaleAdjusterElement canvasUIScaleAdjusterElement)
+	private void AdjustElementAnchoredPositionYIfNeeded(AndroidCanvasUIScaleAdjusterElement canvasUIScaleAdjusterElement)
 	{
 		if(!canvasUIScaleAdjusterElement.AnchoredPositionYShouldBeAdjusted())
 		{
