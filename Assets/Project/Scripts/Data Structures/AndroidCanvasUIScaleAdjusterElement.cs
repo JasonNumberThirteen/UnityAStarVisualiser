@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class AndroidUIScaleAdjusterElement
+public class AndroidCanvasUIScaleAdjusterElement
 {
 	[SerializeField] private RectTransform rectTransform;
 	[SerializeField] private bool adjustHeight;

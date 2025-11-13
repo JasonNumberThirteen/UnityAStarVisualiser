@@ -2454,7 +2454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 343.15002
+      value: 370.1825
       objectReference: {fileID: 0}
     - target: {fileID: 1604831894685878110, guid: acbc7f75779d83d428a99465e52d8cef, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6871,7 +6871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 726.88
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6907,7 +6907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 174.215
+      value: 371.44
       objectReference: {fileID: 0}
     - target: {fileID: 4921650461319182603, guid: 230b0159f80b9ab4697a5300289591f1, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7651,7 +7651,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100.19, y: -48}
+  m_AnchoredPosition: {x: 114.405, y: -48}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1209758094
@@ -8097,7 +8097,7 @@ GameObject:
   - component: {fileID: 1335238159}
   - component: {fileID: 1335238158}
   m_Layer: 0
-  m_Name: Android UI Scale Adjuster
+  m_Name: Android Canvas UI Scale Adjuster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8116,7 +8116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.8
-  uiScaleAdjusterElements:
+  canvasUIScaleAdjusterElements:
   - rectTransform: {fileID: 955322122}
     adjustHeight: 1
     adjustAnchoredPositionY: 0
@@ -14197,6 +14197,6 @@ SceneRoots:
   - {fileID: 903097585}
   - {fileID: 630120275}
   - {fileID: 149438897}
-  - {fileID: 1335238159}
   - {fileID: 588030741}
+  - {fileID: 1335238159}
   - {fileID: 243514320}
