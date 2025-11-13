@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class AndroidMapTileRaycaster : MonoBehaviour
 {
-#if UNITY_ANDROID
 	[SerializeField] private LayerMask detectableGameObjects;
-	
+
+#if UNITY_ANDROID
 	private MainSceneCamera mainSceneCamera;
 
 	public bool MapTileWasTapped(Vector3 position, out MapTileStateController mapTileStateController)

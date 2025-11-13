@@ -5,10 +5,8 @@ using UnityEngine;
 #endif
 public class AndroidRectTransformUISizeAdjuster : MonoBehaviour
 {
-#if UNITY_ANDROID
 	[SerializeField] private AndroidRectTransformUISizeAdjusterElement[] rectTransformUISizeAdjusterElements;
 	[SerializeField, Min(32f)] private float size;
-#endif
 
 	private void Awake()
 	{

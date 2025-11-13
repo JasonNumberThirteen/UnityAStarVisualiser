@@ -6,10 +6,8 @@ using UnityEngine;
 #endif
 public class AndroidTextUIFontSizeAdjuster : MonoBehaviour
 {
-#if UNITY_ANDROID
 	[SerializeField] private TextMeshProUGUI[] texts;
 	[SerializeField, Min(8f)] private float fontSize;
-#endif
 
 	private void Awake()
 	{

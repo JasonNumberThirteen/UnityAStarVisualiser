@@ -1,15 +1,13 @@
 using UnityEngine;
-#if UNITY_ANDROID
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 
 [RequireComponent(typeof(LocalizeStringEvent))]
-#endif
 public class AndroidLocalizedStringSetter : MonoBehaviour
 {
-#if UNITY_ANDROID
 	[SerializeField] private LocalizedString localizedString;
-	
+
+#if UNITY_ANDROID
 	private LocalizeStringEvent localizeStringEvent;
 #endif	
 

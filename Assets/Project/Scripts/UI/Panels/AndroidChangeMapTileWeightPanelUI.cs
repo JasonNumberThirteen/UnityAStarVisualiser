@@ -1,12 +1,10 @@
-#if UNITY_ANDROID
 using UnityEngine;
-#endif
 
 public class AndroidChangeMapTileWeightPanelUI : PanelUI
 {
-#if UNITY_ANDROID
 	[SerializeField] private SliderUI sliderUI;
-	
+
+#if UNITY_ANDROID
 	private MapTile mapTile;
 	private MapPathManager mapPathManager;
 	private HoveredMapTileManager hoveredMapTileManager;

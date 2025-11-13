@@ -5,10 +5,8 @@ using UnityEngine;
 #endif
 public class AndroidUIScaleAdjuster : MonoBehaviour
 {
-#if UNITY_ANDROID
 	[SerializeField, Range(0.01f, 1f)] private float scale = 0.8f;
 	[SerializeField] private AndroidUIScaleAdjusterElement[] elements;
-#endif
 
 	private void Start()
 	{
