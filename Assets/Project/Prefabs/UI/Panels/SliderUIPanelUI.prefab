@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 3561835599537470127}
   - component: {fileID: 3625156079141882629}
   - component: {fileID: 3776083828802473018}
+  - component: {fileID: 1710082303176628657}
   m_Layer: 5
   m_Name: SliderUI
   m_TagString: Untagged
@@ -397,6 +398,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c956e30ee89f79b4faa8081a8274aca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1710082303176628657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528604358933740926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da7e9afaedc7224eb96e16b89d423e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransformUISizeAdjusterElements:
+  - rectTransform: {fileID: 3561835599537470127}
+    adjustWidth: 0
+    adjustHeight: 1
+  - rectTransform: {fileID: 8900560432932223456}
+    adjustWidth: 1
+    adjustHeight: 0
+  size: 48
 --- !u!1 &8982929597614443886
 GameObject:
   m_ObjectHideFlags: 0
