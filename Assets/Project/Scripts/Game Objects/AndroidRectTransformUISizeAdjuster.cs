@@ -13,22 +13,22 @@ public class AndroidRectTransformUISizeAdjuster : MonoBehaviour
 	private void Awake()
 	{
 #if UNITY_ANDROID
-		rectTransformUISizeAdjusterElements.ForEach(rectTransformUISizeAdjusterElement => AdjustRectTransformUISizeAdjusterElementIfNeeded(rectTransformUISizeAdjusterElement, size));
+		rectTransformUISizeAdjusterElements.ForEach(AdjustRectTransformUISizeAdjusterElementIfNeeded);
 #else
 		Destroy(gameObject);
 #endif
 	}
 
 #if UNITY_ANDROID
-	private void AdjustRectTransformUISizeAdjusterElementIfNeeded(AndroidRectTransformUISizeAdjusterElement rectTransformUISizeAdjusterElement, float size)
+	private void AdjustRectTransformUISizeAdjusterElementIfNeeded(AndroidRectTransformUISizeAdjusterElement rectTransformUISizeAdjusterElement)
 	{
 		if(rectTransformUISizeAdjusterElement != null)
 		{
-			AdjustRectTransformSizeIfPossible(rectTransformUISizeAdjusterElement, size);
+			AdjustRectTransformSizeIfPossible(rectTransformUISizeAdjusterElement);
 		}
 	}
 
-	private void AdjustRectTransformSizeIfPossible(AndroidRectTransformUISizeAdjusterElement rectTransformUISizeAdjusterElement, float size)
+	private void AdjustRectTransformSizeIfPossible(AndroidRectTransformUISizeAdjusterElement rectTransformUISizeAdjusterElement)
 	{
 		var rectTransform = rectTransformUISizeAdjusterElement.GetRectTransform();
 		
