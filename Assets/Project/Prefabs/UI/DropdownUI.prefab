@@ -288,6 +288,8 @@ GameObject:
   - component: {fileID: 8853873306184335213}
   - component: {fileID: 6299930088384143177}
   - component: {fileID: 8629899303739353528}
+  - component: {fileID: 1864718497763823698}
+  - component: {fileID: 8772425469580537893}
   m_Layer: 5
   m_Name: DropdownUI
   m_TagString: Untagged
@@ -456,6 +458,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff867c474dda5943884c5ffff815636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1864718497763823698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4868141489201765048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da7e9afaedc7224eb96e16b89d423e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransformUISizeAdjusterElements:
+  - rectTransform: {fileID: 1667250845776670153}
+    adjustWidth: 0
+    adjustHeight: 1
+  - rectTransform: {fileID: 458983447141455012}
+    adjustWidth: 0
+    adjustHeight: 1
+  size: 56
+--- !u!114 &8772425469580537893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4868141489201765048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc4a7813970e2e4ca08af78a5701bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texts:
+  - {fileID: 2862128044036358301}
+  fontSize: 24
 --- !u!1 &6436632933297857274
 GameObject:
   m_ObjectHideFlags: 0
