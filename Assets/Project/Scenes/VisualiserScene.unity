@@ -7981,10 +7981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7529dabe9cfb44b98ad5dc51ef692f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementKeyWasPressedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  mouseWheelWasScrolledEvent:
+  touchesWereUpdatedEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1284377659
@@ -8032,7 +8029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lowerBound: 3
-  upperBound: 50
+  upperBound: 30
 --- !u!1 &1288450401
 GameObject:
   m_ObjectHideFlags: 0
@@ -11428,6 +11425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c065bd9dc8e554da78193e908dc2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyboardVisibilityStateWasChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1784170788
 PrefabInstance:
   m_ObjectHideFlags: 0
