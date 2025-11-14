@@ -2,10 +2,42 @@ using UnityEngine;
 
 public class MapDimensionInputFieldUIValueAdjuster : InputFieldUIValueAdjuster<int>
 {
-	protected override void Awake()
+	public void SetMinimumValue(int minimumValue)
 	{
-		base.Awake();
-		inputFieldUI.SetCharacterLimit(maximumValue.GetNumberOfDigits());
+		this.minimumValue = minimumValue;
+
+		if(this.minimumValue > maximumValue)
+		{
+			maximumValue = this.minimumValue;
+		}
+
+		AdjustValueToChangedRangeIfNeeded();
+	}
+	
+	public void SetMaximumValue(int maximumValue)
+	{
+		this.maximumValue = maximumValue;
+
+		if(this.maximumValue < minimumValue)
+		{
+			minimumValue = this.maximumValue;
+		}
+
+		AdjustValueToChangedRangeIfNeeded();
+		inputFieldUI.SetCharacterLimit(this.maximumValue.GetNumberOfDigits());
+	}
+
+	private void AdjustValueToChangedRangeIfNeeded()
+	{
+		if(!TextRepresentsValue(inputFieldUI.GetText(), out var value))
+		{
+			return;
+		}
+
+		var validatedValue = GetValidatedValue(value);
+			
+		UpdateValueIfNeeded(validatedValue);
+		inputFieldUI.SetText(validatedValue.ToString());
 	}
 
 	protected override int GetValidatedValue(int value) => Mathf.Clamp(value, minimumValue, maximumValue);

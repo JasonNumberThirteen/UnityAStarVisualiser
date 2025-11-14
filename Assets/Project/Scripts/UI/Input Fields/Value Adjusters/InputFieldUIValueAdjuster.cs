@@ -2,7 +2,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 
-[DefaultExecutionOrder(1)]
+[DefaultExecutionOrder(-100)]
 [RequireComponent(typeof(InputFieldUI))]
 public abstract class InputFieldUIValueAdjuster<T> : MonoBehaviour where T : struct
 {
@@ -16,9 +16,6 @@ public abstract class InputFieldUIValueAdjuster<T> : MonoBehaviour where T : str
 	private T cachedValue;
 
 	private readonly StringBuilder stringBuilder = new();
-
-	public T GetMinimumValue() => minimumValue;
-	public T GetMaximumValue() => maximumValue;
 
 	protected abstract T GetValidatedValue(T value);
 	protected abstract bool ValuesAreIdentical(T valueA, T valueB);
@@ -35,6 +32,19 @@ public abstract class InputFieldUIValueAdjuster<T> : MonoBehaviour where T : str
 	protected virtual void OnDestroy()
 	{
 		RegisterToListeners(false);
+	}
+
+	protected void UpdateValueIfNeeded(T value)
+	{
+		if(ValuesAreIdentical(cachedValue, value))
+		{
+			return;
+		}
+
+		cachedValue = value;
+
+		SetText(cachedValue.ToString());
+		valueWasChangedEvent?.Invoke(cachedValue);
 	}
 
 	private void RegisterToListeners(bool register)
@@ -65,19 +75,6 @@ public abstract class InputFieldUIValueAdjuster<T> : MonoBehaviour where T : str
 		{
 			UpdateValueIfNeeded(GetValidatedValue(value));
 		}
-	}
-
-	private void UpdateValueIfNeeded(T value)
-	{
-		if(ValuesAreIdentical(cachedValue, value))
-		{
-			return;
-		}
-
-		cachedValue = value;
-
-		SetText(cachedValue.ToString());
-		valueWasChangedEvent?.Invoke(cachedValue);
 	}
 
 	private void SetText(string text)

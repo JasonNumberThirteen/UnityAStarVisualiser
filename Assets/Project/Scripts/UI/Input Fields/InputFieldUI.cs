@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
+[DefaultExecutionOrder(-200)]
 [RequireComponent(typeof(TMP_InputField))]
 public class InputFieldUI : MonoBehaviour
 {

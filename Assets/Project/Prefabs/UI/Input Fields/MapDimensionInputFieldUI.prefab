@@ -145,5 +145,17 @@ MonoBehaviour:
   valueWasChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  minimumValue: 3
-  maximumValue: 50
+  minimumValue: 0
+  maximumValue: 0
+  inputFieldUI: {fileID: 5002648256077207056}
+--- !u!114 &5002648256077207056 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7165129147473597596, guid: 1a0576eaf8244bf46bc594801c86ea7d, type: 3}
+  m_PrefabInstance: {fileID: 2739135159189340812}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31135060573226008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a4019d6799d8547be55bf0f3f38739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,24 +1,28 @@
 using UnityEngine;
 
-[DefaultExecutionOrder(-300)]
 public class MapBoundariesManager : MonoBehaviour
 {
-	private int lowerBound;
-	private int upperBound;
+	[SerializeField, Range(3, 50)] private int lowerBound = 3;
+	[SerializeField, Range(3, 50)] private int upperBound = 50;
 
 	public int GetLowerBound() => lowerBound;
 	public int GetUpperBound() => upperBound;
 
 	private void Awake()
 	{
-		var mapDimensionInputFieldUIValueAdjuster = ObjectMethods.FindComponentOfType<MapDimensionInputFieldUIValueAdjuster>();
+		var mapDimensionInputFieldUIValueAdjusters = ObjectMethods.FindComponentsOfType<MapDimensionInputFieldUIValueAdjuster>();
 
+		mapDimensionInputFieldUIValueAdjusters.ForEach(SetAdjusterValueBounds);
+	}
+
+	private void SetAdjusterValueBounds(MapDimensionInputFieldUIValueAdjuster mapDimensionInputFieldUIValueAdjuster)
+	{
 		if(mapDimensionInputFieldUIValueAdjuster == null)
 		{
 			return;
 		}
 
-		lowerBound = mapDimensionInputFieldUIValueAdjuster.GetMinimumValue();
-		upperBound = mapDimensionInputFieldUIValueAdjuster.GetMaximumValue();
+		mapDimensionInputFieldUIValueAdjuster.SetMinimumValue(lowerBound);
+		mapDimensionInputFieldUIValueAdjuster.SetMaximumValue(upperBound);
 	}
 }
