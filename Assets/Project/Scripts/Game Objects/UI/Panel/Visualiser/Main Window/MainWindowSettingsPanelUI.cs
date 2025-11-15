@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsPanelUI : PanelUI, IPrimaryWindowElement
+public class MainWindowSettingsPanelUI : PanelUI, IPrimaryWindowElement
 {
 	[SerializeField] private ToggleUI showMapTilesLegendToggleUI;
 	[SerializeField] private ToggleUI showInstructionsToggleUI;
