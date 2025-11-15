@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-public class ButtonsPanelUI : PanelUI, IPrimaryWindowElement
+public class MainWindowButtonsPanelUI : PanelUI, IPrimaryWindowElement
 {
 	[SerializeField] private ButtonUI findPathButtonUI;
 	[SerializeField] private ButtonUI clearResultsButtonUI;
