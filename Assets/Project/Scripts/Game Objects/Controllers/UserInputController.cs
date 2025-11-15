@@ -1,7 +1,7 @@
 #if UNITY_ANDROID
 using System.Linq;
-using System.Collections.Generic;
 #endif
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 #if UNITY_STANDALONE || UNITY_WEBGL
