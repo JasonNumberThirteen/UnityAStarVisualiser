@@ -15,12 +15,9 @@ using UnityEngine.InputSystem.EnhancedTouch;
 #endif
 public class UserInputController : MonoBehaviour
 {
-#if UNITY_STANDALONE || UNITY_WEBGL
 	public UnityEvent<Vector2> movementKeyWasPressedEvent;
 	public UnityEvent<Vector2> mouseWheelWasScrolledEvent;
-#elif UNITY_ANDROID
 	public UnityEvent<List<UnityEngine.InputSystem.EnhancedTouch.Touch>> touchesWereUpdatedEvent;
-#endif
 
 #if UNITY_STANDALONE || UNITY_WEBGL
 	private void OnNavigate(InputValue inputValue)
