@@ -7,7 +7,7 @@
 * [General information](#general-information)
 * [Used technologies](#used-technologies)
 * [Features](#features)
-* [Screenshots](#screenshots)
+* [Scenes](#scenes)
 * [Usage](#usage)
 * [Project status](#project-status)
 * [Credits](#credits)
@@ -23,13 +23,18 @@
 - [DOTween](https://dotween.demigiant.com/ "DOTween (HOTween v2)") plugin for using tweens.
 
 ## Features
+- **FLEXIBLE INPUT**
+	- Moving the camera around the map
+	- Zooming in/out the camera
+	- Adjusting movement speed of the camera
+	- Adjusting zooming in/out sensitivity of the camera
 - **MAP GENERATION**
-	- Generation of a map by the given dimensions in tiles (from **3x3** to **50x50**)
-	- Adjusting dimensions (extending & shrinking) by the given size in the input field
+	- Generation of a map by the given dimensions in tiles (from **3x3** to **30x30**)
+	- Adjusting dimensions (extending & shrinking) by the given size in the input fields
 - **MAP EDITING**
-	- Changing position of map tiles by dragging with a mouse
-	- Adjusting weight to each map tile by using a mouse scroll wheel
-	- Changing tiles type (**passable**/**impassable**) depending on their weight (if it is below 0, then tile is impassable)
+	- Changing position of map tiles
+	- Adjusting weight to each map tile
+	- Changing tiles type (**passable**/**impassable**) depending on their weight (if it is below 0, then the tile is impassable)
 - **ALGORITHM**
 	- Finding a path between the start and destination tiles
 	- Support of both **4-way** and **8-way** (diagonal) movement
@@ -43,16 +48,29 @@
 	- 2 types: **Timed** (step between interval in seconds) and **Stepwise** (step after clicking a button)
 - **MISCELLANEOUS**
 	- Taking screenshots of the map
-	- Zooming in/out by using a mouse scroll wheel
+	- Switching to fullscreen/windowed mode
+	- Displaying of the map area along with additional offset around it in tiles (can be disabled)
+	- Localization support: **Polish** and **English**
+	- Multiplatform support: **Standalone**, **WebGL** and **Android**
 
-## Screenshots
-![A* Visualiser](./Screenshots/AStarVisualiser.png?raw=true)
-![A* Visualiser](./Screenshots/AStarVisualiser2.png?raw=true)
+## Scenes
+### Language Selection
+A starting scene with buttons for selecting desired language.
+
+![A* Visualiser (Language Selection)](./Screenshots/LanguageSelection.png?raw=true)
+
+### Visualiser
+A scene wherein the visualiser is shown.
+
+![A* Visualiser (Visualiser)](./Screenshots/Visualiser.png?raw=true)
+![A* Visualiser (Visualiser 2)](./Screenshots/Visualiser2.png?raw=true)
 
 ## Usage
-- W / S / A / D or arrow keys - **Navigation**,
-- Left mouse button (press & hold) - **Dragging hovered tile**,
-- Mouse scroll wheel - **Zooming in and out** (if none tile is hovered) / **Changing weight of a tile** (if any tile is hovered).
+
+| Platform | Navigation | Hovering a tile | Dragging hovered tile | Changing tile weight | Zooming in/out the camera
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Standalone & WebGL | W / S / A / D or arrow keys | Hovering a tile with a mouse cursor | Left mouse button (**press & hold**) | Mouse scroll wheel (**if any tile is hovered**) | Mouse scroll wheel (**if none tile is hovered**)
+| Android | Swipe (**outside of UI panels**) | Tapping a tile | Tapping already hovered tile | Adjusting by the UI slider shown on top of the screen | Pinch-to-zoom
 
 ## Project status
 <p align = "center"><b>COMPLETED</b></p>
