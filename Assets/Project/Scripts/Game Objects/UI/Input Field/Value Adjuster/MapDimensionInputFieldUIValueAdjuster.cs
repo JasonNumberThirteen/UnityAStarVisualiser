@@ -2,7 +2,28 @@ using UnityEngine;
 
 public class MapDimensionInputFieldUIValueAdjuster : InputFieldUIValueAdjuster<int>
 {
-	public void SetMinimumValue(int minimumValue)
+	private MapBoundariesManager mapBoundariesManager;
+
+	protected override void Awake()
+	{
+		mapBoundariesManager = ObjectMethods.FindComponentOfType<MapBoundariesManager>();
+		
+		base.Awake();
+		SetInitialValues();
+	}
+
+	private void SetInitialValues()
+	{
+		if(mapBoundariesManager == null)
+		{
+			return;
+		}
+		
+		SetMinimumValue(mapBoundariesManager.GetLowerBound());
+		SetMaximumValue(mapBoundariesManager.GetUpperBound());
+	}
+
+	private void SetMinimumValue(int minimumValue)
 	{
 		this.minimumValue = minimumValue;
 
@@ -14,7 +35,7 @@ public class MapDimensionInputFieldUIValueAdjuster : InputFieldUIValueAdjuster<i
 		AdjustValueToChangedRangeIfNeeded();
 	}
 	
-	public void SetMaximumValue(int maximumValue)
+	private void SetMaximumValue(int maximumValue)
 	{
 		this.maximumValue = maximumValue;
 

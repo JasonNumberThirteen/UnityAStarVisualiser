@@ -114,9 +114,4 @@ public class ChangeMapDimensionsPopupPanelUI : PopupPanelUI
 			heightMapDimensionInputFieldUI.text = mapDimensions.y.ToString();
 		}
 	}
-
-	private void Start()
-	{
-		gameObject.SetActive(false);
-	}
 }

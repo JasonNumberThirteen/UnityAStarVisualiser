@@ -7,22 +7,4 @@ public class MapBoundariesManager : MonoBehaviour
 
 	public int GetLowerBound() => lowerBound;
 	public int GetUpperBound() => upperBound;
-
-	private void Awake()
-	{
-		var mapDimensionInputFieldUIValueAdjusters = ObjectMethods.FindComponentsOfType<MapDimensionInputFieldUIValueAdjuster>();
-
-		mapDimensionInputFieldUIValueAdjusters.ForEach(SetAdjusterValueBounds);
-	}
-
-	private void SetAdjusterValueBounds(MapDimensionInputFieldUIValueAdjuster mapDimensionInputFieldUIValueAdjuster)
-	{
-		if(mapDimensionInputFieldUIValueAdjuster == null)
-		{
-			return;
-		}
-
-		mapDimensionInputFieldUIValueAdjuster.SetMinimumValue(lowerBound);
-		mapDimensionInputFieldUIValueAdjuster.SetMaximumValue(upperBound);
-	}
 }
