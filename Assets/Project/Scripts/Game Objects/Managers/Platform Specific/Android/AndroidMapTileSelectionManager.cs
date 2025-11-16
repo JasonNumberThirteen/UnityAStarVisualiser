@@ -17,7 +17,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour, IPrimaryWindowEleme
 	private bool panelUIHoverWasDetected;
 	private Timer timer;
 	private UserInputController userInputController;
-	private AndroidMapTileRaycaster androidMapTileRaycaster;
+	private MapTileStateControllerRaycaster mapTileStateControllerRaycaster;
 	private PanelUIHoverDetectionManager panelUIHoverDetectionManager;
 	private UnityEngine.InputSystem.EnhancedTouch.Touch touch;
 	private MapTileStateController mapTileStateController;
@@ -43,7 +43,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour, IPrimaryWindowEleme
 #if UNITY_ANDROID
 		timer = GetComponent<Timer>();
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
-		androidMapTileRaycaster = ObjectMethods.FindComponentOfType<AndroidMapTileRaycaster>();
+		mapTileStateControllerRaycaster = ObjectMethods.FindComponentOfType<MapTileStateControllerRaycaster>();
 		panelUIHoverDetectionManager = ObjectMethods.FindComponentOfType<PanelUIHoverDetectionManager>();
 
 		RemoveRaycasterFromMainCameraIfPossible();
@@ -105,7 +105,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour, IPrimaryWindowEleme
 
 	private void OnTimerStarted()
 	{
-		if(androidMapTileRaycaster != null && (!androidMapTileRaycaster.MapTileWasTapped(touch.screenPosition, out var mapTileStateController) || !MapTileStateControllersAreEqual(mapTileStateController)))
+		if(mapTileStateControllerRaycaster != null && (!mapTileStateControllerRaycaster.ComponentWasDetected(touch.screenPosition, out var mapTileStateController) || !MapTileStateControllersAreEqual(mapTileStateController)))
 		{
 			UnassignMapTileCompletelyIfNeeded();
 		}
@@ -113,7 +113,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour, IPrimaryWindowEleme
 
 	private void OnTimerFinished()
 	{
-		if(androidMapTileRaycaster != null && androidMapTileRaycaster.MapTileWasTapped(touch.screenPosition, out var mapTileStateController))
+		if(mapTileStateControllerRaycaster != null && mapTileStateControllerRaycaster.ComponentWasDetected(touch.screenPosition, out var mapTileStateController))
 		{
 			HandleTappedMapTile(mapTileStateController);
 		}

@@ -7,6 +7,10 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 
 	private bool mapTilesCanBeHovered = true;
 	private MapTile mapTile;
+#if !UNITY_ANDROID
+	private MapPathManager mapPathManager;
+	private MapTileRaycaster mapTileRaycaster;
+#endif
 	private VisualiserEventsManager visualiserEventsManager;
 
 	public void SetPrimaryWindowElementActive(bool active)
@@ -24,6 +28,10 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 
 	private void Awake()
 	{
+#if !UNITY_ANDROID
+		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
+		mapTileRaycaster = ObjectMethods.FindComponentOfType<MapTileRaycaster>();
+#endif
 		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 
 		RegisterToListeners(true);
@@ -38,6 +46,13 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 	{
 		if(register)
 		{
+#if !UNITY_ANDROID
+			if(mapPathManager != null)
+			{
+				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
+			}
+#endif
+			
 			if(visualiserEventsManager != null)
 			{
 				visualiserEventsManager.eventWasSentEvent.AddListener(OnEventWasSent);
@@ -45,12 +60,29 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 		}
 		else
 		{
+#if !UNITY_ANDROID
+			if(mapPathManager != null)
+			{
+				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
+			}
+#endif
+			
 			if(visualiserEventsManager != null)
 			{
 				visualiserEventsManager.eventWasSentEvent.RemoveListener(OnEventWasSent);
 			}
 		}
 	}
+
+#if !UNITY_ANDROID
+	private void OnPathfindingProcessStateWasChanged(bool started)
+	{
+		if(!started && mapTileRaycaster != null && mapTileRaycaster.ComponentWasDetected(MouseMethods.GetMousePosition(), out var mapTile))
+		{
+			SetMapTile(mapTile);
+		}
+	}
+#endif
 
 	private void OnEventWasSent(VisualiserEvent visualiserEvent)
 	{

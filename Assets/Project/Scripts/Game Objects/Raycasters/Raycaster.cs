@@ -1,32 +1,25 @@
 using UnityEngine;
 
-public class AndroidMapTileRaycaster : MonoBehaviour
+public abstract class Raycaster<T> : MonoBehaviour
 {
 	[SerializeField] private LayerMask detectableGameObjects;
 
-#if UNITY_ANDROID
 	private MainSceneCamera mainSceneCamera;
 
-	public bool MapTileWasTapped(Vector3 position, out MapTileStateController mapTileStateController)
+	public bool ComponentWasDetected(Vector3 position, out T component)
 	{
 		var raycastHitCollider = GetRaycastHitCollider(position);
 		
-		mapTileStateController = raycastHitCollider != null && raycastHitCollider.TryGetComponent<MapTileStateController>(out var foundMapTileStateController) ? foundMapTileStateController : null;
+		component = raycastHitCollider != null && raycastHitCollider.TryGetComponent<T>(out var foundMapTileStateController) ? foundMapTileStateController : default;
 		
-		return mapTileStateController != null;
-	}
-#endif
-	
-	private void Awake()
-	{
-#if UNITY_ANDROID
-		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
-#else
-		Destroy(gameObject);
-#endif
+		return component != null;
 	}
 
-#if UNITY_ANDROID
+	private void Awake()
+	{
+		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
+	}
+
 	private Collider2D GetRaycastHitCollider(Vector3 position)
 	{
 		if(mainSceneCamera == null)
@@ -39,5 +32,4 @@ public class AndroidMapTileRaycaster : MonoBehaviour
 
 		return raycastHit.collider;
 	}
-#endif
 }
