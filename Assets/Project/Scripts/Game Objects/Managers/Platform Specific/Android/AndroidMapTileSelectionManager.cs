@@ -10,9 +10,10 @@ using UnityEngine.EventSystems;
 #if UNITY_ANDROID
 [RequireComponent(typeof(Timer))]
 #endif
-public class AndroidMapTileSelectionManager : MonoBehaviour
+public class AndroidMapTileSelectionManager : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 #if UNITY_ANDROID
+	private bool selectingMapTilesIsLocked;
 	private bool panelUIHoverWasDetected;
 	private Timer timer;
 	private UserInputController userInputController;
@@ -21,6 +22,21 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 	private UnityEngine.InputSystem.EnhancedTouch.Touch touch;
 	private MapTileStateController mapTileStateController;
 #endif
+
+	public void SetPrimaryWindowElementActive(bool active)
+	{
+#if UNITY_ANDROID
+		SetSelectingMapTileLockState(!active);
+		SetPanelUIHoverDetectionState(false);
+#endif
+	}
+
+	public void SetMapEditingElementActive(bool active)
+	{
+#if UNITY_ANDROID
+		SetSelectingMapTileLockState(!active);
+#endif
+	}
 	
 	private void Awake()
 	{
@@ -67,7 +83,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.AddListener(OnHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.AddListener(SetPanelUIHoverDetectionState);
 			}
 		}
 		else
@@ -82,7 +98,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 
 			if(panelUIHoverDetectionManager != null)
 			{
-				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.RemoveListener(OnHoverDetectionStateWasChanged);
+				panelUIHoverDetectionManager.hoverDetectionStateWasChangedEvent.RemoveListener(SetPanelUIHoverDetectionState);
 			}
 		}
 	}
@@ -158,7 +174,7 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 	{
 		var numberOfTouches = touches.Count;
 
-		if(!panelUIHoverWasDetected && numberOfTouches == 1)
+		if(TouchCanBeRegistered() && numberOfTouches == 1)
 		{
 			HandleTouch(touches.First());
 		}
@@ -198,11 +214,17 @@ public class AndroidMapTileSelectionManager : MonoBehaviour
 		return touch.MoveIsSufficientlyFast(Mathf.Epsilon) || touchPhases.Contains(touch.phase);
 	}
 
-	private void OnHoverDetectionStateWasChanged(bool detected)
+	private void SetPanelUIHoverDetectionState(bool detected)
 	{
 		panelUIHoverWasDetected = detected;
 	}
+
+	private void SetSelectingMapTileLockState(bool locked)
+	{
+		selectingMapTilesIsLocked = locked;
+	}
 	
+	private bool TouchCanBeRegistered() => !panelUIHoverWasDetected && !selectingMapTilesIsLocked;
 	private bool TouchWasRegistered(UnityEngine.InputSystem.EnhancedTouch.Touch touch) => touch.phase == UnityEngine.InputSystem.TouchPhase.Began;
 	private bool MapTileShouldBeDeselected(int numberOfTouches) => numberOfTouches == 0 && mapTileStateController != null && mapTileStateController.IsSelected;
 	private bool MapTileStateControllersAreEqual(MapTileStateController mapTileStateController) => this.mapTileStateController == mapTileStateController;
