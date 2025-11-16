@@ -15,6 +15,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 	private bool mapTileIsSelected;
 	private bool panelUIHoverWasDetected;
 	private float zoomPerScroll;
+	private MapAreaManager mapAreaManager;
 	private MainSceneCamera mainSceneCamera;
 	private UserInputController userInputController;
 	private MapBoundariesManager mapBoundariesManager;
@@ -44,6 +45,7 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 	private void Awake()
 	{
+		mapAreaManager = ObjectMethods.FindComponentOfType<MapAreaManager>();
 		mainSceneCamera = ObjectMethods.FindComponentOfType<MainSceneCamera>();
 		userInputController = ObjectMethods.FindComponentOfType<UserInputController>();
 		mapBoundariesManager = ObjectMethods.FindComponentOfType<MapBoundariesManager>();
@@ -264,7 +266,9 @@ public class MainSceneCameraZoomController : MonoBehaviour, IPrimaryWindowElemen
 
 	private float GetMaximumSize()
 	{
-		var maximumMapDimension = GetSizeBy(mapGenerationManager != null ? mapGenerationManager.GetMapDimensions().GetMaximumDimension() : 0f);
+		var mapArea = mapAreaManager != null ? mapAreaManager.GetMapArea() : new Rect();
+		var mapAreaMagnitude = mapArea.GetMagnitude();
+		var maximumMapDimension = GetSizeBy(mapAreaMagnitude.GetMaximumDimension());
 		
 		return Mathf.Max(GetMinimumSize(), maximumMapDimension);
 	}
