@@ -7,7 +7,6 @@ public readonly struct MapTileLegendData
 
 	public MapTileLegendData(Color color, string text)
 	{
-		Color = color;
-		Text = text;
+		(Color, Text) = (color, text);
 	}
 }
