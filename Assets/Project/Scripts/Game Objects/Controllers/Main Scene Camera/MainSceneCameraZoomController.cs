@@ -1,4 +1,6 @@
+#if UNITY_ANDROID
 using System.Linq;
+#endif
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
