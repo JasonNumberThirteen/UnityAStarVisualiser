@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement
+public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	public UnityEvent<MapTile> hoveredMapTileWasChangedEvent;
 
+	private bool mapTilesCanBeHovered = true;
 	private MapTile mapTile;
 	private VisualiserEventsManager visualiserEventsManager;
 
@@ -14,6 +15,11 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement
 		{
 			SetMapTile(null);
 		}
+	}
+
+	public void SetMapEditingElementActive(bool active)
+	{
+		mapTilesCanBeHovered = active;
 	}
 
 	private void Awake()
@@ -48,7 +54,7 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnEventWasSent(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent && mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileHoverStateWasChanged)
+		if(mapTilesCanBeHovered && visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent && mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileHoverStateWasChanged)
 		{
 			SetMapTile(mapTileBoolVisualiserEvent.GetBoolValue() ? mapTileBoolVisualiserEvent.GetMapTile() : null);
 		}

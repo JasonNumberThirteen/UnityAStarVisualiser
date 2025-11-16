@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SelectedMapTileManager : MonoBehaviour, IPrimaryWindowElement
+public class SelectedMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	public UnityEvent<MapTile> selectedMapTileWasChangedEvent;
 
+	private bool mapTilesCanBeSelected = true;
 	private MapTile mapTile;
 	private VisualiserEventsManager visualiserEventsManager;
 
@@ -14,6 +15,11 @@ public class SelectedMapTileManager : MonoBehaviour, IPrimaryWindowElement
 		{
 			SetMapTile(null);
 		}
+	}
+
+	public void SetMapEditingElementActive(bool active)
+	{
+		mapTilesCanBeSelected = active;
 	}
 
 	private void Awake()
@@ -48,7 +54,7 @@ public class SelectedMapTileManager : MonoBehaviour, IPrimaryWindowElement
 
 	private void OnEventWasSent(VisualiserEvent visualiserEvent)
 	{
-		if(visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent && mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged)
+		if(mapTilesCanBeSelected && visualiserEvent is MapTileBoolVisualiserEvent mapTileBoolVisualiserEvent && mapTileBoolVisualiserEvent.GetVisualiserEventType() == VisualiserEventType.MapTileSelectionStateWasChanged)
 		{
 			SetMapTile(mapTileBoolVisualiserEvent.GetBoolValue() ? mapTileBoolVisualiserEvent.GetMapTile() : null);
 		}
