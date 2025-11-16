@@ -1,14 +1,14 @@
 using UnityEngine;
-#if UNITY_ANDROID
 using UnityEngine.Events;
 
+#if UNITY_ANDROID
 [DefaultExecutionOrder(-400)]
 #endif
 public class AndroidTouchScreenKeyboardManager : MonoBehaviour
 {
-#if UNITY_ANDROID
 	public UnityEvent<bool> keyboardVisibilityStateWasChangedEvent;
 
+#if UNITY_ANDROID
 	private bool keyboardIsVisible;
 
 	private bool KeyboardIsVisible
