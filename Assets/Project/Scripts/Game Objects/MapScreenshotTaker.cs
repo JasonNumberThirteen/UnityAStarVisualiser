@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class MapScreenshotTaker : MonoBehaviour
 {
+	public UnityEvent<bool> takingScreenshotStateWasChangedEvent;
 	public UnityEvent<string> screenshotWasTakenEvent;
 	
 	private MapScreenshotSceneCamera mapScreenshotSceneCamera;
@@ -16,14 +17,16 @@ public class MapScreenshotTaker : MonoBehaviour
 #endif
 	private static readonly int RENDER_TEXTURE_DEPTH = 24;
 	private static readonly TextureFormat RENDER_TEXTURE_FORMAT = TextureFormat.RGB24;
-	
+
 	public void TakeMapScreenshot()
 	{
 		var directoryPathFolder = GetDirectoryPathFolder();
 		var directoryPath = $"{directoryPathFolder}/{GetDirectoryName()}";
 		
+		takingScreenshotStateWasChangedEvent?.Invoke(true);
 		EnsureExistanceOfDirectory(directoryPath);
 		TakeScreenshotInDirectory(directoryPath, directoryPathFolder);
+		takingScreenshotStateWasChangedEvent?.Invoke(false);
 	}
 
 	private void Awake()

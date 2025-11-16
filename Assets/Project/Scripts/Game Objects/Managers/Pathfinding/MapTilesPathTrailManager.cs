@@ -1,20 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapTilesPathTrailManager : MonoBehaviour
 {
+	public UnityEvent<List<MapTilePathTrailIndicator>> indicatorsWereAddedEvent;
+	public UnityEvent<List<MapTilePathTrailIndicator>> indicatorsWereRemovedEvent;
+	
 	[SerializeField] private MapTilePathTrailIndicator mapTilePathTrailIndicatorPrefab;
 
 	private bool pathTrailIsEnabled;
 	private MapPathManager mapPathManager;
 
-	private readonly List<MapTilePathTrailIndicator> mapTilePathTrailIndicators = new();
+	private readonly List<MapTilePathTrailIndicator> allMapTilePathTrailIndicators = new();
+	private readonly List<MapTilePathTrailIndicator> modifiedMapTilePathTrailIndicators = new();
 
 	public void SetPathTrailEnabled(bool enabled)
 	{
 		pathTrailIsEnabled = enabled;
 
-		mapTilePathTrailIndicators.ForEach(mapTilePathTrailIndicator => mapTilePathTrailIndicator.SetActive(pathTrailIsEnabled));
+		allMapTilePathTrailIndicators.ForEach(mapTilePathTrailIndicator => mapTilePathTrailIndicator.SetActive(pathTrailIsEnabled));
 	}
 
 	private void Awake()
@@ -51,12 +56,16 @@ public class MapTilesPathTrailManager : MonoBehaviour
 
 	private void OnPathWasFound(List<MapTileNode> mapTileNodes)
 	{
+		modifiedMapTilePathTrailIndicators.Clear();
 		mapTileNodes.ForEachReversed(CreateMapTilePathTrailIndicator);
+		indicatorsWereAddedEvent?.Invoke(modifiedMapTilePathTrailIndicators);
 	}
 
 	private void OnResultsWereCleared()
 	{
-		mapTilePathTrailIndicators.ForEachReversed(RemoveMapTilePathTrailIndicator);
+		modifiedMapTilePathTrailIndicators.Clear();
+		allMapTilePathTrailIndicators.ForEachReversed(RemoveMapTilePathTrailIndicator);
+		indicatorsWereRemovedEvent?.Invoke(modifiedMapTilePathTrailIndicators);
 	}
 
 	private void CreateMapTilePathTrailIndicator(MapTileNode currentMapTileNode, MapTileNode nextMapTileNode)
@@ -70,12 +79,24 @@ public class MapTilesPathTrailManager : MonoBehaviour
 		
 		mapTilePathTrailIndicator.Setup(currentMapTileNode, nextMapTileNode);
 		mapTilePathTrailIndicator.SetActive(pathTrailIsEnabled);
-		mapTilePathTrailIndicators.Add(mapTilePathTrailIndicator);
+		AddIndicator(mapTilePathTrailIndicator);
 	}
 
 	private void RemoveMapTilePathTrailIndicator(MapTilePathTrailIndicator mapTilePathTrailIndicator)
 	{
-		mapTilePathTrailIndicators.Remove(mapTilePathTrailIndicator);
+		RemoveIndicator(mapTilePathTrailIndicator);
 		Destroy(mapTilePathTrailIndicator.gameObject);
+	}
+
+	private void AddIndicator(MapTilePathTrailIndicator mapTilePathTrailIndicator)
+	{
+		allMapTilePathTrailIndicators.Add(mapTilePathTrailIndicator);
+		modifiedMapTilePathTrailIndicators.Add(mapTilePathTrailIndicator);
+	}
+
+	private void RemoveIndicator(MapTilePathTrailIndicator mapTilePathTrailIndicator)
+	{
+		allMapTilePathTrailIndicators.Remove(mapTilePathTrailIndicator);
+		modifiedMapTilePathTrailIndicators.Add(mapTilePathTrailIndicator);
 	}
 }

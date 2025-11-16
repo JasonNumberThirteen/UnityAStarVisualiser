@@ -1,12 +1,30 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class MapTilePathTrailIndicator : MonoBehaviour
+public class MapTilePathTrailIndicator : MonoBehaviour, IMapScreenshotTakerElement
 {
 	[SerializeField, Min(0f)] private float movementPeriodOfOscillation = 3f;
 	[SerializeField, Range(0f, 0.5f)] private float movementDistanceFromCenterOfTile = 0.125f;
 
 	private Tween movementTween;
+	private Vector2 lastLocalPosition;
+
+	public void AdjustForTakingMapScreenshot(bool started)
+	{
+		if(started)
+		{
+			movementTween?.Pause();
+
+			lastLocalPosition = transform.localPosition;
+			transform.localPosition = Vector2.zero;
+		}
+		else
+		{
+			transform.localPosition = lastLocalPosition;
+
+			movementTween?.Play();
+		}
+	}
 	
 	public void Setup(MapTileNode currentMapTileNode, MapTileNode nextMapTileNode)
 	{
