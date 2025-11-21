@@ -20,7 +20,8 @@
 - [Unity](https://unity.com/ "Unity Real-Time Development Platform | 3D, 2D, VR &amp; AR Engine") game engine (version **6000.0.58f2**),
 - [Visual Studio Code](https://code.visualstudio.com/ "Visual Studio Code - Code Editing. Redefined") IDE for writing code,
 - [GIMP](https://www.gimp.org/ "GIMP - GNU Image Manipulation Program") for making graphics,
-- [DOTween](https://dotween.demigiant.com/ "DOTween (HOTween v2)") plugin for using tweens.
+- [DOTween](https://dotween.demigiant.com/ "DOTween (HOTween v2)") plugin for using tweens,
+- [Unity Native Gallery](https://github.com/yasirkula/UnityNativeGallery "Unity Native Gallery") plugin for taking screenshots on Android.
 
 ## Features
 - **FLEXIBLE INPUT**
