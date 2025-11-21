@@ -4,8 +4,10 @@ using UnityEngine.Events;
 public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapEditingElement
 {
 	public UnityEvent<MapTile> hoveredMapTileWasChangedEvent;
-	
+
+#if !UNITY_ANDROID
 	private bool mapTileCanBeDetectedAfterPathfinding = true;
+#endif
 	private bool mapTilesCanBeHovered = true;
 	private MapTile mapTile;
 	private MapPathManager mapPathManager;
@@ -23,7 +25,9 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 			SetMapTile(null);
 		}
 
+#if !UNITY_ANDROID
 		mapTileCanBeDetectedAfterPathfinding = active;
+#endif
 	}
 
 	public void SetMapEditingElementActive(bool active)
