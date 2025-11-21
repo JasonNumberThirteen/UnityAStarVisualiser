@@ -1,31 +1,26 @@
+using System;
+#if !UNITY_ANDROID
 using System.IO;
-using System.Linq;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
 
 public class MapScreenshotTaker : MonoBehaviour
 {
 	public UnityEvent<bool> takingScreenshotStateWasChangedEvent;
-	public UnityEvent<string> screenshotWasTakenEvent;
 	
 	private MapScreenshotSceneCamera mapScreenshotSceneCamera;
 
 	private static readonly string SCREENSHOT_NAME = "Screenshot";
 	private static readonly string SCREENSHOT_EXTENSION = ".png";
-#if UNITY_ANDROID
-	private static readonly string ANDROID_SCREENSHOTS_FOLDER_NAME = "Screenshots";
-#endif
+	private static readonly string SCREENSHOTS_FOLDER_NAME = "Screenshots";
 	private static readonly int RENDER_TEXTURE_DEPTH = 24;
 	private static readonly TextureFormat RENDER_TEXTURE_FORMAT = TextureFormat.RGB24;
 
 	public void TakeMapScreenshot()
 	{
-		var directoryPathFolder = GetDirectoryPathFolder();
-		var directoryPath = $"{directoryPathFolder}/{GetDirectoryName()}";
-		
 		takingScreenshotStateWasChangedEvent?.Invoke(true);
-		EnsureExistanceOfDirectory(directoryPath);
-		TakeScreenshotInDirectory(directoryPath, directoryPathFolder);
+		InitiateTakingScreenshot();
 		takingScreenshotStateWasChangedEvent?.Invoke(false);
 	}
 
@@ -34,6 +29,16 @@ public class MapScreenshotTaker : MonoBehaviour
 		mapScreenshotSceneCamera = ObjectMethods.FindComponentOfType<MapScreenshotSceneCamera>();
 	}
 
+	private void InitiateTakingScreenshot()
+	{
+#if !UNITY_ANDROID
+		EnsureExistanceOfDirectory(GetDirectoryPath());
+#endif
+
+		TakeScreenshotInDirectory();
+	}
+
+#if !UNITY_ANDROID
 	private void EnsureExistanceOfDirectory(string path)
 	{
 		if(!Directory.Exists(path))
@@ -41,16 +46,19 @@ public class MapScreenshotTaker : MonoBehaviour
 			Directory.CreateDirectory(path);
 		}
 	}
+#endif
 
-	private void TakeScreenshotInDirectory(string path, string pathFolder)
+	private void TakeScreenshotInDirectory()
 	{
-		var numberOfExistingScreenshots = new DirectoryInfo(path).GetFiles().Where(file => file.Extension.Equals(SCREENSHOT_EXTENSION)).Count();
-		var screenshotNumber = numberOfExistingScreenshots + 1;
-		var screenshotPath = $"{path}/{SCREENSHOT_NAME}{screenshotNumber}{SCREENSHOT_EXTENSION}";
+		var directoryPath = GetDirectoryPath();
+		var screenshotPath = GetScreenshotPath();
 		var screenshotTexture = GetTextureForScreenshot();
 
-		File.WriteAllBytes(screenshotPath, screenshotTexture.EncodeToPNG());
-		screenshotWasTakenEvent?.Invoke(pathFolder);
+#if !UNITY_ANDROID
+		File.WriteAllBytes($"{directoryPath}/{screenshotPath}", screenshotTexture.EncodeToPNG());
+#else
+		NativeGallery.SaveImageToGallery(screenshotTexture, directoryPath, screenshotPath);
+#endif
 	}
 
 	private Texture2D GetTextureForScreenshot()
@@ -88,24 +96,22 @@ public class MapScreenshotTaker : MonoBehaviour
 
 	private string GetDirectoryPathFolder()
 	{
-#if UNITY_ANDROID
-		using var environment = new AndroidJavaClass(AndroidJNINames.OS_ENVIRONMENT_CLASS_NAME);
-		var directoryDCIM = environment.GetStatic<string>(AndroidJNINames.DIRECTORY_DCIM_FIELD_NAME);
-		using var externalStoragePublicDirectory = environment.CallStatic<AndroidJavaObject>(AndroidJNINames.GET_EXTERNAL_STORAGE_PUBLIC_DIRECTORY_METHOD_NAME, directoryDCIM);
-		var absolutePath = externalStoragePublicDirectory.Call<string>(AndroidJNINames.GET_ABSOLUTE_PATH_METHOD_NAME);
-		
-		return Path.Combine(absolutePath, ANDROID_SCREENSHOTS_FOLDER_NAME);
-#else
+#if !UNITY_ANDROID
 		return Path.GetDirectoryName(Application.dataPath);
+#else
+		return SCREENSHOTS_FOLDER_NAME;
 #endif
 	}
 
 	private string GetDirectoryName()
 	{
-#if UNITY_ANDROID
-		return "AStar Visualiser";
+#if !UNITY_ANDROID
+		return SCREENSHOTS_FOLDER_NAME;
 #else
-		return "Screenshots";
+		return "AStar Visualiser";
 #endif
 	}
+
+	private string GetDirectoryPath() => $"{GetDirectoryPathFolder()}/{GetDirectoryName()}";
+	private string GetScreenshotPath() => $"{SCREENSHOT_NAME}_{DateTime.Now:yyyyMMdd_HHmmss}_AStarVisualiser{SCREENSHOT_EXTENSION}";
 }

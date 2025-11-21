@@ -1121,50 +1121,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yesButtonUI: {fileID: 636857776}
   noButtonUI: {fileID: 1784170790}
---- !u!1 &243514318
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 243514320}
-  - component: {fileID: 243514319}
-  m_Layer: 0
-  m_Name: Android Taken Map Screenshot Notifier
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &243514319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243514318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff6a77b223875c4690e1cb843e9d781, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &243514320
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243514318}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1440862356}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251604567 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5299390335095447550, guid: e807e6877e1a86f458cad1b82cb1df51, type: 3}
@@ -9179,7 +9135,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1335238159}
-  - {fileID: 243514320}
   m_Father: {fileID: 1708368528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1462152835
@@ -11418,9 +11373,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   takingScreenshotStateWasChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  screenshotWasTakenEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1735759779
