@@ -8,9 +8,11 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 	private bool mapTileCanBeDetectedAfterPathfinding = true;
 	private bool mapTilesCanBeHovered = true;
 	private MapTile mapTile;
-#if !UNITY_ANDROID
 	private MapPathManager mapPathManager;
+#if !UNITY_ANDROID
 	private MapTileRaycaster mapTileRaycaster;
+#else
+	private SimulationManager simulationManager;
 #endif
 	private VisualiserEventsManager visualiserEventsManager;
 
@@ -31,9 +33,11 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 
 	private void Awake()
 	{
-#if !UNITY_ANDROID
 		mapPathManager = ObjectMethods.FindComponentOfType<MapPathManager>();
+#if !UNITY_ANDROID
 		mapTileRaycaster = ObjectMethods.FindComponentOfType<MapTileRaycaster>();
+#else
+		simulationManager = ObjectMethods.FindComponentOfType<SimulationManager>();
 #endif
 		visualiserEventsManager = ObjectMethods.FindComponentOfType<VisualiserEventsManager>();
 
@@ -49,12 +53,10 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 	{
 		if(register)
 		{
-#if !UNITY_ANDROID
 			if(mapPathManager != null)
 			{
 				mapPathManager.pathfindingProcessStateWasChangedEvent.AddListener(OnPathfindingProcessStateWasChanged);
 			}
-#endif
 			
 			if(visualiserEventsManager != null)
 			{
@@ -63,12 +65,10 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 		}
 		else
 		{
-#if !UNITY_ANDROID
 			if(mapPathManager != null)
 			{
 				mapPathManager.pathfindingProcessStateWasChangedEvent.RemoveListener(OnPathfindingProcessStateWasChanged);
 			}
-#endif
 			
 			if(visualiserEventsManager != null)
 			{
@@ -77,15 +77,20 @@ public class HoveredMapTileManager : MonoBehaviour, IPrimaryWindowElement, IMapE
 		}
 	}
 
-#if !UNITY_ANDROID
 	private void OnPathfindingProcessStateWasChanged(bool started)
 	{
+#if UNITY_ANDROID
+		if(simulationManager != null && simulationManager.SimulationIsEnabled() && started && mapTile != null)
+		{
+			SetMapTile(null);
+		}
+#else
 		if(!started && mapTileCanBeDetectedAfterPathfinding && mapTileRaycaster != null && mapTileRaycaster.ComponentWasDetected(MouseMethods.GetMousePosition(), out var mapTile))
 		{
 			SetMapTile(mapTile);
 		}
-	}
 #endif
+	}
 
 	private void OnEventWasSent(VisualiserEvent visualiserEvent)
 	{
