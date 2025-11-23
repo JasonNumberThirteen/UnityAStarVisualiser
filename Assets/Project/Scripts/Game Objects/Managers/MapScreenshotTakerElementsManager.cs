@@ -14,6 +14,7 @@ public class MapScreenshotTakerElementsManager : MonoBehaviour
 		mapScreenshotTaker = ObjectMethods.FindComponentOfType<MapScreenshotTaker>();
 		mapTilesPathTrailManager = ObjectMethods.FindComponentOfType<MapTilesPathTrailManager>();
 
+		mapScreenshotTakerElements.AddRange(ObjectMethods.FindInterfacesOfType<IMapScreenshotTakerElement>());
 		RegisterToListeners(true);
 	}
 
