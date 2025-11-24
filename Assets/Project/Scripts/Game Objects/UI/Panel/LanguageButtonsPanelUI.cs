@@ -5,8 +5,22 @@ using UnityEngine.Localization.Settings;
 public class LanguageButtonsPanelUI : PanelUI
 {
 	[SerializeField] private LanguageButtonUI languageButtonUI;
-	
+
+#if !UNITY_WEBGL
 	private void Awake()
+	{
+		CreateLanguageButtons();
+	}
+#else
+	private async void Start()
+	{
+		await LocalizationSettings.InitializationOperation.Task;
+
+		CreateLanguageButtons();
+	}
+#endif
+
+	private void CreateLanguageButtons()
 	{
 		LocalizationSettings.AvailableLocales.Locales.GetReversedList().ForEach(CreateLanguageButtonWithLocale);
 	}
